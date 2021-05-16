@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Ensi</string>
+    <string name="channel_name">#ensi-app</string>
+    <string name="sendMessage">Message #ensi-app</string>
+    <string name="username">Username</string>
+    <string name="content">Content</string>
+    <string name="avatar">Avatar</string>
+    <string name="send">></string>
+    <string name="channelStart">This is the beginning of #ensi-app</string>
+    <string name="options">Options</string>
+    <string name="dlcs">Downloadable Content</string>
+</resources>
