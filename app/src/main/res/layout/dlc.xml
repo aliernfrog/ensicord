@@ -9,10 +9,10 @@
         android:id="@+id/dlc_linear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:background="#454545"
+        android:layout_margin="16dp"
+        android:background="@drawable/linear"
         android:orientation="vertical"
-        android:padding="8dp"
+        android:padding="16dp"
         tools:ignore="UselessParent">
 
         <TextView
@@ -20,9 +20,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="DLC"
-            android:textColor="#77FF00"
-            android:textSize="20sp"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/dlc_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Description"
+            android:textColor="#DFDFDF"
             android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/dlc_hint"
+            android:textColor="#5E5E5E"
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/dlc_words"
@@ -30,14 +44,8 @@
             android:layout_height="wrap_content"
             android:text="Words here"
             android:textColor="#FFFFFF"
+            android:visibility="gone"
             tools:ignore="HardcodedText" />
-
-        <TextView
-            android:id="@+id/dlc_split"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="==========="
-            android:textColor="#888888" />
 
         <TextView
             android:id="@+id/dlc_verbs"
@@ -45,14 +53,8 @@
             android:layout_height="wrap_content"
             android:text="Verbs here"
             android:textColor="#FFFFFF"
+            android:visibility="gone"
             tools:ignore="HardcodedText" />
-
-        <TextView
-            android:id="@+id/dlc_id"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="DLC ID"
-            android:textColor="#888888" />
 
     </LinearLayout>
 </LinearLayout>
