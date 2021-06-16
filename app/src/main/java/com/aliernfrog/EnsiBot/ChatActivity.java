@@ -13,7 +13,6 @@ import android.os.Handler;
 import android.text.Html;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -28,7 +27,7 @@ import java.util.Arrays;
 import java.util.Random;
 
 @SuppressLint("CommitPrefEdits")
-public class MainActivity extends AppCompatActivity {
+public class ChatActivity extends AppCompatActivity {
     ImageView options;
     ScrollView chatScroll;
     LinearLayout chatRoot;
@@ -51,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_chat);
 
         ensiAvatar = ContextCompat.getDrawable(getApplicationContext(), R.drawable.ensi);
         userAvatar = ContextCompat.getDrawable(getApplicationContext(), R.drawable.user);
