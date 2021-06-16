@@ -8,6 +8,7 @@
     <string name="send">></string>
     <string name="channelStart">This is the beginning of #ensi-app</string>
     <string name="options">Options</string>
-    <string name="dlcs">Downloadable Content</string>
+    <string name="dlcs">Words Pack</string>
     <string name="dlc_hint">Click to apply this pack</string>
+    <string name="dlc_applied">Applied the pack!</string>
 </resources>
