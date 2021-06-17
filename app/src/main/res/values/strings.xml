@@ -5,10 +5,14 @@
     <string name="username">Username</string>
     <string name="content">Content</string>
     <string name="avatar">Avatar</string>
-    <string name="send">></string>
+    <string name="send">Send</string>
+    <string name="confirm">Confirm</string>
     <string name="channelStart">This is the beginning of #ensi-app</string>
     <string name="options">Options</string>
-    <string name="dlcs">Words Pack</string>
+    <string name="options_username_hint">Username</string>
+    <string name="options_username_changed">Changed the username!</string>
+    <string name="options_avatar_changed">Changed the avatar!</string>
+    <string name="dlcs">Words Packs</string>
     <string name="dlc_hint">Click to apply this pack</string>
     <string name="dlc_applied">Applied the pack!</string>
 </resources>

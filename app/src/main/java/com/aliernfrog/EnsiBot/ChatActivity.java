@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.text.Html;
 import android.view.View;
@@ -22,6 +23,7 @@ import android.widget.TextView;
 import com.aliernfrog.EnsiBot.utils.EnsiUtil;
 import com.aliernfrog.EnsiBot.utils.FileUtil;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
@@ -34,11 +36,13 @@ public class ChatActivity extends AppCompatActivity {
     EditText chatInput;
     ImageView chatSend;
 
+    String avatarPath;
+
     Drawable ensiAvatar;
     Drawable userAvatar;
 
     String ensiUsername = "<font color=yellow>Ensi</font>";
-    String userUsername = "Some frok";
+    String userUsername;
 
     SharedPreferences config;
 
@@ -52,6 +56,8 @@ public class ChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
+        avatarPath = Environment.getExternalStorageDirectory().toString()+"/Android/data/com.aliernfrog.EnsiBot/files/saved/avatar.png";
+
         ensiAvatar = ContextCompat.getDrawable(getApplicationContext(), R.drawable.ensi);
         userAvatar = ContextCompat.getDrawable(getApplicationContext(), R.drawable.user);
 
@@ -62,11 +68,14 @@ public class ChatActivity extends AppCompatActivity {
         chatSend = findViewById(R.id.main_chatSend);
 
         config = getSharedPreferences("APP_CONFIG", MODE_PRIVATE);
+        userUsername = config.getString("username", "Some frok");
 
         sendMessage(ensiAvatar, ensiUsername, "hi bro");
 
         getSavedWordsAndVerbs();
+        getAvatar();
         setListeners();
+        options.setImageDrawable(userAvatar);
     }
 
     void sendMessage(@Nullable Drawable avatar, String username, String content) {
@@ -123,6 +132,13 @@ public class ChatActivity extends AppCompatActivity {
         handler.postDelayed(() -> sendStory(username, content), 150);
     }
 
+    void getAvatar() {
+        File avatarFile = new File(avatarPath);
+        if (avatarFile.exists()) {
+            userAvatar = Drawable.createFromPath(avatarPath);
+        }
+    }
+
     void getSavedWordsAndVerbs() {
         String words = config.getString("savedWords", "");
         String verbs = config.getString("savedVerbs", "");
@@ -150,11 +166,12 @@ public class ChatActivity extends AppCompatActivity {
 
     void switchActivity(Class activity) {
         Intent intent = new Intent(this, activity);
+        finish();
         startActivity(intent);
     }
 
     void setListeners() {
-        options.setOnClickListener(v -> switchActivity(DlcActivity.class));
+        options.setOnClickListener(v -> switchActivity(OptionsActivity.class));
 
         chatSend.setOnClickListener(v -> {
             sendMessage(userAvatar, userUsername, chatInput.getText().toString());
