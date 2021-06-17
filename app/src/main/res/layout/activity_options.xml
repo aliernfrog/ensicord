@@ -61,7 +61,7 @@
                         android:layout_height="160dp"
                         android:adjustViewBounds="true"
                         android:contentDescription="@string/avatar"
-                        android:src="@drawable/ensi" />
+                        android:src="@drawable/user" />
 
                     <TextView
                         android:layout_width="match_parent"
