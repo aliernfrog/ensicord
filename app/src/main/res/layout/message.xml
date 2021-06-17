@@ -9,8 +9,8 @@
 
     <ImageView
         android:id="@+id/message_author_avatar"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:adjustViewBounds="true"
         android:contentDescription="@string/avatar"
         android:scaleType="centerInside"
@@ -18,7 +18,7 @@
 
     <LinearLayout
         android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="vertical"
         android:paddingLeft="8dp"

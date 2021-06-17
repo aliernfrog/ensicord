@@ -14,6 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Ensi">
+        <activity android:name=".OptionsActivity" />
         <activity android:name=".DlcActivity" />
         <activity android:name=".SplashActivity">
             <intent-filter>
