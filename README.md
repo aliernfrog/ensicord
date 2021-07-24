@@ -1,4 +1,4 @@
-# ensi-app
+# ensicord
 
 A Discord ripoff where you can chat with a <a href="https://aliernfrog.glitch.me/ensibot">Ensi Bot</a> remake.
 
