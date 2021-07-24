@@ -154,7 +154,7 @@ public class OptionsActivity extends AppCompatActivity implements PickiTCallback
     public void onBackPressed() {
         pickiT.deleteTemporaryFile(this);
         finish();
-        switchActivity(ChatActivity.class);
+        switchActivity(SplashActivity.class);
         super.onBackPressed();
     }
 }
