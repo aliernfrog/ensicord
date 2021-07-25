@@ -19,7 +19,7 @@ public class FilePickerActivity extends AppCompatActivity implements PickiTCallb
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_file_picker);
 
-        fileType = getIntent().getStringExtra("FILE_PATH");
+        fileType = getIntent().getStringExtra("FILE_TYPE");
 
         pickiT = new PickiT(this, this, this);
 
