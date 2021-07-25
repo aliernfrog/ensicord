@@ -36,13 +36,21 @@
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
-            <ImageView
-                android:id="@+id/main_options"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:contentDescription="@string/options"
-                android:scaleType="centerInside"
-                app:srcCompat="@drawable/user" />
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="#00FFFFFF"
+                app:cardCornerRadius="20dp"
+                app:cardPreventCornerOverlap="false">
+
+                <ImageView
+                    android:id="@+id/main_options"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:contentDescription="@string/options"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@drawable/user" />
+            </androidx.cardview.widget.CardView>
 
         </LinearLayout>
 
