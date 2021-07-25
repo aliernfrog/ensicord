@@ -126,6 +126,7 @@ public class ChatActivity extends AppCompatActivity {
         String mention = EnsiUtil.buildMention(username);
         String finalText = currentText+mention;
         chatInput.setText(finalText);
+        chatInput.setSelection(chatInput.length());
     }
 
     void scrollToBottom() {
