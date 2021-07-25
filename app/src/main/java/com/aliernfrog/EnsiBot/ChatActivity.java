@@ -43,7 +43,7 @@ public class ChatActivity extends AppCompatActivity {
     Drawable ensiAvatar;
     Drawable userAvatar;
 
-    String ensiUsername = "<font color=yellow>Ensi</font>";
+    String ensiUsername;
     String userUsername;
 
     SharedPreferences config;
@@ -74,6 +74,7 @@ public class ChatActivity extends AppCompatActivity {
         chatSend = findViewById(R.id.main_chatSend);
 
         config = getSharedPreferences("APP_CONFIG", MODE_PRIVATE);
+        ensiUsername = config.getString("ensiUsername", "<font color=yellow>Ensi</font>");
         userUsername = config.getString("username", "Some frok");
 
         getSavedWordsAndVerbs();
