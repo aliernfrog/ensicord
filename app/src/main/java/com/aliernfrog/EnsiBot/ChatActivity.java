@@ -76,13 +76,12 @@ public class ChatActivity extends AppCompatActivity {
         config = getSharedPreferences("APP_CONFIG", MODE_PRIVATE);
         userUsername = config.getString("username", "Some frok");
 
-        sendMessage(ensiAvatar, ensiUsername, "hi bro");
-
         getSavedWordsAndVerbs();
         getAvatar();
         getChannel();
         setListeners();
-        options.setImageDrawable(userAvatar);
+
+        sendMessage(ensiAvatar, ensiUsername, "hi bro");
     }
 
     void sendMessage(@Nullable Drawable avatar, String username, String content) {
@@ -154,6 +153,7 @@ public class ChatActivity extends AppCompatActivity {
         if (avatarFile.exists()) {
             userAvatar = Drawable.createFromPath(avatarPath);
         }
+        options.setImageDrawable(userAvatar);
     }
 
     void getSavedWordsAndVerbs() {
