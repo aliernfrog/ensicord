@@ -53,7 +53,7 @@ public class ChatActivity extends AppCompatActivity {
     ArrayList<String> concs;
     ArrayList<String> types;
 
-    Boolean[] saveChances = {false,false,true};
+    Boolean[] saveChances = {false,false,false,false,false,false,true};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
