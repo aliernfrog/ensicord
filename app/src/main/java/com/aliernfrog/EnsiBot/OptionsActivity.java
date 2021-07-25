@@ -34,7 +34,7 @@ public class OptionsActivity extends AppCompatActivity implements PickiTCallback
     SharedPreferences.Editor configEdit;
 
     String avatarPath;
-    Integer PICK_AVATAR = 1;
+    Integer REQUEST_PICK_AVATAR = 1;
 
     PickiT pickiT;
 
@@ -73,9 +73,9 @@ public class OptionsActivity extends AppCompatActivity implements PickiTCallback
 
     void pickAvatar() {
         if (!hasPerms()) return;
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("image/*");
-        startActivityForResult(intent, PICK_AVATAR);
+        Intent intent = new Intent(this, FilePickerActivity.class);
+        intent.putExtra("FILE_TYPE", "image/*");
+        startActivityForResult(intent, REQUEST_PICK_AVATAR);
     }
 
     void setAvatar(String path) {
@@ -118,8 +118,9 @@ public class OptionsActivity extends AppCompatActivity implements PickiTCallback
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            if (requestCode == PICK_AVATAR) {
-                pickiT.getPath(data.getData(), Build.VERSION.SDK_INT);
+            if (requestCode == REQUEST_PICK_AVATAR) {
+                String path = data.getStringExtra("path");
+                setAvatar(path);
             }
         }
     }
