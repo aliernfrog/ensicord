@@ -50,6 +50,8 @@ public class ChatActivity extends AppCompatActivity {
 
     ArrayList<String> savedWords;
     ArrayList<String> savedVerbs;
+    ArrayList<String> concs;
+    ArrayList<String> types;
 
     Boolean[] saveChances = {false,false,true};
 
@@ -109,7 +111,7 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     void sendStory(String username, String content) {
-        sendMessage(ensiAvatar, ensiUsername, EnsiUtil.buildMessage(username, content, savedWords, savedVerbs));
+        sendMessage(ensiAvatar, ensiUsername, EnsiUtil.buildMessage(username, content, savedWords, savedVerbs, concs, types));
         Random random = new Random();
         Boolean doSave = saveChances[random.nextInt(saveChances.length)];
         if (doSave) {
