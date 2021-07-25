@@ -30,9 +30,11 @@ import java.util.Random;
 
 @SuppressLint("CommitPrefEdits")
 public class ChatActivity extends AppCompatActivity {
+    TextView channelTitle;
     ImageView options;
     ScrollView chatScroll;
     LinearLayout chatRoot;
+    TextView channelHint;
     EditText chatInput;
     ImageView chatSend;
 
@@ -61,9 +63,11 @@ public class ChatActivity extends AppCompatActivity {
         ensiAvatar = ContextCompat.getDrawable(getApplicationContext(), R.drawable.ensi);
         userAvatar = ContextCompat.getDrawable(getApplicationContext(), R.drawable.user);
 
+        channelTitle = findViewById(R.id.main_channel_name);
         options = findViewById(R.id.main_options);
         chatScroll = findViewById(R.id.main_chatScroll);
         chatRoot = findViewById(R.id.main_chatRoot);
+        channelHint = findViewById(R.id.main_chat_hint);
         chatInput = findViewById(R.id.main_chatInput);
         chatSend = findViewById(R.id.main_chatSend);
 
@@ -74,6 +78,7 @@ public class ChatActivity extends AppCompatActivity {
 
         getSavedWordsAndVerbs();
         getAvatar();
+        getChannel();
         setListeners();
         options.setImageDrawable(userAvatar);
     }
@@ -130,6 +135,15 @@ public class ChatActivity extends AppCompatActivity {
         if (username.equals(ensiUsername) || username.equals("")) return;
         Handler handler = new Handler();
         handler.postDelayed(() -> sendStory(username, content), 150);
+    }
+
+    void getChannel() {
+        String name = "#"+config.getString("channelName", "general");
+        String hint = getString(R.string.channelStart).replace("%NAME%", name);
+        String inputHint = getString(R.string.sendMessage).replace("%NAME%", name);
+        channelTitle.setText(name);
+        channelHint.setText(hint);
+        chatInput.setHint(inputHint);
     }
 
     void getAvatar() {
