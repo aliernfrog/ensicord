@@ -19,8 +19,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class DlcActivity extends AppCompatActivity {
-    LinearLayout root;
     ProgressBar loading;
+    LinearLayout themeRoot;
+    LinearLayout chatRoot;
 
     String url = "https://ensiapp.aliernfrog.repl.co";
     JSONArray rawDlcs;
@@ -32,8 +33,9 @@ public class DlcActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dlc);
 
-        root = findViewById(R.id.dlc_root);
         loading = findViewById(R.id.dlc_loading);
+        themeRoot = findViewById(R.id.dlc_theme_root);
+        chatRoot = findViewById(R.id.dlc_chat_root);
 
         Handler handler = new Handler();
         handler.postDelayed(this::getDlcs, 1000);
@@ -55,8 +57,10 @@ public class DlcActivity extends AppCompatActivity {
         try {
             for (int i = 0; i < rawDlcs.length(); i++) {
                 JSONObject current = rawDlcs.getJSONObject(i);
+                LinearLayout root = chatRoot;
+                if (current.has("type") && current.getString("type").equals("theme")) root = themeRoot;
                 ViewGroup dlc = (ViewGroup) getLayoutInflater().inflate(R.layout.dlc, root, false);
-                setDlcView(current, dlc);
+                setDlcView(current, root, dlc);
             }
             loading.setVisibility(View.GONE);
         } catch (Exception e) {
@@ -64,7 +68,7 @@ public class DlcActivity extends AppCompatActivity {
         }
     }
 
-    void setDlcView(JSONObject object, ViewGroup dlc) {
+    void setDlcView(JSONObject object, LinearLayout root, ViewGroup dlc) {
         try {
             LinearLayout dlcLinear = dlc.findViewById(R.id.dlc_linear);
             TextView nameView = dlc.findViewById(R.id.dlc_name);
