@@ -12,7 +12,7 @@
     <string name="options_username_hint">Username</string>
     <string name="options_username_changed">Changed the username!</string>
     <string name="options_avatar_changed">Changed the avatar!</string>
-    <string name="dlcs">Words Packs</string>
+    <string name="dlcs">Chat &amp; theme packs</string>
     <string name="dlc_hint">Click to apply this pack</string>
     <string name="dlc_applied">Applied the pack!</string>
 </resources>
