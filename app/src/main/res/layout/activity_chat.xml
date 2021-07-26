@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_constraint"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#000000"
@@ -36,13 +37,21 @@
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
-            <ImageView
-                android:id="@+id/main_options"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:contentDescription="@string/options"
-                android:scaleType="centerInside"
-                app:srcCompat="@drawable/user" />
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="#00FFFFFF"
+                app:cardCornerRadius="20dp"
+                app:cardPreventCornerOverlap="false">
+
+                <ImageView
+                    android:id="@+id/main_options"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:contentDescription="@string/options"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@drawable/user" />
+            </androidx.cardview.widget.CardView>
 
         </LinearLayout>
 
@@ -72,6 +81,7 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/main_chat_hint"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="16dp"

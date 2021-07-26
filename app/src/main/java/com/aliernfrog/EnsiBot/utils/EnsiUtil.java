@@ -1,67 +1,72 @@
 package com.aliernfrog.EnsiBot.utils;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
 public class EnsiUtil {
-    static String[] responses = {"yes bro","no bro","wow bro","frog","tank","story"};
-    static String[] concs = {"and","but","then","becans"};
-    static Boolean[] chances = {false,false,false,false,true};
+    static String[] defaultConcs = {"and","then","or","becans","like"};
+    static String[] defaultTypes = {"W V W","W V","V W","W","V","W V W C W V W","V W V V W","V W V V W C V W V V W","W + W = W"};
 
     public static String buildMention(String username) {
         return "<b><font color=#0098FF>@"+username+"</font></b>";
     }
 
-    public static String buildMessage(String username, String content, List<String> savedWords, List<String> savedVerbs) {
+    public static String buildMessage(String username, String content, List<String> savedWords, List<String> savedVerbs, List<String> concs, List<String> types) {
         content = content.toLowerCase();
         List<String> args = Arrays.asList(content.split(" "));
 
-        String response;
-
-        Random random = new Random();
-        response = responses[random.nextInt(responses.length)];
+        String response = buildStory(savedWords, savedVerbs, concs, types);
 
         if (args.contains("hi") || args.contains("hello")) response = "wow hi bro";
         if (args.contains("gn")) response = buildMention(username)+", gn my,";
 
-        if (response.equals("story")) response = buildStory(savedWords, savedVerbs);
-
         return response;
     }
 
-    public static String buildStory(List<String> savedWords, List<String> savedVerbs) {
+    public static String buildStory(List<String> savedWords, List<String> savedVerbs, List<String> concs, List<String> types) {
+        List<String> defaultC = new ArrayList<>(Arrays.asList(defaultConcs));
+        List<String> defaultT = new ArrayList<>(Arrays.asList(defaultTypes));
+        if (concs == null || concs.size() < 1) concs = defaultC;
+        if (types == null || types.size() < 1) types = defaultT;
         Random random = new Random();
-        Boolean twice = chances[random.nextInt(chances.length)];
-        String finalStr = buildStorySentence(savedWords, savedVerbs);
-        if (twice) {
-            String str = buildStorySentence(savedWords, savedVerbs);
-            String conc = concs[random.nextInt(concs.length)];
-            finalStr = finalStr+" "+conc+" "+str;
+        String type = types.get(random.nextInt(types.size()));
+        String[] typeArr = type.split("");
+        StringBuilder full = new StringBuilder();
+        for (String cur : typeArr) {
+            switch (cur) {
+                case "W":
+                    full.append(randomize(savedWords));
+                    break;
+                case "V":
+                    full.append(randomize(savedVerbs));
+                    break;
+                case "C":
+                    full.append(randomize(concs));
+                    break;
+                default:
+                    full.append(cur);
+            }
         }
-        return finalStr;
-    }
-
-    static String buildStorySentence(List<String> savedWords, List<String> savedVerbs) {
-        Random random = new Random();
-        String w1 = savedWords.get(random.nextInt(savedWords.size()));
-        String w2 = savedVerbs.get(random.nextInt(savedVerbs.size()));
-        String w3 = savedWords.get(random.nextInt(savedWords.size()));
-        return w1+" "+w2+" "+w3;
+        return full.toString();
     }
 
     public static String listJoin(String chars, List<String> list) {
-        String finalStr = "";
+        StringBuilder finalStr = new StringBuilder();
         for (int i = 0; i < list.size(); i++) {
             String current = list.get(i);
-            if (finalStr.equals("")) {
-                finalStr = finalStr+current;
+            if (finalStr.toString().equals("")) {
+                finalStr.append(current);
             } else {
-                finalStr = finalStr+chars+current;
+                finalStr.append(chars).append(current);
             }
         }
-        return finalStr;
+        return finalStr.toString();
+    }
+
+    static String randomize(List<String> list) {
+        Random random = new Random();
+        return list.get(random.nextInt(list.size()));
     }
 }

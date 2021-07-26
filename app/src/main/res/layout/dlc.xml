@@ -38,23 +38,5 @@
             android:textColor="#5E5E5E"
             android:textSize="12sp" />
 
-        <TextView
-            android:id="@+id/dlc_words"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Words here"
-            android:textColor="#FFFFFF"
-            android:visibility="gone"
-            tools:ignore="HardcodedText" />
-
-        <TextView
-            android:id="@+id/dlc_verbs"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Verbs here"
-            android:textColor="#FFFFFF"
-            android:visibility="gone"
-            tools:ignore="HardcodedText" />
-
     </LinearLayout>
 </LinearLayout>
