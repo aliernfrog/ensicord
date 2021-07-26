@@ -162,10 +162,12 @@ public class ChatActivity extends AppCompatActivity {
         String verbs = config.getString("savedVerbs", "");
         String _concs = config.getString("concs", null);
         String _types = config.getString("types", null);
+        String ensiName = config.getString("ensiName", null);
         savedWords = new ArrayList<>(Arrays.asList(words.split("\n")));
         savedVerbs = new ArrayList<>(Arrays.asList(verbs.split("\n")));
         if (_concs != null) concs = new ArrayList<>(Arrays.asList(_concs.split("\n")));
         if (_types != null) types = new ArrayList<>(Arrays.asList(_types.split("\n")));
+        if (ensiName != null) ensiUsername = ensiName;
     }
 
     void getAvatar() {
