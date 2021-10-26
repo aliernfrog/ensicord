@@ -27,7 +27,7 @@ public class DlcApplyActivity extends AppCompatActivity {
     String dataPath;
     String wordsFileName = "words.txt";
     String verbsFileName = "verbs.txt";
-    String url = "https://ensiapp.aliernfrog.repl.co";
+    String url = "https://aliernfrog.repl.co";
 
     JSONObject rawDlc;
 
