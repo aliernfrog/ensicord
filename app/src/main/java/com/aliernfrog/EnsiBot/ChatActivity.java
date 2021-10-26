@@ -99,7 +99,7 @@ public class ChatActivity extends AppCompatActivity {
 
     void sendMessage(@Nullable Drawable avatar, String username, String content) {
         if (content.replaceAll(" ", "").equals("")) return;
-        ViewGroup message = (ViewGroup) getLayoutInflater().inflate(R.layout.message, chatRoot, false);
+        ViewGroup message = (ViewGroup) getLayoutInflater().inflate(R.layout.inflate_message, chatRoot, false);
         LinearLayout messageView = message.findViewById(R.id.message_linear);
         ImageView avatarView = message.findViewById(R.id.message_author_avatar);
         TextView usernameView = message.findViewById(R.id.message_author_username);
