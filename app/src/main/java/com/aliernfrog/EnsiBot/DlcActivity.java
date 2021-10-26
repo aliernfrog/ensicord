@@ -59,7 +59,7 @@ public class DlcActivity extends AppCompatActivity {
                 JSONObject current = rawDlcs.getJSONObject(i);
                 LinearLayout root = chatRoot;
                 if (current.has("type") && current.getString("type").equals("theme")) root = themeRoot;
-                ViewGroup dlc = (ViewGroup) getLayoutInflater().inflate(R.layout.dlc, root, false);
+                ViewGroup dlc = (ViewGroup) getLayoutInflater().inflate(R.layout.inflate_dlc, root, false);
                 setDlcView(current, root, dlc);
             }
             loading.setVisibility(View.GONE);
