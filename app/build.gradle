@@ -18,11 +18,12 @@ android {
 
     defaultConfig {
         applicationId "com.aliernfrog.EnsiBot"
-        minSdkVersion 16
-        targetSdkVersion 30
         versionCode 2
         versionName "1.2"
         signingConfig signingConfigs.release
+        //noinspection OldTargetApi
+        targetSdkVersion 30
+        minSdkVersion 16
     }
 
     buildTypes {
@@ -30,6 +31,15 @@ android {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            versionNameSuffix '-release'
+            signingConfig signingConfigs.release
+        }
+
+        debug {
+            versionNameSuffix '-debug'
+            jniDebuggable true
+            renderscriptDebuggable true
+            applicationIdSuffix '.debug'
         }
     }
     compileOptions {
@@ -39,10 +49,8 @@ android {
 }
 
 dependencies {
-
-    //noinspection GradleDependency
-    implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'com.google.android.material:material:1.3.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'androidx.appcompat:appcompat:1.3.1'
+    implementation 'com.google.android.material:material:1.4.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.1'
     implementation 'com.github.HBiSoft:PickiT:0.1.14'
 }
