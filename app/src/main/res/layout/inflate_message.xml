@@ -21,7 +21,6 @@
             android:layout_height="40dp"
             android:adjustViewBounds="true"
             android:contentDescription="@string/avatar"
-            android:scaleType="centerInside"
             tools:srcCompat="@drawable/user" />
     </androidx.cardview.widget.CardView>
 
