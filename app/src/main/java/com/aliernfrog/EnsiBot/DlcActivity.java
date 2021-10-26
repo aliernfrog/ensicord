@@ -9,6 +9,7 @@ import android.os.StrictMode;
 import android.text.Html;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -23,7 +24,7 @@ public class DlcActivity extends AppCompatActivity {
     LinearLayout themeRoot;
     LinearLayout chatRoot;
 
-    String url = "https://ensiapp.aliernfrog.repl.co";
+    String url = "https://aliernfrog.repl.co";
     JSONArray rawDlcs;
 
     @Override
@@ -71,6 +72,7 @@ public class DlcActivity extends AppCompatActivity {
     void setDlcView(JSONObject object, LinearLayout root, ViewGroup dlc) {
         try {
             LinearLayout dlcLinear = dlc.findViewById(R.id.dlc_linear);
+            ImageView thumbnailView = dlc.findViewById(R.id.dlc_thumbnail);
             TextView nameView = dlc.findViewById(R.id.dlc_name);
             TextView descView = dlc.findViewById(R.id.dlc_desc);
             String id = object.getString("_id");
@@ -78,8 +80,21 @@ public class DlcActivity extends AppCompatActivity {
             String desc = object.getString("description");
             nameView.setText(name);
             descView.setText(Html.fromHtml(desc));
+            getDlcThumbnail(thumbnailView, object);
             dlcLinear.setOnClickListener(v -> applyDlc(id));
             root.addView(dlc);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    void getDlcThumbnail(ImageView thumbnaiView, JSONObject dlc) {
+        try {
+            if (dlc.has("thumbnailUrl")) {
+                thumbnaiView.setImageBitmap(WebUtil.getBipmapFromURL(dlc.getString("thumbnailUrl")));
+            } else {
+                thumbnaiView.setVisibility(View.GONE);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

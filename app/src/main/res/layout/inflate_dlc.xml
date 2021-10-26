@@ -15,13 +15,31 @@
         android:padding="16dp"
         tools:ignore="UselessParent">
 
-        <TextView
-            android:id="@+id/dlc_name"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="DLC"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp" />
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingBottom="8dp"
+            tools:ignore="UseCompoundDrawables">
+
+            <ImageView
+                android:id="@+id/dlc_thumbnail"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                tools:ignore="ContentDescription"
+                tools:srcCompat="@drawable/ensicord120" />
+
+            <TextView
+                android:id="@+id/dlc_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="DLC"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                tools:ignore="HardcodedText" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/dlc_desc"
@@ -29,13 +47,14 @@
             android:layout_height="wrap_content"
             android:text="Description"
             android:textColor="#DFDFDF"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            tools:ignore="HardcodedText" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/dlc_hint"
-            android:textColor="#5E5E5E"
+            android:textColor="#78909C"
             android:textSize="12sp" />
 
     </LinearLayout>
