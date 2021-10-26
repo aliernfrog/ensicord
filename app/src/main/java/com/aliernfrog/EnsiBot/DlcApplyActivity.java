@@ -93,16 +93,19 @@ public class DlcApplyActivity extends AppCompatActivity {
             String concs = null;
             String types = null;
             String ensiName = null;
+            String channelName = null;
             if (rawDlc.has("words")) words = rawDlc.getString("words");
             if (rawDlc.has("verbs")) verbs = rawDlc.getString("verbs");
             if (rawDlc.has("concs")) concs = rawDlc.getString("concs");
             if (rawDlc.has("types")) types = rawDlc.getString("types");
             if (rawDlc.has("ensiName")) ensiName = rawDlc.getString("ensiName");
+            if (rawDlc.has("channelName")) channelName = rawDlc.getString("channelName");
             if (words != null) saveFile(wordsFileName, words);
             if (verbs != null) saveFile(verbsFileName, verbs);
             configEdit.putString("concs", concs);
             configEdit.putString("types", types);
             configEdit.putString("ensiName", ensiName);
+            configEdit.putString("channelName", channelName);
             configEdit.commit();
             finishApplying();
         } catch (Exception e) {
