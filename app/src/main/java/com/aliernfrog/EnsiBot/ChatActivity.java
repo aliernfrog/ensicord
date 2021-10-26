@@ -11,7 +11,6 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.text.Html;
 import android.view.View;
@@ -69,7 +68,7 @@ public class ChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
-        avatarPath = Environment.getExternalStorageDirectory().toString()+"/Android/data/com.aliernfrog.EnsiBot/files/saved/avatar.png";
+        avatarPath = getExternalFilesDir("saved").toString()+"/avatar.png";
 
         ensiAvatar = ContextCompat.getDrawable(getApplicationContext(), R.drawable.ensi);
         userAvatar = ContextCompat.getDrawable(getApplicationContext(), R.drawable.user);

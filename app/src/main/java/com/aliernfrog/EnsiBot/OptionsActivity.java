@@ -10,7 +10,6 @@ import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.text.Html;
 import android.widget.Button;
 import android.widget.EditText;
@@ -46,7 +45,7 @@ public class OptionsActivity extends AppCompatActivity implements PickiTCallback
         config = getSharedPreferences("APP_CONFIG", MODE_PRIVATE);
         configEdit = config.edit();
 
-        avatarPath = Environment.getExternalStorageDirectory().toString()+"/Android/data/com.aliernfrog.EnsiBot/files/saved/avatar.png";
+        avatarPath = getExternalFilesDir("saved").toString()+"/avatar.png";
 
         avatar = findViewById(R.id.options_avatar);
         usernameInput = findViewById(R.id.options_username_input);
