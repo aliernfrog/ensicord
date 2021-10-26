@@ -48,8 +48,8 @@
                     android:id="@+id/main_options"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
+                    android:adjustViewBounds="true"
                     android:contentDescription="@string/options"
-                    android:scaleType="centerInside"
                     app:srcCompat="@drawable/user"
                     tools:ignore="ImageContrastCheck" />
             </androidx.cardview.widget.CardView>
