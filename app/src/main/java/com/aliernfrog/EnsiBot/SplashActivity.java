@@ -73,10 +73,7 @@ public class SplashActivity extends AppCompatActivity {
 
     void switchActivity() {
         Intent intent = new Intent(this, ChatActivity.class);
-        Handler handler = new Handler();
-        handler.postDelayed(() -> {
-            startActivity(intent);
-            finish();
-        }, 500);
+        startActivity(intent);
+        finish();
     }
 }
