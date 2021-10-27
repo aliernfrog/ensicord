@@ -161,8 +161,8 @@ public class ChatActivity extends AppCompatActivity {
     void getSavedWordsAndVerbs() {
         String words = config.getString("savedWords", "");
         String verbs = config.getString("savedVerbs", "");
-        String _concs = config.getString("concs", null);
-        String _types = config.getString("types", null);
+        String _concs = dlc.getString("concs", null);
+        String _types = dlc.getString("types", null);
         savedWords = new ArrayList<>(Arrays.asList(words.split("\n")));
         savedVerbs = new ArrayList<>(Arrays.asList(verbs.split("\n")));
         if (_concs != null) concs = new ArrayList<>(Arrays.asList(_concs.split("\n")));
