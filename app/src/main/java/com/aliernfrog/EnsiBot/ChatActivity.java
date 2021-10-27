@@ -43,6 +43,7 @@ public class ChatActivity extends AppCompatActivity {
     ImageView chatSend;
 
     SharedPreferences config;
+    SharedPreferences dlc;
 
     String avatarPath;
 
@@ -85,7 +86,8 @@ public class ChatActivity extends AppCompatActivity {
         chatSend = findViewById(R.id.main_chatSend);
 
         config = getSharedPreferences("APP_CONFIG", MODE_PRIVATE);
-        ensiUsername = config.getString("ensiUsername", "<font color=yellow>Ensi</font>");
+        dlc = getSharedPreferences("APP_DLC", MODE_PRIVATE);
+        ensiUsername = dlc.getString("ensiName", "<font color=yellow>Ensi</font>");
         userUsername = config.getString("username", "Some frok");
 
         getSavedWordsAndVerbs();
@@ -161,12 +163,10 @@ public class ChatActivity extends AppCompatActivity {
         String verbs = config.getString("savedVerbs", "");
         String _concs = config.getString("concs", null);
         String _types = config.getString("types", null);
-        String ensiName = config.getString("ensiName", null);
         savedWords = new ArrayList<>(Arrays.asList(words.split("\n")));
         savedVerbs = new ArrayList<>(Arrays.asList(verbs.split("\n")));
         if (_concs != null) concs = new ArrayList<>(Arrays.asList(_concs.split("\n")));
         if (_types != null) types = new ArrayList<>(Arrays.asList(_types.split("\n")));
-        if (ensiName != null) ensiUsername = ensiName;
     }
 
     void getAvatar() {
@@ -178,7 +178,7 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     void getChannel() {
-        String name = "#"+config.getString("channelName", "general");
+        String name = dlc.getString("channelName", "#general");
         String hint = getString(R.string.channelStart).replace("%NAME%", name);
         String inputHint = getString(R.string.sendMessage).replace("%NAME%", name);
         channelTitle.setText(name);
@@ -187,16 +187,16 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     void getDlcTheme() {
-        String backgroundColor = config.getString("theme_background", "#000000");
-        String topBarColor = config.getString("theme_topBar", "#FF18191D");
-        String titleColor = config.getString("theme_title", "#FFFFFF");
-        String hintColor = config.getString("theme_hint", "#8C8C8C");
-        String chatBoxColor = config.getString("theme_chatBox", "#FF18191D");
-        String chatBoxHintColor = config.getString("theme_chatBoxHint", "#636363");
-        String chatBoxTextColor = config.getString("theme_chatBoxText", "#FFFFFF");
-        messageColor = config.getString("theme_message", "#00000000");
-        messageAuthorColor = config.getString("theme_message_author", "#FFFFFF");
-        messageContentColor = config.getString("theme_message_content", "#DDDDDD");
+        String backgroundColor = dlc.getString("background", "#000000");
+        String topBarColor = dlc.getString("topBar", "#FF18191D");
+        String titleColor = dlc.getString("title", "#FFFFFF");
+        String hintColor = dlc.getString("hint", "#8C8C8C");
+        String chatBoxColor = dlc.getString("chatBox", "#FF18191D");
+        String chatBoxHintColor = dlc.getString("chatBoxHint", "#636363");
+        String chatBoxTextColor = dlc.getString("chatBoxText", "#FFFFFF");
+        messageColor = dlc.getString("message", "#00000000");
+        messageAuthorColor = dlc.getString("messageAuthor", "#FFFFFF");
+        messageContentColor = dlc.getString("messageContent", "#DDDDDD");
         background.setBackgroundColor(Color.parseColor(backgroundColor));
         topBar.setBackgroundColor(Color.parseColor(topBarColor));
         channelTitle.setTextColor(Color.parseColor(titleColor));

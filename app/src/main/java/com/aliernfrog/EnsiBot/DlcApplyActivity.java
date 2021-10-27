@@ -9,11 +9,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.aliernfrog.EnsiBot.utils.FileUtil;
 import com.aliernfrog.EnsiBot.utils.WebUtil;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 @SuppressLint("CommitPrefEdits")
@@ -21,7 +21,9 @@ public class DlcApplyActivity extends AppCompatActivity {
     TextView info;
 
     SharedPreferences config;
+    SharedPreferences dlc;
     SharedPreferences.Editor configEdit;
+    SharedPreferences.Editor dlcEdit;
 
     String dlcId;
     String dataPath;
@@ -41,7 +43,9 @@ public class DlcApplyActivity extends AppCompatActivity {
         info = findViewById(R.id.dlcApply_info);
 
         config = getSharedPreferences("APP_CONFIG", MODE_PRIVATE);
+        dlc = getSharedPreferences("APP_DLC", MODE_PRIVATE);
         configEdit = config.edit();
+        dlcEdit = dlc.edit();
 
         dlcId = getIntent().getStringExtra("dlc_id");
         dataPath = getExternalFilesDir("saved").toString();
@@ -66,78 +70,26 @@ public class DlcApplyActivity extends AppCompatActivity {
     }
 
     void applyDlc() {
-        inform("Getting DLC type");
+        inform("Applying the DLC");
         try {
-            String type = rawDlc.getString("type");
-            switch(type) {
-                case "chat":
-                    applyChatDlc();
-                    break;
-                case "theme":
-                    applyThemeDlc();
-                    break;
-                default:
-                    inform("Not a valid DLC type");
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-            inform(e.toString());
-        }
-    }
-
-    void applyChatDlc() {
-        inform("Applying chat DLC");
-        try {
-            String words = null;
-            String verbs = null;
-            String concs = null;
-            String types = null;
-            String ensiName = null;
-            String channelName = null;
-            if (rawDlc.has("words")) words = rawDlc.getString("words");
-            if (rawDlc.has("verbs")) verbs = rawDlc.getString("verbs");
-            if (rawDlc.has("concs")) concs = rawDlc.getString("concs");
-            if (rawDlc.has("types")) types = rawDlc.getString("types");
-            if (rawDlc.has("ensiName")) ensiName = rawDlc.getString("ensiName");
-            if (rawDlc.has("channelName")) channelName = rawDlc.getString("channelName");
-            if (words != null) saveFile(wordsFileName, words);
-            if (verbs != null) saveFile(verbsFileName, verbs);
-            configEdit.putString("concs", concs);
-            configEdit.putString("types", types);
-            configEdit.putString("ensiName", ensiName);
-            configEdit.putString("channelName", channelName);
-            configEdit.commit();
-            finishApplying();
-        } catch (Exception e) {
-            e.printStackTrace();
-            inform(e.toString());
-        }
-    }
-
-    void applyThemeDlc() {
-        inform("Applying theme DLC");
-        try {
-            String background = rawDlc.getString("background");
-            String topBar = rawDlc.getString("topBar");
-            String title = rawDlc.getString("title");
-            String hint = rawDlc.getString("hint");
-            String chatBox = rawDlc.getString("chatBox");
-            String chatBoxHint = rawDlc.getString("chatBoxHint");
-            String chatBoxText = rawDlc.getString("chatBoxText");
-            String message = rawDlc.getString("message");
-            String messageAuthor = rawDlc.getString("messageAuthor");
-            String messageContent = rawDlc.getString("messageContent");
-            configEdit.putString("theme_background", background);
-            configEdit.putString("theme_topBar", topBar);
-            configEdit.putString("theme_title", title);
-            configEdit.putString("theme_hint", hint);
-            configEdit.putString("theme_chatBox", chatBox);
-            configEdit.putString("theme_chatBoxHint", chatBoxHint);
-            configEdit.putString("theme_chatBoxText", chatBoxText);
-            configEdit.putString("theme_message", message);
-            configEdit.putString("theme_message_author", messageAuthor);
-            configEdit.putString("theme_message_content", messageContent);
-            configEdit.commit();
+            if (rawDlc.has("words")) saveFile(wordsFileName, rawDlc.getString("words"));
+            if (rawDlc.has("verbs")) saveFile(verbsFileName, rawDlc.getString("verbs"));
+            if (rawDlc.has("concs")) dlcEdit.putString("concs", rawDlc.getString("concs"));
+            if (rawDlc.has("types")) dlcEdit.putString("types", rawDlc.getString("types"));
+            if (rawDlc.has("ensiName")) dlcEdit.putString("ensiName", rawDlc.getString("ensiName"));
+            //TODO if (rawDlc.has("ensiAvatarUrl"))
+            if (rawDlc.has("channelName")) dlcEdit.putString("channelName", rawDlc.getString("channelName"));
+            if (rawDlc.has("background")) dlcEdit.putString("background", rawDlc.getString("background"));
+            if (rawDlc.has("topBar")) dlcEdit.putString("topBar", rawDlc.getString("topBar"));
+            if (rawDlc.has("title")) dlcEdit.putString("title", rawDlc.getString("title"));
+            if (rawDlc.has("hint")) dlcEdit.putString("hint", rawDlc.getString("hint"));
+            if (rawDlc.has("chatBox")) dlcEdit.putString("chatBox", rawDlc.getString("chatBox"));
+            if (rawDlc.has("chatBoxHint")) dlcEdit.putString("chatBoxHint", rawDlc.getString("chatBoxHint"));
+            if (rawDlc.has("chatBoxText")) dlcEdit.putString("chatBoxText", rawDlc.getString("chatBoxText"));
+            if (rawDlc.has("message")) dlcEdit.putString("message", rawDlc.getString("message"));
+            if (rawDlc.has("messageAuthor")) dlcEdit.putString("messageAuthor", rawDlc.getString("messageAuthor"));
+            if (rawDlc.has("messageContent")) dlcEdit.putString("messageContent", rawDlc.getString("messageContent"));
+            dlcEdit.commit();
             finishApplying();
         } catch (Exception e) {
             e.printStackTrace();
