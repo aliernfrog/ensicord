@@ -16,9 +16,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.aliernfrog.EnsiBot.ChatActivity;
 import com.aliernfrog.EnsiBot.OptionsActivity;
 import com.aliernfrog.EnsiBot.R;
+import com.aliernfrog.EnsiBot.utils.AppUtil;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.io.File;
@@ -27,8 +27,8 @@ public class OptionsSheet extends BottomSheetDialogFragment {
     LinearLayout avatar_linear;
     ImageView avatar;
     TextView username;
-    Button starboard;
-    Button options;
+    LinearLayout starboard;
+    LinearLayout options;
 
     String avatarPath;
 
@@ -79,7 +79,7 @@ public class OptionsSheet extends BottomSheetDialogFragment {
     }
 
     void setListeners() {
-        avatar_linear.setOnClickListener(view -> switchActivity(OptionsActivity.class, true));
-        options.setOnClickListener(view -> switchActivity(OptionsActivity.class, true));
+        AppUtil.handleOnPressEvent(avatar_linear, () -> switchActivity(OptionsActivity.class, true));
+        AppUtil.handleOnPressEvent(options, () -> switchActivity(OptionsActivity.class, true));
     }
 }
