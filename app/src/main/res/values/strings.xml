@@ -8,6 +8,8 @@
     <string name="avatar">Avatar</string>
     <string name="send">Send</string>
     <string name="confirm">Confirm</string>
+    <string name="optionssheet_profileHint">Click to customize your profile</string>
+    <string name="starboard">Starboard</string>
     <string name="options">Options</string>
     <string name="options_username_hint">Username</string>
     <string name="options_username_changed">Changed the username!</string>
