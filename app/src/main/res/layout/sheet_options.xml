@@ -64,35 +64,62 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="8dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:baselineAligned="false">
 
-        <Button
+        <LinearLayout
             android:id="@+id/optionssheet_starboard"
-            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="8dp"
             android:layout_weight="1"
             android:background="@drawable/linear"
-            android:padding="8dp"
-            android:text="@string/starboard"
-            android:textColor="#FFFFFF"
-            android:textStyle="bold"
-            app:backgroundTint="#FF202020" />
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="8dp">
 
-        <Button
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:contentDescription="@string/starboard"
+                app:srcCompat="@drawable/starboard" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="@string/starboard"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/optionssheet_options"
-            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="8dp"
             android:layout_weight="1"
             android:background="@drawable/linear"
-            android:padding="8dp"
-            android:text="@string/options"
-            android:textColor="#FFFFFF"
-            android:textStyle="bold"
-            app:backgroundTint="#FF202020" />
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:contentDescription="@string/options"
+                app:srcCompat="@drawable/options" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="@string/options"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </LinearLayout>
 
     </LinearLayout>
 

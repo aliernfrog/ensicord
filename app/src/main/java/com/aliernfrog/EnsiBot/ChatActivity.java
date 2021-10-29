@@ -6,7 +6,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -22,6 +21,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.aliernfrog.EnsiBot.fragments.OptionsSheet;
+import com.aliernfrog.EnsiBot.utils.AppUtil;
 import com.aliernfrog.EnsiBot.utils.EnsiUtil;
 import com.aliernfrog.EnsiBot.utils.FileUtil;
 
@@ -233,7 +233,7 @@ public class ChatActivity extends AppCompatActivity {
     void setListeners() {
         avatar.setOnClickListener(v -> openOptionsSheet());
 
-        chatSend.setOnClickListener(v -> {
+        AppUtil.handleOnPressEvent(chatSend, () -> {
             sendMessage(userAvatar, userUsername, chatInput.getText().toString());
             chatInput.setText("");
         });
