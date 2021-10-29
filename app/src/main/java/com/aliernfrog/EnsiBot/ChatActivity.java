@@ -21,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.aliernfrog.EnsiBot.fragments.OptionsSheet;
 import com.aliernfrog.EnsiBot.utils.EnsiUtil;
 import com.aliernfrog.EnsiBot.utils.FileUtil;
 
@@ -34,7 +35,7 @@ public class ChatActivity extends AppCompatActivity {
     ConstraintLayout background;
     LinearLayout topBar;
     TextView channelTitle;
-    ImageView options;
+    ImageView avatar;
     ScrollView chatScroll;
     LinearLayout chatRoot;
     TextView channelHint;
@@ -77,7 +78,7 @@ public class ChatActivity extends AppCompatActivity {
         background = findViewById(R.id.main_constraint);
         topBar = findViewById(R.id.main_topBar);
         channelTitle = findViewById(R.id.main_channel_name);
-        options = findViewById(R.id.main_options);
+        avatar = findViewById(R.id.main_options);
         chatScroll = findViewById(R.id.main_chatScroll);
         chatRoot = findViewById(R.id.main_chatRoot);
         channelHint = findViewById(R.id.main_chat_hint);
@@ -174,7 +175,7 @@ public class ChatActivity extends AppCompatActivity {
         if (avatarFile.exists()) {
             userAvatar = Drawable.createFromPath(avatarPath);
         }
-        options.setImageDrawable(userAvatar);
+        avatar.setImageDrawable(userAvatar);
     }
 
     void getChannel() {
@@ -224,14 +225,13 @@ public class ChatActivity extends AppCompatActivity {
         }
     }
 
-    void switchActivity(Class activity) {
-        Intent intent = new Intent(this, activity);
-        finish();
-        startActivity(intent);
+    void openOptionsSheet() {
+        OptionsSheet optionsSheet = new OptionsSheet();
+        optionsSheet.show(getSupportFragmentManager(), "options_sheet");
     }
 
     void setListeners() {
-        options.setOnClickListener(v -> switchActivity(OptionsActivity.class));
+        avatar.setOnClickListener(v -> openOptionsSheet());
 
         chatSend.setOnClickListener(v -> {
             sendMessage(userAvatar, userUsername, chatInput.getText().toString());
