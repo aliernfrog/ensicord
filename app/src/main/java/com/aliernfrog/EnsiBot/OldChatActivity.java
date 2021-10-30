@@ -23,12 +23,10 @@ import android.widget.TextView;
 import com.aliernfrog.EnsiBot.fragments.OptionsSheet;
 import com.aliernfrog.EnsiBot.utils.AppUtil;
 import com.aliernfrog.EnsiBot.utils.EnsiUtil;
-import com.aliernfrog.EnsiBot.utils.FileUtil;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Random;
 
 @SuppressLint("CommitPrefEdits")
 public class OldChatActivity extends AppCompatActivity {
@@ -56,14 +54,12 @@ public class OldChatActivity extends AppCompatActivity {
 
     ArrayList<String> savedWords;
     ArrayList<String> savedVerbs;
-    ArrayList<String> concs;
-    ArrayList<String> types;
+    ArrayList<String> savedConcs;
+    ArrayList<String> savedTypes;
 
     String messageColor;
     String messageAuthorColor;
     String messageContentColor;
-
-    Boolean[] saveChances = {false,false,false,false,false,false,true};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,14 +126,7 @@ public class OldChatActivity extends AppCompatActivity {
     }
 
     void sendStory(String username, String content) {
-        sendMessage(ensiAvatar, ensiUsername, EnsiUtil.buildMessage(username, content, savedWords, savedVerbs, concs, types));
-        Random random = new Random();
-        Boolean doSave = saveChances[random.nextInt(saveChances.length)];
-        if (doSave) {
-            String[] args = content.split(" ");
-            String word = args[random.nextInt(args.length)];
-            saveWord(word);
-        }
+        sendMessage(ensiAvatar, ensiUsername, EnsiUtil.buildMessage(username, content, savedWords, savedVerbs, savedConcs, savedTypes));
     }
 
     void mention(String username) {
@@ -160,14 +149,14 @@ public class OldChatActivity extends AppCompatActivity {
     }
 
     void getSavedWordsAndVerbs() {
-        String words = config.getString("savedWords", "");
-        String verbs = config.getString("savedVerbs", "");
-        String _concs = dlc.getString("concs", null);
-        String _types = dlc.getString("types", null);
+        String words = dlc.getString("words", "");
+        String verbs = dlc.getString("verbs", "");
+        String _concs = dlc.getString("concs", "");
+        String _types = dlc.getString("types", "");
         savedWords = new ArrayList<>(Arrays.asList(words.split("\n")));
         savedVerbs = new ArrayList<>(Arrays.asList(verbs.split("\n")));
-        if (_concs != null) concs = new ArrayList<>(Arrays.asList(_concs.split("\n")));
-        if (_types != null) types = new ArrayList<>(Arrays.asList(_types.split("\n")));
+        savedConcs = new ArrayList<>(Arrays.asList(_concs.split("\n")));
+        savedTypes = new ArrayList<>(Arrays.asList(_types.split("\n")));
     }
 
     void getAvatar() {
@@ -205,24 +194,6 @@ public class OldChatActivity extends AppCompatActivity {
         chatBox.setBackgroundColor(Color.parseColor(chatBoxColor));
         chatInput.setHintTextColor(Color.parseColor(chatBoxHintColor));
         chatInput.setTextColor(Color.parseColor(chatBoxTextColor));
-    }
-
-    void saveWord(String word) {
-        word = word.toLowerCase();
-        try {
-            if (savedWords.contains(word) || savedVerbs.contains(word)) return;
-            String folder = getExternalFilesDir("saved").toString();
-            boolean isVerb = word.endsWith("ed");
-            if (!isVerb) {
-                savedWords.add(word);
-                FileUtil.saveFile(folder, "words.txt", EnsiUtil.listJoin("\n", savedWords));
-            } else {
-                savedVerbs.add(word);
-                FileUtil.saveFile(folder, "verbs.txt", EnsiUtil.listJoin("\n", savedVerbs));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     void openOptionsSheet() {

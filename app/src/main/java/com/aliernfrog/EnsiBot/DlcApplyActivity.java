@@ -71,8 +71,8 @@ public class DlcApplyActivity extends AppCompatActivity {
     void applyDlc() {
         inform("Applying the DLC");
         try {
-            if (rawDlc.has("words")) saveFile(wordsFileName, rawDlc.getString("words"));
-            if (rawDlc.has("verbs")) saveFile(verbsFileName, rawDlc.getString("verbs"));
+            if (rawDlc.has("words")) dlcEdit.putString("words", rawDlc.getString("words"));
+            if (rawDlc.has("verbs")) dlcEdit.putString("verbs", rawDlc.getString("verbs"));
             if (rawDlc.has("concs")) dlcEdit.putString("concs", rawDlc.getString("concs"));
             if (rawDlc.has("types")) dlcEdit.putString("types", rawDlc.getString("types"));
             if (rawDlc.has("ensiName")) dlcEdit.putString("ensiName", rawDlc.getString("ensiName"));
