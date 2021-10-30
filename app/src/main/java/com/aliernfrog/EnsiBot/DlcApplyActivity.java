@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.aliernfrog.EnsiBot.utils.FileUtil;
 import com.aliernfrog.EnsiBot.utils.WebUtil;
@@ -99,9 +98,9 @@ public class DlcApplyActivity extends AppCompatActivity {
 
     void finishApplying() {
         inform("Applied the DLC!");
-        Intent intent = new Intent(this, SplashActivity.class);
-        Handler handler = new Handler();
-        handler.postDelayed(() -> {
+        Intent intent = new Intent(getApplicationContext(), SplashActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        new Handler().postDelayed(() -> {
             finish();
             startActivity(intent);
         }, 2000);
