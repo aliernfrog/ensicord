@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_constraint"
+    android:id="@+id/chat_constraint"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#000000"
@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:id="@+id/main_topBar"
+            android:id="@+id/chat_topBar"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="#FF18191D"
@@ -28,7 +28,7 @@
             android:padding="14dp">
 
             <TextView
-                android:id="@+id/main_channel_name"
+                android:id="@+id/chat_channel_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -45,7 +45,7 @@
                 app:cardPreventCornerOverlap="false">
 
                 <ImageView
-                    android:id="@+id/main_options"
+                    android:id="@+id/chat_options"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:adjustViewBounds="true"
@@ -57,7 +57,7 @@
         </LinearLayout>
 
         <RelativeLayout
-            android:id="@+id/main_chat"
+            android:id="@+id/chat_chat"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -70,19 +70,19 @@
                 tools:ignore="UselessParent">
 
                 <ScrollView
-                    android:id="@+id/main_chatScroll"
+                    android:id="@+id/chat_chatScroll"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingBottom="74dp">
 
                     <LinearLayout
-                        android:id="@+id/main_chatRoot"
+                        android:id="@+id/chat_chatRoot"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/main_chat_hint"
+                            android:id="@+id/chat_chat_hint"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="16dp"
@@ -113,7 +113,7 @@
                 app:cardPreventCornerOverlap="false">
 
                 <LinearLayout
-                    android:id="@+id/main_chatBox"
+                    android:id="@+id/chat_chatBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="#FF18191D"
@@ -121,7 +121,7 @@
                     android:padding="8dp">
 
                     <EditText
-                        android:id="@+id/main_chatInput"
+                        android:id="@+id/chat_chatInput"
                         android:layout_width="0dp"
                         android:layout_height="40dp"
                         android:layout_weight="1"
@@ -135,7 +135,7 @@
                         tools:ignore="TouchTargetSizeCheck" />
 
                     <ImageView
-                        android:id="@+id/main_chatSend"
+                        android:id="@+id/chat_chatSend"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:contentDescription="@string/send"
