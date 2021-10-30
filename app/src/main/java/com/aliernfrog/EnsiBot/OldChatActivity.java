@@ -31,7 +31,7 @@ import java.util.Arrays;
 import java.util.Random;
 
 @SuppressLint("CommitPrefEdits")
-public class ChatActivity extends AppCompatActivity {
+public class OldChatActivity extends AppCompatActivity {
     ConstraintLayout background;
     LinearLayout topBar;
     TextView channelTitle;
