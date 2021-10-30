@@ -75,16 +75,16 @@ public class ChatActivity extends AppCompatActivity {
         ensiAvatar = ContextCompat.getDrawable(getApplicationContext(), R.drawable.ensi);
         userAvatar = ContextCompat.getDrawable(getApplicationContext(), R.drawable.user);
 
-        background = findViewById(R.id.main_constraint);
-        topBar = findViewById(R.id.main_topBar);
-        channelTitle = findViewById(R.id.main_channel_name);
-        avatar = findViewById(R.id.main_options);
-        chatScroll = findViewById(R.id.main_chatScroll);
-        chatRoot = findViewById(R.id.main_chatRoot);
-        channelHint = findViewById(R.id.main_chat_hint);
-        chatBox = findViewById(R.id.main_chatBox);
-        chatInput = findViewById(R.id.main_chatInput);
-        chatSend = findViewById(R.id.main_chatSend);
+        background = findViewById(R.id.chat_constraint);
+        topBar = findViewById(R.id.chat_topBar);
+        channelTitle = findViewById(R.id.chat_channel_name);
+        avatar = findViewById(R.id.chat_options);
+        chatScroll = findViewById(R.id.chat_chatScroll);
+        chatRoot = findViewById(R.id.chat_chatRoot);
+        channelHint = findViewById(R.id.chat_chat_hint);
+        chatBox = findViewById(R.id.chat_chatBox);
+        chatInput = findViewById(R.id.chat_chatInput);
+        chatSend = findViewById(R.id.chat_chatSend);
 
         config = getSharedPreferences("APP_CONFIG", MODE_PRIVATE);
         dlc = getSharedPreferences("APP_DLC", MODE_PRIVATE);
