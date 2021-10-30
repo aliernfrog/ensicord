@@ -6,7 +6,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
 
 import com.aliernfrog.EnsiBot.utils.FileUtil;
 
@@ -72,7 +71,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     void switchActivity() {
-        Intent intent = new Intent(this, ChatActivity.class);
+        Intent intent = new Intent(this, OldChatActivity.class);
         startActivity(intent);
         finish();
     }
