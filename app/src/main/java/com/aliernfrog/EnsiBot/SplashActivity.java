@@ -22,7 +22,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     void switchActivity() {
-        Intent intent = new Intent(this, OldChatActivity.class);
+        Intent intent = new Intent(this, ChatActivity.class);
         startActivity(intent);
         finish();
     }
