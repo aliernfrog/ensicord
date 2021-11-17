@@ -12,20 +12,23 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import java.io.File;
 
+import com.aliernfrog.EnsiBot.utils.AppUtil;
 import com.aliernfrog.EnsiBot.utils.FileUtil;
+import com.google.android.material.textfield.TextInputLayout;
 import com.hbisoft.pickit.PickiT;
 import com.hbisoft.pickit.PickiTCallbacks;
 
 @SuppressLint("CommitPrefEdits")
 public class OptionsActivity extends AppCompatActivity implements PickiTCallbacks {
+    LinearLayout profileLinear;
     ImageView avatar;
-    EditText usernameInput;
+    TextInputLayout usernameInput;
     Button usernameConfirm;
     Button redirectDlcs;
 
@@ -47,6 +50,7 @@ public class OptionsActivity extends AppCompatActivity implements PickiTCallback
 
         avatarPath = getExternalFilesDir("saved").toString()+"/avatar.png";
 
+        profileLinear = findViewById(R.id.options_profile_linear);
         avatar = findViewById(R.id.options_avatar);
         usernameInput = findViewById(R.id.options_username_input);
         usernameConfirm = findViewById(R.id.options_username_confirm);
@@ -63,11 +67,6 @@ public class OptionsActivity extends AppCompatActivity implements PickiTCallback
         configEdit.putString("username", name);
         configEdit.commit();
         Toast.makeText(getApplicationContext(), R.string.options_username_changed, Toast.LENGTH_SHORT).show();
-    }
-
-    void switchActivity(Class activity) {
-        Intent intent = new Intent(this, activity);
-        startActivity(intent);
     }
 
     void pickAvatar() {
@@ -97,7 +96,12 @@ public class OptionsActivity extends AppCompatActivity implements PickiTCallback
 
     void updateOptions() {
         getAvatar();
-        usernameInput.setText(config.getString("username", "Some frok"));
+        usernameInput.getEditText().setText(config.getString("username", "Some frok"));
+    }
+
+    void switchActivity(Class activity) {
+        Intent intent = new Intent(this, activity);
+        startActivity(intent);
     }
 
     Boolean hasPerms() {
@@ -125,9 +129,10 @@ public class OptionsActivity extends AppCompatActivity implements PickiTCallback
     }
 
     void setListeners() {
-        avatar.setOnClickListener(v -> pickAvatar());
-        usernameConfirm.setOnClickListener(v -> changeName(Html.fromHtml(usernameInput.getText().toString()).toString()));
-        redirectDlcs.setOnClickListener(v -> switchActivity(DlcActivity.class));
+        AppUtil.handleOnPressEvent(profileLinear);
+        AppUtil.handleOnPressEvent(avatar, this::pickAvatar);
+        AppUtil.handleOnPressEvent(usernameConfirm, () -> changeName(Html.fromHtml(usernameInput.getEditText().getText().toString()).toString()));
+        AppUtil.handleOnPressEvent(redirectDlcs, () -> switchActivity(DlcActivity.class));
     }
 
     @Override
