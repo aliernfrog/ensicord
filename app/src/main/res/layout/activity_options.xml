@@ -114,11 +114,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:background="@drawable/linear"
+                    android:background="@drawable/linear_button"
                     android:padding="8dp"
                     android:text="@string/confirm"
                     android:textColor="#FFFFFF"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    app:backgroundTint="#FF0E0E0E" />
             </LinearLayout>
 
             <Button
@@ -126,7 +127,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                android:background="@drawable/linear"
+                android:background="@drawable/linear_blue"
                 android:padding="8dp"
                 android:text="@string/dlcs"
                 android:textColor="#FFFFFF"
