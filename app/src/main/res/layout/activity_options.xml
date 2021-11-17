@@ -39,7 +39,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingLeft="24dp"
+            android:paddingRight="24dp">
 
             <LinearLayout
                 android:id="@+id/options_username_linear"
@@ -50,6 +52,18 @@
                 android:gravity="center"
                 android:orientation="vertical"
                 android:padding="8dp">
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:text="@string/options_profile"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold" />
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="wrap_content"
@@ -71,29 +85,40 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
                     android:text="@string/options_username_hint"
-                    android:textColor="#BDBDBD" />
+                    android:textColor="#BDBDBD"
+                    android:textStyle="bold" />
 
                 <EditText
                     android:id="@+id/options_username_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
                     android:autofillHints="false"
                     android:ems="10"
                     android:hint="@string/options_username_hint"
                     android:inputType="text|textNoSuggestions"
                     android:minHeight="48dp"
+                    android:padding="8dp"
                     android:textColor="#FFFFFF"
                     android:textColorHint="#BCBCBC"
+                    android:textStyle="bold"
                     tools:ignore="DuplicateSpeakableTextCheck" />
 
                 <Button
                     android:id="@+id/options_username_confirm"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
                     android:background="@drawable/linear"
+                    android:padding="8dp"
                     android:text="@string/confirm"
-                    android:textColor="#FFFFFF" />
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <Button
@@ -105,6 +130,7 @@
                 android:padding="8dp"
                 android:text="@string/dlcs"
                 android:textColor="#FFFFFF"
+                android:textStyle="bold"
                 app:backgroundTint="#005DFF" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
