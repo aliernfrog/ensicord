@@ -42,6 +42,22 @@
             android:paddingRight="24dp">
 
             <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@drawable/linear"
+                android:orientation="horizontal"
+                android:padding="1dp">
+
+                <ImageView
+                    android:id="@+id/profile_goBack"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:contentDescription="@string/action_back"
+                    app:srcCompat="@drawable/goback" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/profile_avatar_linear"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

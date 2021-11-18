@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Ensicord</string>
+    <string name="action_back">Go back</string>
     <string name="channel_name">#unnamed</string>
     <string name="channelStart">This is the beginning of %NAME%</string>
     <string name="sendMessageDisabled">You can\'t send messages here</string>

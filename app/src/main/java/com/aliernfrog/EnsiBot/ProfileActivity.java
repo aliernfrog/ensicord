@@ -24,6 +24,7 @@ import com.google.android.material.textfield.TextInputLayout;
 
 @SuppressLint("CommitPrefEdits")
 public class ProfileActivity extends AppCompatActivity {
+    ImageView goBack;
     LinearLayout avatarLinear;
     ImageView avatar;
     LinearLayout usernameLinear;
@@ -47,6 +48,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         avatarPath = getExternalFilesDir("saved").toString()+"/avatar.png";
 
+        goBack = findViewById(R.id.profile_goBack);
         avatarLinear = findViewById(R.id.profile_avatar_linear);
         avatar = findViewById(R.id.profile_avatar);
         usernameLinear = findViewById(R.id.profile_username_linear);
@@ -125,6 +127,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     void setListeners() {
+        AppUtil.handleOnPressEvent(goBack, this::finish);
         AppUtil.handleOnPressEvent(avatarLinear, this::pickAvatar);
         AppUtil.handleOnPressEvent(usernameLinear);
         AppUtil.handleOnPressEvent(usernameConfirm, () -> changeName(Html.fromHtml(usernameInput.getEditText().getText().toString()).toString()));
