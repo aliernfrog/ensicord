@@ -42,9 +42,9 @@
             android:paddingRight="24dp">
 
             <LinearLayout
-                android:id="@+id/profile_profile_linear"
+                android:id="@+id/profile_avatar_linear"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:background="@drawable/linear"
                 android:gravity="center"
@@ -86,11 +86,36 @@
                     android:textColor="#78909C"
                     android:textSize="11sp" />
 
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/profile_username_linear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@drawable/linear"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:text="@string/profile_username"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold" />
+
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/profile_username_input"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_margin="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
                     android:textColorHint="#777777"
                     app:boxStrokeColor="#005DFF">
 
@@ -103,7 +128,8 @@
                         android:singleLine="true"
                         android:textColor="#FFFFFF"
                         android:textColorHint="#777777"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        tools:ignore="DuplicateSpeakableTextCheck" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <Button
@@ -117,6 +143,7 @@
                     android:textColor="#FFFFFF"
                     android:textStyle="bold"
                     app:backgroundTint="#FF0E0E0E" />
+
             </LinearLayout>
 
             <Button
