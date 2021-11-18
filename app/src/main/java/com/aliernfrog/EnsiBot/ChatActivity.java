@@ -122,7 +122,7 @@ public class ChatActivity extends AppCompatActivity {
         if (saveToHistory) chatHistory.put(AppUtil.buildMessageData(username, content));
         chatRoot.addView(message);
         scrollToBottom();
-        if (!username.equals(ensiUsername) && saveToHistory) sendMessage(ensiAvatar, ensiUsername, EnsiUtil.buildMessage(username, content, savedWords, savedVerbs, savedConcs, savedTypes), true);
+        if (!username.equals(ensiUsername) && saveToHistory && sendMessageAllowed) sendMessage(ensiAvatar, ensiUsername, EnsiUtil.buildMessage(username, content, savedWords, savedVerbs, savedConcs, savedTypes), true);
     }
 
     void getChannel(@Nullable String name) {
