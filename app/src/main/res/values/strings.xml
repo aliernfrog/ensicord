@@ -27,5 +27,6 @@
     <string name="dlc_applied">Applied the pack!</string>
     <string name="options">Options</string>
     <string name="options_chatOptions">Chat options</string>
+    <string name="options_saveHistory">Save chat history</string>
     <string name="options_moreOptions">More options</string>
 </resources>
