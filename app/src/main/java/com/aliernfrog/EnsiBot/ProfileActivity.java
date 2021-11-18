@@ -24,8 +24,9 @@ import com.google.android.material.textfield.TextInputLayout;
 
 @SuppressLint("CommitPrefEdits")
 public class ProfileActivity extends AppCompatActivity {
-    LinearLayout profileLinear;
+    LinearLayout avatarLinear;
     ImageView avatar;
+    LinearLayout usernameLinear;
     TextInputLayout usernameInput;
     Button usernameConfirm;
     Button redirectDlcs;
@@ -46,8 +47,9 @@ public class ProfileActivity extends AppCompatActivity {
 
         avatarPath = getExternalFilesDir("saved").toString()+"/avatar.png";
 
-        profileLinear = findViewById(R.id.profile_profile_linear);
+        avatarLinear = findViewById(R.id.profile_avatar_linear);
         avatar = findViewById(R.id.profile_avatar);
+        usernameLinear = findViewById(R.id.profile_username_linear);
         usernameInput = findViewById(R.id.profile_username_input);
         usernameConfirm = findViewById(R.id.profile_username_confirm);
         redirectDlcs = findViewById(R.id.profile_dlcs);
@@ -123,8 +125,8 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     void setListeners() {
-        AppUtil.handleOnPressEvent(profileLinear);
-        AppUtil.handleOnPressEvent(avatar, this::pickAvatar);
+        AppUtil.handleOnPressEvent(avatarLinear, this::pickAvatar);
+        AppUtil.handleOnPressEvent(usernameLinear);
         AppUtil.handleOnPressEvent(usernameConfirm, () -> changeName(Html.fromHtml(usernameInput.getEditText().getText().toString()).toString()));
         AppUtil.handleOnPressEvent(redirectDlcs, () -> switchActivity(DlcActivity.class));
     }
