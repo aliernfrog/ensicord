@@ -15,6 +15,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.aliernfrog.EnsiBot.OptionsActivity;
 import com.aliernfrog.EnsiBot.ProfileActivity;
 import com.aliernfrog.EnsiBot.R;
 import com.aliernfrog.EnsiBot.utils.AppUtil;
@@ -71,14 +72,14 @@ public class OptionsSheet extends BottomSheetDialogFragment {
         }
     }
 
-    void switchActivity(Class activity, Boolean dismiss) {
+    void switchActivity(Class activity) {
         Intent intent = new Intent(context, activity);
         startActivity(intent);
-        if (dismiss) dismiss();
+        dismiss();
     }
 
     void setListeners() {
-        AppUtil.handleOnPressEvent(avatar_linear, () -> switchActivity(ProfileActivity.class, true));
-        AppUtil.handleOnPressEvent(options, () -> switchActivity(ProfileActivity.class, true));
+        AppUtil.handleOnPressEvent(avatar_linear, () -> switchActivity(ProfileActivity.class));
+        AppUtil.handleOnPressEvent(options, () -> switchActivity(OptionsActivity.class));
     }
 }
