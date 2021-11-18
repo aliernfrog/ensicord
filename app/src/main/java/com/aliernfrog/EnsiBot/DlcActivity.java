@@ -24,6 +24,7 @@ public class DlcActivity extends AppCompatActivity {
     ProgressBar loading;
     LinearLayout themeRoot;
     LinearLayout chatRoot;
+    LinearLayout experimentalRoot;
 
     String url = "https://aliernfrog.repl.co";
     JSONArray rawDlcs;
@@ -38,6 +39,7 @@ public class DlcActivity extends AppCompatActivity {
         loading = findViewById(R.id.dlc_loading);
         themeRoot = findViewById(R.id.dlc_theme_root);
         chatRoot = findViewById(R.id.dlc_chat_root);
+        experimentalRoot = findViewById(R.id.dlc_experimental_root);
 
         setListeners();
 
@@ -62,7 +64,9 @@ public class DlcActivity extends AppCompatActivity {
             for (int i = 0; i < rawDlcs.length(); i++) {
                 JSONObject current = rawDlcs.getJSONObject(i);
                 LinearLayout root = chatRoot;
-                if (current.has("type") && current.getString("type").equals("theme")) root = themeRoot;
+                if (current.getString("type").equals("theme")) root = themeRoot;
+                if (current.getString("type").equals("experimental")) root = experimentalRoot;
+                if (root.getVisibility() != View.VISIBLE) root.setVisibility(View.VISIBLE);
                 ViewGroup dlc = (ViewGroup) getLayoutInflater().inflate(R.layout.inflate_dlc, root, false);
                 setDlcView(current, root, dlc);
             }
@@ -113,5 +117,6 @@ public class DlcActivity extends AppCompatActivity {
     void setListeners() {
         AppUtil.handleOnPressEvent(themeRoot);
         AppUtil.handleOnPressEvent(chatRoot);
+        AppUtil.handleOnPressEvent(experimentalRoot);
     }
 }
