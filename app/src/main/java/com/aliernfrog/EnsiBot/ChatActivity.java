@@ -97,7 +97,7 @@ public class ChatActivity extends AppCompatActivity {
         setListeners();
     }
 
-    void sendMessage(@Nullable Drawable avatar, String username, String content) {
+    void sendMessage(@Nullable Drawable avatar, String username, String content, Boolean saveToHistory) {
         if (content.replaceAll(" ", "").equals("")) return;
         ViewGroup message = (ViewGroup) getLayoutInflater().inflate(R.layout.inflate_message, chatRoot, false);
         LinearLayout messageView = message.findViewById(R.id.message_linear);
@@ -110,6 +110,7 @@ public class ChatActivity extends AppCompatActivity {
         messageView.setBackgroundColor(Color.parseColor(messageColor));
         usernameView.setTextColor(Color.parseColor(messageAuthorColor));
         contentView.setTextColor(Color.parseColor(messageContentColor));
+        if (saveToHistory) chatHistory.put(AppUtil.buildMessageData(username, content));
         chatRoot.addView(message);
         scrollToBottom();
     }
@@ -176,6 +177,7 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     void saveChatHistory() {
+        if (!saveNewMessages) return;
         try {
             File file = new File(chatHistoryPath);
             String parentPath = file.getParent();
