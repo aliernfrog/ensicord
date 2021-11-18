@@ -3,12 +3,26 @@ package com.aliernfrog.EnsiBot.utils;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
+import android.graphics.drawable.Drawable;
 import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.annotation.Nullable;
 
+import org.json.JSONObject;
+
 public class AppUtil {
+    public static JSONObject buildMessageData(String author, String content) {
+        JSONObject object = new JSONObject();
+        try {
+            object.put("author", author);
+            object.put("content", content);
+            return object;
+        } catch (Exception e) {
+            return object;
+        }
+    }
+
     public static void handleOnPressEvent(View view, MotionEvent event, @Nullable Runnable onClick) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
