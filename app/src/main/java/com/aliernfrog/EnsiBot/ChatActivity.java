@@ -22,6 +22,7 @@ import androidx.core.content.ContextCompat;
 
 import com.aliernfrog.EnsiBot.fragments.OptionsSheet;
 import com.aliernfrog.EnsiBot.utils.AppUtil;
+import com.aliernfrog.EnsiBot.utils.ChatUtil;
 import com.aliernfrog.EnsiBot.utils.FileUtil;
 
 import org.json.JSONArray;
@@ -98,22 +99,28 @@ public class ChatActivity extends AppCompatActivity {
         setListeners();
     }
 
-    void sendMessage(@Nullable Drawable avatar, String username, String content) {
+    void sendMessage(Drawable avatar, String author, String content) {
         if (content.replaceAll(" ", "").equals("")) return;
-        ViewGroup message = (ViewGroup) getLayoutInflater().inflate(R.layout.inflate_message, chatRoot, false);
-        LinearLayout messageView = message.findViewById(R.id.message_linear);
-        ImageView avatarView = message.findViewById(R.id.message_author_avatar);
-        TextView usernameView = message.findViewById(R.id.message_author_username);
-        TextView contentView = message.findViewById(R.id.message_content);
-        if (avatar != null) avatarView.setImageDrawable(avatar);
-        usernameView.setText(Html.fromHtml(username));
-        //usernameView.setOnClickListener(v -> mention(usernameView.getText().toString()));
-        contentView.setText(Html.fromHtml(content));
-        messageView.setBackgroundColor(Color.parseColor(messageColor));
-        usernameView.setTextColor(Color.parseColor(messageAuthorColor));
-        contentView.setTextColor(Color.parseColor(messageContentColor));
-        chatRoot.addView(message);
-        scrollToBottom();
+        try {
+            JSONObject data = new JSONObject()
+                    .put("type", "message")
+                    .put("author", author)
+                    .put("content", content);
+            ViewGroup message = (ViewGroup) ChatUtil.loadMessage(data, chatRoot, getLayoutInflater());
+            LinearLayout messageView = message.findViewById(R.id.message_linear);
+            ImageView avatarView = message.findViewById(R.id.message_author_avatar);
+            TextView authorView = message.findViewById(R.id.message_author_username);
+            TextView contentView = message.findViewById(R.id.message_content);
+            avatarView.setImageDrawable(avatar);
+            messageView.setBackgroundColor(Color.parseColor(messageColor));
+            authorView.setTextColor(Color.parseColor(messageAuthorColor));
+            contentView.setTextColor(Color.parseColor(messageContentColor));
+            chatRoot.addView(message);
+            scrollToBottom();
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
+        }
     }
 
     void getChannel(@Nullable String name) {
