@@ -39,6 +39,8 @@ public class DlcActivity extends AppCompatActivity {
         themeRoot = findViewById(R.id.dlc_theme_root);
         chatRoot = findViewById(R.id.dlc_chat_root);
 
+        setListeners();
+
         Handler handler = new Handler();
         handler.postDelayed(this::getDlcs, 1000);
     }
@@ -106,5 +108,10 @@ public class DlcActivity extends AppCompatActivity {
         intent.putExtra("dlc_id", id);
         finish();
         startActivity(intent);
+    }
+
+    void setListeners() {
+        AppUtil.handleOnPressEvent(themeRoot);
+        AppUtil.handleOnPressEvent(chatRoot);
     }
 }
