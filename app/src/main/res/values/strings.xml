@@ -19,6 +19,8 @@
     <string name="profile_username_changed">Changed the username!</string>
     <string name="options">Options</string>
     <string name="dlcs">Chat &amp; theme packs</string>
+    <string name="dlcs_theme">Theme packs</string>
+    <string name="dlcs_chat">Chat packs</string>
     <string name="dlc_hint">Click to apply this pack</string>
     <string name="dlc_applied">Applied the pack!</string>
 </resources>
