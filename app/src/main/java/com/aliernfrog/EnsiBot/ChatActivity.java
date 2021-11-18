@@ -99,7 +99,7 @@ public class ChatActivity extends AppCompatActivity {
         setListeners();
     }
 
-    void sendMessage(Drawable avatar, String author, String content) {
+    void sendMessage(Drawable avatar, String author, String content, Boolean saveToHistory) {
         if (content.replaceAll(" ", "").equals("")) return;
         try {
             JSONObject data = new JSONObject()
@@ -116,13 +116,14 @@ public class ChatActivity extends AppCompatActivity {
             authorView.setTextColor(Color.parseColor(messageAuthorColor));
             contentView.setTextColor(Color.parseColor(messageContentColor));
             chatRoot.addView(message);
+            if (saveToHistory) chatHistory.put(data);
             scrollToBottom();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    void sendSuggestion(@Nullable Drawable icon, String title) {
+    void sendSuggestion(@Nullable Drawable icon, String title, Boolean saveToHistory) {
         try {
             JSONObject data = new JSONObject()
                     .put("type", "suggestion")
@@ -134,6 +135,7 @@ public class ChatActivity extends AppCompatActivity {
             suggestionLinear.setBackgroundColor(Color.parseColor(suggestionColor));
             suggestionText.setTextColor(Color.parseColor(suggestionTextColor));
             chatRoot.addView(suggestion);
+            if (saveToHistory) chatHistory.put(data);
             scrollToBottom();
         } catch (Exception e) {
             e.printStackTrace();
@@ -186,13 +188,32 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     void loadChatHistory() {
-        try {
-            for (int i = 0; i < chatHistory.length(); i++) {
+        for (int i = 0; i < chatHistory.length(); i++) {
+            try {
                 JSONObject message = chatHistory.getJSONObject(i);
-                String author = message.getString("author");
-                String content = message.getString("content");
-                sendMessage(null, author, content);
+                String type = message.getString("type");
+                if (type.equals("message")) {
+                    Drawable avatar = null;
+                    String author = message.getString("author");
+                    String content = message.getString("content");
+                    if (author.equals(userUsername)) avatar = userAvatar;
+                    if (author.equals(ensiUsername)) avatar = ensiAvatar;
+                    sendMessage(avatar, author, content, false);
+                }
+                if (type.equals("suggestion")) sendSuggestion(null, message.getString("title"), false);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
+        }
+    }
+
+    void saveChatHistory() {
+        try {
+            File file = new File(chatHistoryPath);
+            String parentPath = file.getParent();
+            String fileName = file.getName();
+            String history = chatHistory.toString();
+            FileUtil.saveFile(parentPath, fileName, history);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -234,8 +255,15 @@ public class ChatActivity extends AppCompatActivity {
         avatar.setOnClickListener(v -> openOptionsSheet());
 
         AppUtil.handleOnPressEvent(chatSend, () -> {
-            sendMessage(userAvatar, userUsername, chatInput.getText().toString());
+            sendMessage(userAvatar, userUsername, chatInput.getText().toString(), true);
             chatInput.setText("");
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        saveChatHistory();
+        finish();
     }
 }
