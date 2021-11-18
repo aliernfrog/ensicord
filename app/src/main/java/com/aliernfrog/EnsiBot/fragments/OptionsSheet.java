@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -16,7 +15,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.aliernfrog.EnsiBot.OptionsActivity;
+import com.aliernfrog.EnsiBot.ProfileActivity;
 import com.aliernfrog.EnsiBot.R;
 import com.aliernfrog.EnsiBot.utils.AppUtil;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
@@ -79,7 +78,7 @@ public class OptionsSheet extends BottomSheetDialogFragment {
     }
 
     void setListeners() {
-        AppUtil.handleOnPressEvent(avatar_linear, () -> switchActivity(OptionsActivity.class, true));
-        AppUtil.handleOnPressEvent(options, () -> switchActivity(OptionsActivity.class, true));
+        AppUtil.handleOnPressEvent(avatar_linear, () -> switchActivity(ProfileActivity.class, true));
+        AppUtil.handleOnPressEvent(options, () -> switchActivity(ProfileActivity.class, true));
     }
 }
