@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.aliernfrog.EnsiBot.utils.AppUtil;
 import com.aliernfrog.EnsiBot.utils.WebUtil;
 
 import org.json.JSONArray;
@@ -81,7 +82,7 @@ public class DlcActivity extends AppCompatActivity {
             nameView.setText(name);
             descView.setText(Html.fromHtml(desc));
             getDlcThumbnail(thumbnailView, object);
-            dlcLinear.setOnClickListener(v -> applyDlc(id));
+            AppUtil.handleOnPressEvent(dlcLinear, () -> applyDlc(id));
             root.addView(dlc);
         } catch (Exception e) {
             e.printStackTrace();

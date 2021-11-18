@@ -38,7 +38,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingLeft="24dp"
+            android:paddingRight="24dp">
 
             <ProgressBar
                 android:id="@+id/dlc_loading"
@@ -50,15 +52,14 @@
                 android:id="@+id/dlc_theme_root"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:padding="8dp" />
+                android:layout_marginBottom="16dp"
+                android:orientation="vertical" />
 
             <LinearLayout
                 android:id="@+id/dlc_chat_root"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:padding="8dp" />
+                android:orientation="vertical" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
