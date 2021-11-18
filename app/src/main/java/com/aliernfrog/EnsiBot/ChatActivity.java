@@ -22,12 +22,15 @@ import androidx.core.content.ContextCompat;
 
 import com.aliernfrog.EnsiBot.fragments.OptionsSheet;
 import com.aliernfrog.EnsiBot.utils.AppUtil;
+import com.aliernfrog.EnsiBot.utils.EnsiUtil;
 import com.aliernfrog.EnsiBot.utils.FileUtil;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ChatActivity extends AppCompatActivity {
     ConstraintLayout background;
@@ -55,6 +58,11 @@ public class ChatActivity extends AppCompatActivity {
     String messageColor;
     String messageAuthorColor;
     String messageContentColor;
+
+    ArrayList<String> savedWords;
+    ArrayList<String> savedVerbs;
+    ArrayList<String> savedConcs;
+    ArrayList<String> savedTypes;
 
     String chatHistoryPath;
     Boolean sendMessageAllowed;
@@ -90,6 +98,7 @@ public class ChatActivity extends AppCompatActivity {
         userUsername = config.getString("username", "Some frok");
 
         getDlcTheme();
+        getSavedWordsAndVerbs();
         getChannel(null);
         getChatOptions();
         getAvatar();
@@ -113,6 +122,7 @@ public class ChatActivity extends AppCompatActivity {
         if (saveToHistory) chatHistory.put(AppUtil.buildMessageData(username, content));
         chatRoot.addView(message);
         scrollToBottom();
+        if (!username.equals(ensiUsername) && saveToHistory) sendMessage(ensiAvatar, ensiUsername, EnsiUtil.buildMessage(username, content, savedWords, savedVerbs, savedConcs, savedTypes), true);
     }
 
     void getChannel(@Nullable String name) {
@@ -207,6 +217,17 @@ public class ChatActivity extends AppCompatActivity {
         chatBox.setBackgroundColor(Color.parseColor(chatBoxColor));
         chatInput.setHintTextColor(Color.parseColor(chatBoxHintColor));
         chatInput.setTextColor(Color.parseColor(chatBoxTextColor));
+    }
+
+    void getSavedWordsAndVerbs() {
+        String words = dlc.getString("words", "");
+        String verbs = dlc.getString("verbs", "");
+        String _concs = dlc.getString("concs", "");
+        String _types = dlc.getString("types", "");
+        savedWords = new ArrayList<>(Arrays.asList(words.split("\n")));
+        savedVerbs = new ArrayList<>(Arrays.asList(verbs.split("\n")));
+        savedConcs = new ArrayList<>(Arrays.asList(_concs.split("\n")));
+        savedTypes = new ArrayList<>(Arrays.asList(_types.split("\n")));
     }
 
     void scrollToBottom() {
