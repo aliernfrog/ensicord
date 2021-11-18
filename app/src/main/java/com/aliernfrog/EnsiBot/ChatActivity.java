@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.Html;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -26,7 +25,6 @@ import com.aliernfrog.EnsiBot.utils.ChatUtil;
 import com.aliernfrog.EnsiBot.utils.FileUtil;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -54,6 +52,8 @@ public class ChatActivity extends AppCompatActivity {
     String ensiUsername;
     String userUsername;
 
+    String suggestionColor;
+    String suggestionTextColor;
     String messageColor;
     String messageAuthorColor;
     String messageContentColor;
@@ -119,7 +119,24 @@ public class ChatActivity extends AppCompatActivity {
             scrollToBottom();
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    void sendSuggestion(@Nullable Drawable icon, String title) {
+        try {
+            JSONObject data = new JSONObject()
+                    .put("type", "suggestion")
+                    .put("title", title);
+            if (icon != null) data.put("icon", icon);
+            ViewGroup suggestion = (ViewGroup) ChatUtil.loadMessage(data, chatRoot, getLayoutInflater());
+            LinearLayout suggestionLinear = suggestion.findViewById(R.id.suggestion_linear);
+            TextView suggestionText = suggestion.findViewById(R.id.suggestion_title);
+            suggestionLinear.setBackgroundColor(Color.parseColor(suggestionColor));
+            suggestionText.setTextColor(Color.parseColor(suggestionTextColor));
+            chatRoot.addView(suggestion);
+            scrollToBottom();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -189,6 +206,8 @@ public class ChatActivity extends AppCompatActivity {
         String chatBoxColor = dlc.getString("chatBox", "#FF18191D");
         String chatBoxHintColor = dlc.getString("chatBoxHint", "#636363");
         String chatBoxTextColor = dlc.getString("chatBoxText", "#FFFFFF");
+        suggestionColor = dlc.getString("suggestion", "#FF18191D");
+        suggestionTextColor = dlc.getString("suggestionText", "#FFFFFF");
         messageColor = dlc.getString("message", "#00000000");
         messageAuthorColor = dlc.getString("messageAuthor", "#FFFFFF");
         messageContentColor = dlc.getString("messageContent", "#DDDDDD");
