@@ -116,25 +116,6 @@ public class ChatActivity extends AppCompatActivity {
         scrollToBottom();
     }
 
-    void sendSuggestion(@Nullable Drawable icon, String title, Boolean saveToHistory) {
-        try {
-            JSONObject data = new JSONObject()
-                    .put("type", "suggestion")
-                    .put("title", title);
-            if (icon != null) data.put("icon", icon);
-            ViewGroup suggestion = (ViewGroup) ChatUtil.loadMessage(data, chatRoot, getLayoutInflater());
-            LinearLayout suggestionLinear = suggestion.findViewById(R.id.suggestion_linear);
-            TextView suggestionText = suggestion.findViewById(R.id.suggestion_title);
-            suggestionLinear.setBackgroundColor(Color.parseColor(suggestionColor));
-            suggestionText.setTextColor(Color.parseColor(suggestionTextColor));
-            chatRoot.addView(suggestion);
-            if (saveToHistory) chatHistory.put(data);
-            scrollToBottom();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     void getChannel(@Nullable String name) {
         if (name == null) name = dlc.getString("channelName", "#general");
         String hint = getString(R.string.channelStart).replace("%NAME%", name);
@@ -184,16 +165,12 @@ public class ChatActivity extends AppCompatActivity {
         for (int i = 0; i < chatHistory.length(); i++) {
             try {
                 JSONObject message = chatHistory.getJSONObject(i);
-                String type = message.getString("type");
-                if (type.equals("message")) {
-                    Drawable avatar = null;
-                    String author = message.getString("author");
-                    String content = message.getString("content");
-                    if (author.equals(userUsername)) avatar = userAvatar;
-                    if (author.equals(ensiUsername)) avatar = ensiAvatar;
-                    sendMessage(avatar, author, content, false);
-                }
-                if (type.equals("suggestion")) sendSuggestion(null, message.getString("title"), false);
+                Drawable avatar = null;
+                String author = message.getString("author");
+                String content = message.getString("content");
+                if (author.equals(userUsername)) avatar = userAvatar;
+                if (author.equals(ensiUsername)) avatar = ensiAvatar;
+                sendMessage(avatar, author, content, false);
             } catch (Exception e) {
                 e.printStackTrace();
             }
