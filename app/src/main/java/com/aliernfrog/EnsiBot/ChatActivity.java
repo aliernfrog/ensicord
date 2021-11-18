@@ -52,8 +52,6 @@ public class ChatActivity extends AppCompatActivity {
     String ensiUsername;
     String userUsername;
 
-    String suggestionColor;
-    String suggestionTextColor;
     String messageColor;
     String messageAuthorColor;
     String messageContentColor;
@@ -197,8 +195,6 @@ public class ChatActivity extends AppCompatActivity {
         String chatBoxColor = dlc.getString("chatBox", "#FF18191D");
         String chatBoxHintColor = dlc.getString("chatBoxHint", "#636363");
         String chatBoxTextColor = dlc.getString("chatBoxText", "#FFFFFF");
-        suggestionColor = dlc.getString("suggestion", "#FF18191D");
-        suggestionTextColor = dlc.getString("suggestionText", "#FFFFFF");
         messageColor = dlc.getString("message", "#00000000");
         messageAuthorColor = dlc.getString("messageAuthor", "#FFFFFF");
         messageContentColor = dlc.getString("messageContent", "#DDDDDD");

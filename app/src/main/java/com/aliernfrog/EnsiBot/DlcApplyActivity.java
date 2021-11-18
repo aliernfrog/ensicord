@@ -85,8 +85,6 @@ public class DlcApplyActivity extends AppCompatActivity {
             if (rawDlc.has("chatBox")) dlcEdit.putString("chatBox", rawDlc.getString("chatBox"));
             if (rawDlc.has("chatBoxHint")) dlcEdit.putString("chatBoxHint", rawDlc.getString("chatBoxHint"));
             if (rawDlc.has("chatBoxText")) dlcEdit.putString("chatBoxText", rawDlc.getString("chatBoxText"));
-            if (rawDlc.has("suggestion")) dlcEdit.putString("suggestion", rawDlc.getString("suggestion"));
-            if (rawDlc.has("suggestionText")) dlcEdit.putString("suggestionText", rawDlc.getString("suggestionText"));
             if (rawDlc.has("message")) dlcEdit.putString("message", rawDlc.getString("message"));
             if (rawDlc.has("messageAuthor")) dlcEdit.putString("messageAuthor", rawDlc.getString("messageAuthor"));
             if (rawDlc.has("messageContent")) dlcEdit.putString("messageContent", rawDlc.getString("messageContent"));
