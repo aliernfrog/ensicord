@@ -25,7 +25,7 @@ import com.hbisoft.pickit.PickiT;
 import com.hbisoft.pickit.PickiTCallbacks;
 
 @SuppressLint("CommitPrefEdits")
-public class OptionsActivity extends AppCompatActivity implements PickiTCallbacks {
+public class ProfileActivity extends AppCompatActivity implements PickiTCallbacks {
     LinearLayout profileLinear;
     ImageView avatar;
     TextInputLayout usernameInput;
@@ -43,18 +43,18 @@ public class OptionsActivity extends AppCompatActivity implements PickiTCallback
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_options);
+        setContentView(R.layout.activity_profile);
 
         config = getSharedPreferences("APP_CONFIG", MODE_PRIVATE);
         configEdit = config.edit();
 
         avatarPath = getExternalFilesDir("saved").toString()+"/avatar.png";
 
-        profileLinear = findViewById(R.id.options_profile_linear);
-        avatar = findViewById(R.id.options_avatar);
-        usernameInput = findViewById(R.id.options_username_input);
-        usernameConfirm = findViewById(R.id.options_username_confirm);
-        redirectDlcs = findViewById(R.id.options_dlcs);
+        profileLinear = findViewById(R.id.profile_profile_linear);
+        avatar = findViewById(R.id.profile_avatar);
+        usernameInput = findViewById(R.id.profile_username_input);
+        usernameConfirm = findViewById(R.id.profile_username_confirm);
+        redirectDlcs = findViewById(R.id.profile_dlcs);
 
         pickiT = new PickiT(this, this, this);
 
@@ -66,7 +66,7 @@ public class OptionsActivity extends AppCompatActivity implements PickiTCallback
         if (name.replace(" ","").equals("")) name = "Some frok";
         configEdit.putString("username", name);
         configEdit.commit();
-        Toast.makeText(getApplicationContext(), R.string.options_username_changed, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), R.string.profile_username_changed, Toast.LENGTH_SHORT).show();
     }
 
     void pickAvatar() {
@@ -80,7 +80,7 @@ public class OptionsActivity extends AppCompatActivity implements PickiTCallback
         try {
             FileUtil.copyFile(path, avatarPath);
             getAvatar();
-            Toast.makeText(getApplicationContext(), R.string.options_avatar_changed, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), R.string.profile_avatar_changed, Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             e.printStackTrace();
         }
