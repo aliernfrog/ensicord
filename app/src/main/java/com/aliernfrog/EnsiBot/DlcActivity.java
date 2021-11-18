@@ -21,6 +21,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class DlcActivity extends AppCompatActivity {
+    ImageView goBack;
     ProgressBar loading;
     LinearLayout themeRoot;
     LinearLayout chatRoot;
@@ -36,6 +37,7 @@ public class DlcActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dlc);
 
+        goBack = findViewById(R.id.dlc_goBack);
         loading = findViewById(R.id.dlc_loading);
         themeRoot = findViewById(R.id.dlc_theme_root);
         chatRoot = findViewById(R.id.dlc_chat_root);
@@ -115,6 +117,7 @@ public class DlcActivity extends AppCompatActivity {
     }
 
     void setListeners() {
+        AppUtil.handleOnPressEvent(goBack, this::finish);
         AppUtil.handleOnPressEvent(themeRoot);
         AppUtil.handleOnPressEvent(chatRoot);
         AppUtil.handleOnPressEvent(experimentalRoot);
