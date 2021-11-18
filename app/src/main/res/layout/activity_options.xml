@@ -79,6 +79,17 @@
                     android:textColor="#FFFFFF"
                     android:textStyle="bold" />
 
+                <CheckBox
+                    android:id="@+id/options_chat_saveHistory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/linear_button"
+                    android:padding="8dp"
+                    android:text="@string/options_saveHistory"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -101,15 +112,6 @@
                     android:textColor="#FFFFFF"
                     android:textStyle="bold" />
 
-                <CheckBox
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:background="@drawable/linear_button"
-                    android:padding="8dp"
-                    android:text="PLACEHOLDER"
-                    android:textColor="#FFFFFF"
-                    android:textStyle="bold" />
             </LinearLayout>
 
         </LinearLayout>
