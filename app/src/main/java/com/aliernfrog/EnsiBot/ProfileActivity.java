@@ -21,11 +21,9 @@ import java.io.File;
 import com.aliernfrog.EnsiBot.utils.AppUtil;
 import com.aliernfrog.EnsiBot.utils.FileUtil;
 import com.google.android.material.textfield.TextInputLayout;
-import com.hbisoft.pickit.PickiT;
-import com.hbisoft.pickit.PickiTCallbacks;
 
 @SuppressLint("CommitPrefEdits")
-public class ProfileActivity extends AppCompatActivity implements PickiTCallbacks {
+public class ProfileActivity extends AppCompatActivity {
     LinearLayout profileLinear;
     ImageView avatar;
     TextInputLayout usernameInput;
@@ -37,8 +35,6 @@ public class ProfileActivity extends AppCompatActivity implements PickiTCallback
 
     String avatarPath;
     Integer REQUEST_PICK_AVATAR = 1;
-
-    PickiT pickiT;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +51,6 @@ public class ProfileActivity extends AppCompatActivity implements PickiTCallback
         usernameInput = findViewById(R.id.profile_username_input);
         usernameConfirm = findViewById(R.id.profile_username_confirm);
         redirectDlcs = findViewById(R.id.profile_dlcs);
-
-        pickiT = new PickiT(this, this, this);
 
         setListeners();
         updateOptions();
@@ -133,32 +127,5 @@ public class ProfileActivity extends AppCompatActivity implements PickiTCallback
         AppUtil.handleOnPressEvent(avatar, this::pickAvatar);
         AppUtil.handleOnPressEvent(usernameConfirm, () -> changeName(Html.fromHtml(usernameInput.getEditText().getText().toString()).toString()));
         AppUtil.handleOnPressEvent(redirectDlcs, () -> switchActivity(DlcActivity.class));
-    }
-
-    @Override
-    public void PickiTonUriReturned() {
-
-    }
-
-    @Override
-    public void PickiTonStartListener() {
-
-    }
-
-    @Override
-    public void PickiTonProgressUpdate(int progress) {
-
-    }
-
-    @Override
-    public void PickiTonCompleteListener(String path, boolean wasDriveFile, boolean wasUnknownProvider, boolean wasSuccessful, String Reason) {
-        setAvatar(path);
-    }
-
-    @Override
-    public void onBackPressed() {
-        pickiT.deleteTemporaryFile(this);
-        finish();
-        super.onBackPressed();
     }
 }
