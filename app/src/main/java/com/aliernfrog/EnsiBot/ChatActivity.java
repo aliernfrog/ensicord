@@ -47,6 +47,7 @@ public class ChatActivity extends AppCompatActivity {
     SharedPreferences config;
     SharedPreferences dlc;
 
+    String ensiAvatarPath;
     String avatarPath;
 
     Drawable ensiAvatar;
@@ -77,6 +78,7 @@ public class ChatActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chat);
 
         avatarPath = getExternalFilesDir("saved").toString()+"/avatar.png";
+        ensiAvatarPath = getExternalFilesDir("saved").toString()+"/ensi.png";
 
         ensiAvatar = ContextCompat.getDrawable(getApplicationContext(), R.drawable.ensi);
         userAvatar = ContextCompat.getDrawable(getApplicationContext(), R.drawable.user);
@@ -164,9 +166,9 @@ public class ChatActivity extends AppCompatActivity {
 
     void getAvatar() {
         File avatarFile = new File(avatarPath);
-        if (avatarFile.exists()) {
-            userAvatar = Drawable.createFromPath(avatarPath);
-        }
+        File ensiAvatarFile = new File(ensiAvatarPath);
+        if (avatarFile.exists()) userAvatar = Drawable.createFromPath(avatarPath);
+        if (ensiAvatarFile.exists()) ensiAvatar = Drawable.createFromPath(ensiAvatarPath);
         avatar.setImageDrawable(userAvatar);
     }
 

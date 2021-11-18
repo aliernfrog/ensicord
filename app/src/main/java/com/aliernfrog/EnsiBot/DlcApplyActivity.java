@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
@@ -14,6 +15,12 @@ import com.aliernfrog.EnsiBot.utils.FileUtil;
 import com.aliernfrog.EnsiBot.utils.WebUtil;
 
 import org.json.JSONObject;
+
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 
 @SuppressLint("CommitPrefEdits")
 public class DlcApplyActivity extends AppCompatActivity {
@@ -26,8 +33,7 @@ public class DlcApplyActivity extends AppCompatActivity {
 
     String dlcId;
     String dataPath;
-    String wordsFileName = "words.txt";
-    String verbsFileName = "verbs.txt";
+    String ensiAvatarPath;
     String url = "https://aliernfrog.repl.co";
 
     JSONObject rawDlc;
@@ -48,6 +54,7 @@ public class DlcApplyActivity extends AppCompatActivity {
 
         dlcId = getIntent().getStringExtra("dlc_id");
         dataPath = getExternalFilesDir("saved").toString();
+        ensiAvatarPath = dataPath+"/ensi.png";
 
         inform("Downloading DLC");
         Handler handler = new Handler();
@@ -76,7 +83,7 @@ public class DlcApplyActivity extends AppCompatActivity {
             if (rawDlc.has("concs")) dlcEdit.putString("concs", rawDlc.getString("concs"));
             if (rawDlc.has("types")) dlcEdit.putString("types", rawDlc.getString("types"));
             if (rawDlc.has("ensiName")) dlcEdit.putString("ensiName", rawDlc.getString("ensiName"));
-            //TODO if (rawDlc.has("ensiAvatarUrl"))
+            if (rawDlc.has("ensiAvatarUrl")) applyEnsiAvatar(rawDlc.getString("ensiAvatarUrl"));
             if (rawDlc.has("channelName")) dlcEdit.putString("channelName", rawDlc.getString("channelName"));
             if (rawDlc.has("background")) dlcEdit.putString("background", rawDlc.getString("background"));
             if (rawDlc.has("topBar")) dlcEdit.putString("topBar", rawDlc.getString("topBar"));
@@ -96,6 +103,19 @@ public class DlcApplyActivity extends AppCompatActivity {
         }
     }
 
+    void applyEnsiAvatar(String avatarUrl) {
+        try {
+            File ensiAvatarFile = new File(ensiAvatarPath);
+            Bitmap avatar = WebUtil.getBipmapFromURL(avatarUrl);
+            OutputStream os = new BufferedOutputStream(new FileOutputStream(ensiAvatarFile));
+            avatar.compress(Bitmap.CompressFormat.PNG, 100, os);
+            os.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            inform(e.toString());
+        }
+    }
+
     void finishApplying() {
         inform("Applied the DLC!");
         Intent intent = new Intent(getApplicationContext(), SplashActivity.class);
@@ -108,13 +128,5 @@ public class DlcApplyActivity extends AppCompatActivity {
 
     void inform(String text) {
         info.setText(text);
-    }
-
-    void saveFile(String name, String content) {
-        try {
-            FileUtil.saveFile(dataPath, name, content);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }
