@@ -1,5 +1,7 @@
 package com.aliernfrog.EnsiBot.utils;
 
+import android.content.Context;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -45,6 +47,15 @@ public class FileUtil {
         }
         reader.close();
         return _full;
+    }
+
+    public static String readFileFromAssets(Context context, String fileName) throws Exception {
+        InputStream inputStream = context.getAssets().open(fileName);
+        int size = inputStream.available();
+        byte[] bytes = new byte[size];
+        inputStream.read(bytes);
+        inputStream.close();
+        return new String(bytes);
     }
 
     public static void saveFile(String folder, String fileName, String content) throws Exception {
