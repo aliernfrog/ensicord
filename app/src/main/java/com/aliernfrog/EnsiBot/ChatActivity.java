@@ -120,7 +120,7 @@ public class ChatActivity extends AppCompatActivity {
         messageView.setBackgroundColor(Color.parseColor(messageColor));
         usernameView.setTextColor(Color.parseColor(messageAuthorColor));
         contentView.setTextColor(Color.parseColor(messageContentColor));
-        if (saveToHistory) chatHistory.put(AppUtil.buildMessageData(username, content, username.equals(ensiUsername)));
+        if (saveToHistory) chatHistory.put(AppUtil.buildMessageData(username, content, userUsername, ensiUsername));
         chatRoot.addView(message);
         scrollToBottom();
         if (!username.equals(ensiUsername) && saveToHistory && sendMessageAllowed) sendMessage(ensiAvatar, ensiUsername, EnsiUtil.buildMessage(username, content, savedWords, savedVerbs, savedConcs, savedTypes), true);
