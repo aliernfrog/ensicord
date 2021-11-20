@@ -5,12 +5,21 @@ import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.EditText;
 
 import androidx.annotation.Nullable;
 
 import org.json.JSONObject;
 
 public class AppUtil {
+    public static void mentionUser(EditText input, String username) {
+        String current = input.getText().toString();
+        String mention = "<b><font color=#0098FF>@"+username+"</font></b>";
+        String finalText = current+mention;
+        input.setText(finalText);
+        input.setSelection(input.length());
+    }
+
     public static String fixTextForHtml(String text) {
         text = text.replace(" ", "&nbsp;");
         text = text.replace("\n", "<br>");
