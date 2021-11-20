@@ -243,10 +243,10 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     void getSavedWordsAndVerbs() {
-        String words = dlc.getString("words", "me,you,we,they,alierns,indinibee,bees,momes,frog,free candies,ensi".replaceAll(",","\n"));
-        String verbs = dlc.getString("verbs", "went to,ate,drove,kidnapped,talked,hacked,germanized,moused,stalked,added".replaceAll(",","\n"));
-        String _concs = dlc.getString("concs", "and,then,or,becans,like".replaceAll(",","\n"));
-        String _types = dlc.getString("types", "W V W,W V,V W,W,V,W V W C W V W,V W V V W,V W V V W C V W V V W,W + W = W".replaceAll(",","\n"));
+        String words = dlc.getString("words", "");
+        String verbs = dlc.getString("verbs", "");
+        String _concs = dlc.getString("concs", "");
+        String _types = dlc.getString("types", "");
         savedWords = new ArrayList<>(Arrays.asList(words.split("\n")));
         savedVerbs = new ArrayList<>(Arrays.asList(verbs.split("\n")));
         savedConcs = new ArrayList<>(Arrays.asList(_concs.split("\n")));
