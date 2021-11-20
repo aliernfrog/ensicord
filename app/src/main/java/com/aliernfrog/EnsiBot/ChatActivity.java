@@ -173,6 +173,7 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     void loadChatHistory() {
+        if (!saveNewMessages) return;
         for (int i = 0; i < chatHistory.length(); i++) {
             try {
                 JSONObject message = chatHistory.getJSONObject(i);
