@@ -18,9 +18,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Ensi">
         <activity
-            android:name=".OptionsActivity"
-            android:exported="false" />
-        <activity
             android:name=".SplashActivity"
             android:exported="true">
             <intent-filter>
@@ -29,12 +26,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DlcApplyActivity" />
         <activity android:name=".FilePickerActivity" />
-        <activity android:name=".ProfileActivity" />
+        <activity android:name=".DlcApplyActivity" />
+        <activity android:name=".OptionsActivity" android:exported="true" />
         <activity android:name=".DlcActivity" />
+        <activity android:name=".ProfileActivity" />
         <activity android:name=".ChatActivity" />
-        <activity android:name=".OldChatActivity" />
     </application>
 
 </manifest>
