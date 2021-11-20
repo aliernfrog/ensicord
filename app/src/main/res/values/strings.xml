@@ -10,6 +10,8 @@
     <string name="avatar">Avatar</string>
     <string name="send">Send</string>
     <string name="confirm">Confirm</string>
+    <string name="message_addToStarboard">Add to starboard</string>
+    <string name="message_delete">Delete</string>
     <string name="optionssheet_profileHint">Click to customize your profile</string>
     <string name="starboard">Starboard</string>
     <string name="profile">Profile customization</string>
