@@ -3,7 +3,6 @@ package com.aliernfrog.EnsiBot.utils;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
-import android.graphics.drawable.Drawable;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -12,6 +11,12 @@ import androidx.annotation.Nullable;
 import org.json.JSONObject;
 
 public class AppUtil {
+    public static String fixTextForHtml(String text) {
+        text = text.replace(" ", "&nbsp;");
+        text = text.replace("\n", "<br>");
+        return text;
+    }
+
     public static JSONObject buildMessageData(String author, String content, String userUsername, String ensiUsername) {
         JSONObject object = new JSONObject();
         try {
