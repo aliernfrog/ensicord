@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 
+import com.aliernfrog.EnsiBot.fragments.MessageSheet;
 import com.aliernfrog.EnsiBot.fragments.OptionsSheet;
 import com.aliernfrog.EnsiBot.utils.AppUtil;
 import com.aliernfrog.EnsiBot.utils.EnsiUtil;
@@ -71,6 +73,8 @@ public class ChatActivity extends AppCompatActivity {
     Boolean isStarboard;
     JSONArray chatHistory;
 
+    Integer chosenMessage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -121,6 +125,10 @@ public class ChatActivity extends AppCompatActivity {
         usernameView.setTextColor(Color.parseColor(messageAuthorColor));
         contentView.setTextColor(Color.parseColor(messageContentColor));
         usernameView.setOnClickListener(view -> AppUtil.mentionUser(chatInput, usernameView.getText().toString()));
+        message.setOnLongClickListener(view -> {
+            openMessageSheet(message);
+            return true;
+        });
         chatRoot.addView(message);
         scrollToBottom();
         if (saveToHistory) chatHistory.put(AppUtil.buildMessageData(username, content, userUsername, ensiUsername));
@@ -238,10 +246,20 @@ public class ChatActivity extends AppCompatActivity {
         handler.postDelayed(() -> chatScroll.fullScroll(View.FOCUS_DOWN), 100);
     }
 
+    void openMessageSheet(View message) {
+        chosenMessage = ((LinearLayout)message.getParent()).indexOfChild(message);
+        MessageSheet messageSheet = new MessageSheet();
+        messageSheet.show(getSupportFragmentManager(), "message_sheet");
+    }
+
     void openOptionsSheet() {
         OptionsSheet optionsSheet = new OptionsSheet();
         optionsSheet.show(getSupportFragmentManager(), "options_sheet");
         saveChatHistory();
+    }
+
+    public View getChosenMessage() {
+        return chatRoot.getChildAt(chosenMessage);
     }
 
     void setListeners() {
