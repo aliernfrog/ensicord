@@ -3,6 +3,10 @@ package com.aliernfrog.EnsiBot.utils;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -33,6 +37,34 @@ public class AppUtil {
         } catch (Exception e) {
             return object;
         }
+    }
+
+    public static String getVersName(Context context) throws Exception {
+        PackageManager pm = context.getPackageManager();
+        PackageInfo pInfo = pm.getPackageInfo(context.getPackageName(), 0);
+        return pInfo.versionName;
+    }
+
+    public static Integer getVersCode(Context context) throws Exception {
+        PackageManager pm = context.getPackageManager();
+        PackageInfo pInfo = pm.getPackageInfo(context.getPackageName(), 0);
+        return pInfo.versionCode;
+    }
+
+    @SuppressLint("ApplySharedPref")
+    public static Boolean getUpdates(Context context) throws Exception {
+        SharedPreferences update = context.getSharedPreferences("APP_UPDATE", Context.MODE_PRIVATE);
+        SharedPreferences config = context.getSharedPreferences("APP_CONFIG", Context.MODE_PRIVATE);
+        SharedPreferences.Editor updateEdit = update.edit();
+        String updateUrl = config.getString("updateUrl", "https://aliernfrog.glitch.me/ensicord/update.json");
+        String rawUpdate = WebUtil.getContentFromURL(updateUrl);
+        JSONObject object = new JSONObject(rawUpdate);
+        updateEdit.putInt("updateLatest", object.getInt("latest"));
+        updateEdit.putString("updateDownload", object.getString("download"));
+        updateEdit.putString("updateChangelog", object.getString("changelog"));
+        updateEdit.putString("updateChangelogVersion", object.getString("changelogVersion"));
+        updateEdit.commit();
+        return true;
     }
 
     public static String fixTextForHtml(String text) {

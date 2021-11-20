@@ -6,7 +6,10 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.widget.Toast;
 
+import com.aliernfrog.EnsiBot.utils.AppUtil;
 import com.aliernfrog.EnsiBot.utils.FileUtil;
 
 import java.io.File;
@@ -20,6 +23,8 @@ public class SplashActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
@@ -28,8 +33,18 @@ public class SplashActivity extends AppCompatActivity {
         config = getSharedPreferences("APP_CONFIG", MODE_PRIVATE);
         saveHistory = config.getBoolean("saveHistory", true);
 
+        getUpdates();
         checkFiles();
         switchActivity();
+    }
+
+    void getUpdates() {
+        try {
+            AppUtil.getUpdates(getApplicationContext());
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT).show();
+        }
     }
 
     void checkFiles() {

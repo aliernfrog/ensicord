@@ -4,10 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Html;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.aliernfrog.EnsiBot.utils.AppUtil;
 
@@ -16,8 +18,14 @@ public class OptionsActivity extends AppCompatActivity {
     LinearLayout chatOptions;
     CheckBox saveHistory;
     LinearLayout moreOptions;
+    LinearLayout changelogLinear;
+    TextView changelogText;
+
+    String appVers;
+    Integer appVersCode;
 
     SharedPreferences config;
+    SharedPreferences update;
     SharedPreferences.Editor configEdit;
 
     @Override
@@ -29,11 +37,16 @@ public class OptionsActivity extends AppCompatActivity {
         chatOptions = findViewById(R.id.options_chat_linear);
         saveHistory = findViewById(R.id.options_chat_saveHistory);
         moreOptions = findViewById(R.id.options_more_linear);
+        changelogLinear = findViewById(R.id.options_changelog_linear);
+        changelogText = findViewById(R.id.options_changelog);
 
         config = getSharedPreferences("APP_CONFIG", MODE_PRIVATE);
+        update = getSharedPreferences("APP_UPDATE", MODE_PRIVATE);
         configEdit = config.edit();
 
         getConfig();
+        getVersion();
+        getChangelog();
         setListeners();
     }
 
@@ -46,10 +59,28 @@ public class OptionsActivity extends AppCompatActivity {
         configEdit.commit();
     }
 
+    void getVersion() {
+        try {
+            appVers = AppUtil.getVersName(getApplicationContext());
+            appVersCode = AppUtil.getVersCode(getApplicationContext());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    void getChangelog() {
+        String versInfo = "<b>Current version:</b> "+appVers+" ("+appVersCode+")";
+        String _changelog = update.getString("updateChangelog", "No changelog has been found");
+        String _changelogVers = update.getString("updateChangelogVersion", "-");
+        String _full = _changelog+"<br /><br />"+"<b>Changelog version:</b> "+_changelogVers+"<br />"+versInfo;
+        changelogText.setText(Html.fromHtml(_full));
+    }
+
     void setListeners() {
         AppUtil.handleOnPressEvent(goBack, this::finish);
         AppUtil.handleOnPressEvent(chatOptions);
         saveHistory.setOnCheckedChangeListener((compoundButton, b) -> changeBoolean("saveHistory", b));
         AppUtil.handleOnPressEvent(moreOptions);
+        AppUtil.handleOnPressEvent(changelogLinear);
     }
 }
