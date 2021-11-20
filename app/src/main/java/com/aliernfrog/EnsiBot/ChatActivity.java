@@ -134,6 +134,12 @@ public class ChatActivity extends AppCompatActivity {
         if (!username.equals(ensiUsername) && saveToHistory && sendMessageAllowed) sendMessage(ensiAvatar, ensiUsername, EnsiUtil.buildMessage(username, content, savedWords, savedVerbs, savedConcs, savedTypes), true);
     }
 
+    public void deleteChosenMessage() {
+        View message = getChosenMessage();
+        chatRoot.removeView(message);
+        chatHistory = AppUtil.removeIndexFromJsonArray(chatHistory, chosenMessage-1);
+    }
+
     void getChannel(@Nullable String name) {
         if (name == null) name = dlc.getString("channelName", "#general");
         String hint = getString(R.string.channelStart).replace("%NAME%", name);

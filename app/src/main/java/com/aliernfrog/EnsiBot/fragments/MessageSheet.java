@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 
 import com.aliernfrog.EnsiBot.ChatActivity;
 import com.aliernfrog.EnsiBot.R;
+import com.aliernfrog.EnsiBot.utils.AppUtil;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 public class MessageSheet extends BottomSheetDialogFragment {
@@ -40,6 +41,11 @@ public class MessageSheet extends BottomSheetDialogFragment {
         return view;
     }
 
+    void deleteMessage() {
+        context.deleteChosenMessage();
+        dismiss();
+    }
+
     void loadMessage() {
         View view = context.getChosenMessage();
         TextView authorView = view.findViewById(R.id.message_author_username);
@@ -51,6 +57,6 @@ public class MessageSheet extends BottomSheetDialogFragment {
     }
 
     void setListeners() {
-
+        AppUtil.handleOnPressEvent(deleteMessage, this::deleteMessage);
     }
 }
