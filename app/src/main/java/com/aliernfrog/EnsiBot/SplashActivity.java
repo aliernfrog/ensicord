@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.widget.Toast;
 
 import com.aliernfrog.EnsiBot.utils.AppUtil;
 import com.aliernfrog.EnsiBot.utils.FileUtil;
