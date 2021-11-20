@@ -50,7 +50,7 @@ public class OptionsSheet extends BottomSheetDialogFragment {
 
         context = getActivity();
 
-        if (context != null) avatarPath = context.getExternalFilesDir("saved").toString()+"/avatar.png";
+        if (context != null) avatarPath = context.getExternalFilesDir(".saved").toString()+"/avatar.png";
         if (context != null) config = context.getSharedPreferences("APP_CONFIG", Context.MODE_PRIVATE);
 
         getUsername();

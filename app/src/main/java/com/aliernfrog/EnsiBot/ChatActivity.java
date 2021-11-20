@@ -83,8 +83,8 @@ public class ChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
-        avatarPath = getExternalFilesDir("saved").toString()+"/avatar.png";
-        ensiAvatarPath = getExternalFilesDir("saved").toString()+"/ensi.png";
+        avatarPath = getExternalFilesDir(".saved").toString()+"/avatar.png";
+        ensiAvatarPath = getExternalFilesDir(".saved").toString()+"/ensi.png";
 
         ensiAvatar = ContextCompat.getDrawable(getApplicationContext(), R.drawable.ensi);
         userAvatar = ContextCompat.getDrawable(getApplicationContext(), R.drawable.user);
