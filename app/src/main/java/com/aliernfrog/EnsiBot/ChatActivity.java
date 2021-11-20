@@ -120,7 +120,7 @@ public class ChatActivity extends AppCompatActivity {
         messageView.setBackgroundColor(Color.parseColor(messageColor));
         usernameView.setTextColor(Color.parseColor(messageAuthorColor));
         contentView.setTextColor(Color.parseColor(messageContentColor));
-        if (saveToHistory) chatHistory.put(AppUtil.buildMessageData(username, content));
+        if (saveToHistory) chatHistory.put(AppUtil.buildMessageData(username, content, username.equals(ensiUsername)));
         chatRoot.addView(message);
         scrollToBottom();
         if (!username.equals(ensiUsername) && saveToHistory && sendMessageAllowed) sendMessage(ensiAvatar, ensiUsername, EnsiUtil.buildMessage(username, content, savedWords, savedVerbs, savedConcs, savedTypes), true);
@@ -175,12 +175,13 @@ public class ChatActivity extends AppCompatActivity {
         for (int i = 0; i < chatHistory.length(); i++) {
             try {
                 JSONObject message = chatHistory.getJSONObject(i);
-                Drawable avatar = null;
+                Drawable avatarDrawable = null;
+                String avatar = message.getString("avatar");
                 String author = message.getString("author");
                 String content = message.getString("content");
-                if (author.equals(userUsername)) avatar = userAvatar;
-                if (author.equals(ensiUsername)) avatar = ensiAvatar;
-                sendMessage(avatar, author, content, false);
+                if (avatar.equals("user")) avatarDrawable = userAvatar;
+                if (avatar.equals("ensi")) avatarDrawable = ensiAvatar;
+                sendMessage(avatarDrawable, author, content, false);
             } catch (Exception e) {
                 e.printStackTrace();
             }

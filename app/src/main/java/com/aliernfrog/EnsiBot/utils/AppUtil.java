@@ -12,9 +12,11 @@ import androidx.annotation.Nullable;
 import org.json.JSONObject;
 
 public class AppUtil {
-    public static JSONObject buildMessageData(String author, String content) {
+    public static JSONObject buildMessageData(String author, String content, Boolean isEnsi) {
         JSONObject object = new JSONObject();
         try {
+            if (isEnsi) object.put("avatar", "ensi");
+            if (!isEnsi) object.put("avatar", "user");
             object.put("author", author);
             object.put("content", content);
             return object;
