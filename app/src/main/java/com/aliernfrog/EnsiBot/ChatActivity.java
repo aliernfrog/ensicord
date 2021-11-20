@@ -240,6 +240,7 @@ public class ChatActivity extends AppCompatActivity {
     void openOptionsSheet() {
         OptionsSheet optionsSheet = new OptionsSheet();
         optionsSheet.show(getSupportFragmentManager(), "options_sheet");
+        saveChatHistory();
     }
 
     void setListeners() {
