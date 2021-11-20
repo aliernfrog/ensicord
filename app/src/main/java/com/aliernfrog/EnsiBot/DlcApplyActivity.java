@@ -54,7 +54,7 @@ public class DlcApplyActivity extends AppCompatActivity {
 
         dlcId = getIntent().getStringExtra("dlc_id");
         applyDefault = getIntent().getBooleanExtra("applyDefault", false);
-        dataPath = getExternalFilesDir("saved").toString();
+        dataPath = getExternalFilesDir(".saved").toString();
         ensiAvatarPath = dataPath+"/ensi.png";
 
         inform("Please wait..");
@@ -98,7 +98,6 @@ public class DlcApplyActivity extends AppCompatActivity {
     }
 
     void applyDlc() {
-        inform("Applying the DLC");
         try {
             if (rawDlc.has("words")) dlcEdit.putString("words", rawDlc.getString("words"));
             if (rawDlc.has("verbs")) dlcEdit.putString("verbs", rawDlc.getString("verbs"));

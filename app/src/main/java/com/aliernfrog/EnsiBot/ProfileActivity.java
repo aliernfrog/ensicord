@@ -46,7 +46,7 @@ public class ProfileActivity extends AppCompatActivity {
         config = getSharedPreferences("APP_CONFIG", MODE_PRIVATE);
         configEdit = config.edit();
 
-        avatarPath = getExternalFilesDir("saved").toString()+"/avatar.png";
+        avatarPath = getExternalFilesDir(".saved").toString()+"/avatar.png";
 
         goBack = findViewById(R.id.profile_goBack);
         avatarLinear = findViewById(R.id.profile_avatar_linear);
