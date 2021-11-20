@@ -15,6 +15,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.aliernfrog.EnsiBot.ChatActivity;
 import com.aliernfrog.EnsiBot.OptionsActivity;
 import com.aliernfrog.EnsiBot.ProfileActivity;
 import com.aliernfrog.EnsiBot.R;
@@ -72,6 +73,15 @@ public class OptionsSheet extends BottomSheetDialogFragment {
         }
     }
 
+    void switchStarboard() {
+        Intent intent = new Intent(context, ChatActivity.class);
+        intent.putExtra("chatHistoryPath", context.getExternalFilesDir(".saved").getPath()+"/starboard.json");
+        intent.putExtra("sendMessageAllowed", false);
+        intent.putExtra("isStarboard", true);
+        startActivity(intent);
+        dismiss();
+    }
+
     void switchActivity(Class activity) {
         Intent intent = new Intent(context, activity);
         startActivity(intent);
@@ -80,6 +90,7 @@ public class OptionsSheet extends BottomSheetDialogFragment {
 
     void setListeners() {
         AppUtil.handleOnPressEvent(avatar_linear, () -> switchActivity(ProfileActivity.class));
+        AppUtil.handleOnPressEvent(starboard, this::switchStarboard);
         AppUtil.handleOnPressEvent(options, () -> switchActivity(OptionsActivity.class));
     }
 }

@@ -13,7 +13,12 @@ import androidx.annotation.Nullable;
 import com.aliernfrog.EnsiBot.ChatActivity;
 import com.aliernfrog.EnsiBot.R;
 import com.aliernfrog.EnsiBot.utils.AppUtil;
+import com.aliernfrog.EnsiBot.utils.FileUtil;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+
+import org.json.JSONArray;
+
+import java.io.File;
 
 public class MessageSheet extends BottomSheetDialogFragment {
     TextView message_author;
@@ -41,6 +46,22 @@ public class MessageSheet extends BottomSheetDialogFragment {
         return view;
     }
 
+    void addToStarboard() {
+        try {
+            String starboardPath = context.getExternalFilesDir(".saved").getPath()+"/starboard.json";
+            File starboardFile = new File(starboardPath);
+            String content = FileUtil.readFile(starboardFile.getPath());
+            JSONArray starboardArray = new JSONArray(content);
+            starboardArray.put(context.getChosenMessageData());
+            String parentPath = starboardFile.getParent();
+            String fileName = starboardFile.getName();
+            FileUtil.saveFile(parentPath, fileName, starboardArray.toString());
+            dismiss();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     void deleteMessage() {
         context.deleteChosenMessage();
         dismiss();
@@ -57,6 +78,7 @@ public class MessageSheet extends BottomSheetDialogFragment {
     }
 
     void setListeners() {
+        AppUtil.handleOnPressEvent(addToStarboard, this::addToStarboard);
         AppUtil.handleOnPressEvent(deleteMessage, this::deleteMessage);
     }
 }

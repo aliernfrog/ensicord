@@ -27,6 +27,7 @@ import com.aliernfrog.EnsiBot.utils.EnsiUtil;
 import com.aliernfrog.EnsiBot.utils.FileUtil;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -260,6 +261,15 @@ public class ChatActivity extends AppCompatActivity {
 
     public View getChosenMessage() {
         return chatRoot.getChildAt(chosenMessage);
+    }
+
+    public JSONObject getChosenMessageData() {
+        try {
+            return chatHistory.getJSONObject(chosenMessage-1);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return new JSONObject();
+        }
     }
 
     void scrollToBottom() {

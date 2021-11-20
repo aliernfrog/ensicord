@@ -35,8 +35,11 @@ public class SplashActivity extends AppCompatActivity {
     void checkFiles() {
         try {
             String historyPath = dataPath+"/history.json";
+            String starboardPath = dataPath+"/starboard.json";
             File historyFile = new File(historyPath);
+            File starboardFile = new File(starboardPath);
             if (!historyFile.exists()) FileUtil.saveFile(dataPath, historyFile.getName(), "[]");
+            if (!starboardFile.exists()) FileUtil.saveFile(dataPath, starboardFile.getName(), "[]");
         } catch (Exception e) {
             e.printStackTrace();
         }
