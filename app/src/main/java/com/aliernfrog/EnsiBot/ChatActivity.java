@@ -178,6 +178,19 @@ public class ChatActivity extends AppCompatActivity {
         avatar.setImageDrawable(userAvatar);
     }
 
+    void saveChatHistory() {
+        if (!saveNewMessages) return;
+        try {
+            File file = new File(chatHistoryPath);
+            String parentPath = file.getParent();
+            String fileName = file.getName();
+            String history = chatHistory.toString();
+            FileUtil.saveFile(parentPath, fileName, history);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     void loadChatHistory() {
         if (!saveNewMessages) return;
         for (int i = 0; i < chatHistory.length(); i++) {
@@ -193,19 +206,6 @@ public class ChatActivity extends AppCompatActivity {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
-    }
-
-    void saveChatHistory() {
-        if (!saveNewMessages) return;
-        try {
-            File file = new File(chatHistoryPath);
-            String parentPath = file.getParent();
-            String fileName = file.getName();
-            String history = chatHistory.toString();
-            FileUtil.saveFile(parentPath, fileName, history);
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
@@ -240,11 +240,6 @@ public class ChatActivity extends AppCompatActivity {
         savedTypes = new ArrayList<>(Arrays.asList(_types.split("\n")));
     }
 
-    void scrollToBottom() {
-        Handler handler = new Handler();
-        handler.postDelayed(() -> chatScroll.fullScroll(View.FOCUS_DOWN), 100);
-    }
-
     void openMessageSheet(View message) {
         chosenMessage = ((LinearLayout)message.getParent()).indexOfChild(message);
         MessageSheet messageSheet = new MessageSheet();
@@ -259,6 +254,11 @@ public class ChatActivity extends AppCompatActivity {
 
     public View getChosenMessage() {
         return chatRoot.getChildAt(chosenMessage);
+    }
+
+    void scrollToBottom() {
+        Handler handler = new Handler();
+        handler.postDelayed(() -> chatScroll.fullScroll(View.FOCUS_DOWN), 100);
     }
 
     void setListeners() {
