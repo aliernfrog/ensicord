@@ -14,7 +14,7 @@ import org.json.JSONObject;
 public class AppUtil {
     public static void mentionUser(EditText input, String username) {
         String current = input.getText().toString();
-        String mention = "<b><font color=#0098FF>@"+username+"</font></b>";
+        String mention = EnsiUtil.buildMention(username);
         String finalText = current+mention;
         input.setText(finalText);
         input.setSelection(input.length());
