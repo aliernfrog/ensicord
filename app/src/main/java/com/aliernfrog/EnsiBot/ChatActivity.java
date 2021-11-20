@@ -114,7 +114,7 @@ public class ChatActivity extends AppCompatActivity {
         ImageView avatarView = message.findViewById(R.id.message_author_avatar);
         TextView usernameView = message.findViewById(R.id.message_author_username);
         TextView contentView = message.findViewById(R.id.message_content);
-        if (avatar != null) avatarView.setImageDrawable(avatar);
+        avatarView.setImageDrawable(avatar);
         usernameView.setText(Html.fromHtml(username));
         contentView.setText(Html.fromHtml(content));
         messageView.setBackgroundColor(Color.parseColor(messageColor));
