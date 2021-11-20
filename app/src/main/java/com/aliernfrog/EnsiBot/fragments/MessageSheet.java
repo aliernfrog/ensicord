@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,7 +12,6 @@ import androidx.annotation.Nullable;
 
 import com.aliernfrog.EnsiBot.ChatActivity;
 import com.aliernfrog.EnsiBot.R;
-import com.aliernfrog.EnsiBot.utils.AppUtil;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 public class MessageSheet extends BottomSheetDialogFragment {
