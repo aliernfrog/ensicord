@@ -21,8 +21,8 @@ public class AppUtil {
     }
 
     public static String fixTextForHtml(String text) {
-        text = text.replace("  ", "&nbsp;&nbsp;");
         text = text.replace("   ", "&nbsp;&nbsp;&nbsp;");
+        text = text.replace("  ", "&nbsp;&nbsp;");
         text = text.replace("\n", "<br>");
         return text;
     }
