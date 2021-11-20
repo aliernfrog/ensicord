@@ -46,7 +46,8 @@
             android:layout_height="wrap_content"
             android:linksClickable="true"
             android:text="@string/content"
-            android:textColor="#DDDDDD" />
+            android:textColor="#DDDDDD"
+            android:autoLink="web" />
 
     </LinearLayout>
 </LinearLayout>

@@ -48,12 +48,14 @@ public class ChatActivity extends AppCompatActivity {
 
     SharedPreferences config;
     SharedPreferences dlc;
+    SharedPreferences update;
 
     String ensiAvatarPath;
     String avatarPath;
 
     Drawable ensiAvatar;
     Drawable userAvatar;
+    Drawable systemAvatar;
 
     String ensiUsername;
     String userUsername;
@@ -85,6 +87,7 @@ public class ChatActivity extends AppCompatActivity {
 
         ensiAvatar = ContextCompat.getDrawable(getApplicationContext(), R.drawable.ensi);
         userAvatar = ContextCompat.getDrawable(getApplicationContext(), R.drawable.user);
+        systemAvatar = ContextCompat.getDrawable(getApplicationContext(), R.drawable.system);
 
         background = findViewById(R.id.chat_constraint);
         topBar = findViewById(R.id.chat_topBar);
@@ -99,6 +102,7 @@ public class ChatActivity extends AppCompatActivity {
 
         config = getSharedPreferences("APP_CONFIG", MODE_PRIVATE);
         dlc = getSharedPreferences("APP_DLC", MODE_PRIVATE);
+        update = getSharedPreferences("APP_UPDATE", MODE_PRIVATE);
         ensiUsername = dlc.getString("ensiName", "<font color=yellow>Ensi</font>");
         userUsername = config.getString("username", "Some frok");
 
@@ -109,6 +113,7 @@ public class ChatActivity extends AppCompatActivity {
         setListeners();
         getChatOptions();
         loadChatHistory();
+        checkUpdates();
     }
 
     void sendMessage(@Nullable Drawable avatar, String username, String content, Boolean saveToHistory) {
@@ -209,6 +214,7 @@ public class ChatActivity extends AppCompatActivity {
                 String content = message.getString("content");
                 if (avatar.equals("user")) avatarDrawable = userAvatar;
                 if (avatar.equals("ensi")) avatarDrawable = ensiAvatar;
+                if (avatar.equals("other")) avatarDrawable = systemAvatar;
                 sendMessage(avatarDrawable, author, content, false);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -245,6 +251,23 @@ public class ChatActivity extends AppCompatActivity {
         savedVerbs = new ArrayList<>(Arrays.asList(verbs.split("\n")));
         savedConcs = new ArrayList<>(Arrays.asList(_concs.split("\n")));
         savedTypes = new ArrayList<>(Arrays.asList(_types.split("\n")));
+    }
+
+    void checkUpdates() {
+        if (isStarboard) return;
+        try {
+            int currentVersion = AppUtil.getVersCode(getApplicationContext());
+            int latestVersion = update.getInt("updateLatest", currentVersion);
+            if (latestVersion > currentVersion) {
+                String _changelog = update.getString("updateChangelog", "-");
+                String _download = update.getString("updateDownload", "-");
+                String _author = "New update!";
+                String _content = _changelog+"<br>"+_download;
+                sendMessage(systemAvatar, _author, _content, true);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     void openMessageSheet(View message) {
