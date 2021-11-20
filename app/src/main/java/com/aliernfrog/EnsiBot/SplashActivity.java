@@ -20,6 +20,7 @@ public class SplashActivity extends AppCompatActivity {
 
     SharedPreferences config;
     Boolean saveHistory = true;
+    Boolean autoUpdate = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +33,7 @@ public class SplashActivity extends AppCompatActivity {
 
         config = getSharedPreferences("APP_CONFIG", MODE_PRIVATE);
         saveHistory = config.getBoolean("saveHistory", true);
+        autoUpdate = config.getBoolean("autoUpdate", true);
 
         getUpdates();
         checkFiles();
@@ -39,11 +41,11 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     void getUpdates() {
+        if (!autoUpdate) return;
         try {
             AppUtil.getUpdates(getApplicationContext());
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT).show();
         }
     }
 
