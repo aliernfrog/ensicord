@@ -77,6 +77,7 @@ public class ChatActivity extends AppCompatActivity {
     JSONArray chatHistory;
 
     Integer chosenMessage;
+    Boolean requiresProfileUpdate = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,13 +105,11 @@ public class ChatActivity extends AppCompatActivity {
         config = getSharedPreferences("APP_CONFIG", MODE_PRIVATE);
         dlc = getSharedPreferences("APP_DLC", MODE_PRIVATE);
         update = getSharedPreferences("APP_UPDATE", MODE_PRIVATE);
-        ensiUsername = dlc.getString("ensiName", "<font color=yellow>Ensi</font>");
-        userUsername = config.getString("username", "Some frok");
 
         getDlcTheme();
         getSavedWordsAndVerbs();
         getChannel(null);
-        getAvatar();
+        getAvatarsAndUsernames();
         setListeners();
         getChatOptions();
         loadChatHistory();
@@ -139,6 +138,7 @@ public class ChatActivity extends AppCompatActivity {
         scrollToBottom();
         if (saveToHistory) chatHistory.put(AppUtil.buildMessageData(username, content, userUsername, ensiUsername));
         if (!username.equals(ensiUsername) && saveToHistory && sendMessageAllowed) sendMessage(ensiAvatar, ensiUsername, EnsiUtil.buildMessage(username, content, savedWords, savedVerbs, savedConcs, savedTypes), true);
+        if (requiresProfileUpdate) getAvatarsAndUsernames();
     }
 
     public void deleteChosenMessage() {
@@ -183,12 +183,15 @@ public class ChatActivity extends AppCompatActivity {
         }
     }
 
-    void getAvatar() {
+    void getAvatarsAndUsernames() {
         File avatarFile = new File(avatarPath);
         File ensiAvatarFile = new File(ensiAvatarPath);
         if (avatarFile.exists()) userAvatar = Drawable.createFromPath(avatarPath);
         if (ensiAvatarFile.exists()) ensiAvatar = Drawable.createFromPath(ensiAvatarPath);
         avatar.setImageDrawable(userAvatar);
+        ensiUsername = dlc.getString("ensiName", "<font color=yellow>Ensi</font>");
+        userUsername = config.getString("username", "Some frok");
+        requiresProfileUpdate = false;
     }
 
     void saveChatHistory() {
@@ -281,6 +284,7 @@ public class ChatActivity extends AppCompatActivity {
     void openOptionsSheet() {
         OptionsSheet optionsSheet = new OptionsSheet();
         optionsSheet.show(getSupportFragmentManager(), "options_sheet");
+        requiresProfileUpdate = true;
         saveChatHistory();
     }
 
