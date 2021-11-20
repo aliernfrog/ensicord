@@ -1,5 +1,6 @@
 package com.aliernfrog.EnsiBot;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -251,6 +252,7 @@ public class ChatActivity extends AppCompatActivity {
         savedVerbs = new ArrayList<>(Arrays.asList(verbs.split("\n")));
         savedConcs = new ArrayList<>(Arrays.asList(_concs.split("\n")));
         savedTypes = new ArrayList<>(Arrays.asList(_types.split("\n")));
+        if (_types.equals("")) applyDefaultDlc();
     }
 
     void checkUpdates() {
@@ -297,6 +299,12 @@ public class ChatActivity extends AppCompatActivity {
 
     public Boolean getIsStarboard() {
         return isStarboard;
+    }
+
+    void applyDefaultDlc() {
+        Intent intent = new Intent(this, DlcApplyActivity.class);
+        intent.putExtra("applyDefault", true);
+        startActivity(intent);
     }
 
     void scrollToBottom() {

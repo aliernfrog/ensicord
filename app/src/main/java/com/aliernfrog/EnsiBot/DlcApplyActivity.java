@@ -18,7 +18,6 @@ import org.json.JSONObject;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 
@@ -32,6 +31,7 @@ public class DlcApplyActivity extends AppCompatActivity {
     SharedPreferences.Editor dlcEdit;
 
     String dlcId;
+    Boolean applyDefault;
     String dataPath;
     String ensiAvatarPath;
     String url = "https://aliernfrog.repl.co";
@@ -53,21 +53,43 @@ public class DlcApplyActivity extends AppCompatActivity {
         dlcEdit = dlc.edit();
 
         dlcId = getIntent().getStringExtra("dlc_id");
+        applyDefault = getIntent().getBooleanExtra("applyDefault", false);
         dataPath = getExternalFilesDir("saved").toString();
         ensiAvatarPath = dataPath+"/ensi.png";
 
-        inform("Downloading DLC");
+        inform("Please wait..");
         Handler handler = new Handler();
         handler.postDelayed(this::getDlc, 1000);
     }
 
     void getDlc() {
+        if (dlcId != null) {
+            getDlcFromWebsite();
+        } else if (applyDefault) {
+            getDlcFromFile();
+        } else {
+            finish();
+        }
+    }
+
+    void getDlcFromWebsite() {
         try {
             JSONObject object = new JSONObject();
             object.put("type", "dlcGet");
             object.put("dlc_id", dlcId);
             String res = WebUtil.doPostRequest(url, object);
             rawDlc = new JSONObject(res);
+            applyDlc();
+        } catch (Exception e) {
+            e.printStackTrace();
+            inform(e.toString());
+        }
+    }
+
+    void getDlcFromFile() {
+        try {
+            String content = FileUtil.readFileFromAssets(getApplicationContext(), "default.json");
+            rawDlc = new JSONObject(content);
             applyDlc();
         } catch (Exception e) {
             e.printStackTrace();
@@ -117,13 +139,13 @@ public class DlcApplyActivity extends AppCompatActivity {
     }
 
     void finishApplying() {
-        inform("Applied the DLC!");
+        inform("Done!");
         Intent intent = new Intent(getApplicationContext(), SplashActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         new Handler().postDelayed(() -> {
             finish();
             startActivity(intent);
-        }, 2000);
+        }, 1000);
     }
 
     void inform(String text) {
