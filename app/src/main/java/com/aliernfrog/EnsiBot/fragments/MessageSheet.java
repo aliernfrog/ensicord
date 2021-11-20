@@ -75,6 +75,7 @@ public class MessageSheet extends BottomSheetDialogFragment {
         String content = contentView.getText().toString();
         message_author.setText(author);
         message_content.setText(content);
+        if (context.getIsStarboard()) addToStarboard.setVisibility(View.GONE);
     }
 
     void setListeners() {

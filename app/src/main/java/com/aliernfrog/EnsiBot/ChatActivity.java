@@ -272,6 +272,10 @@ public class ChatActivity extends AppCompatActivity {
         }
     }
 
+    public Boolean getIsStarboard() {
+        return isStarboard;
+    }
+
     void scrollToBottom() {
         Handler handler = new Handler();
         handler.postDelayed(() -> chatScroll.fullScroll(View.FOCUS_DOWN), 100);
