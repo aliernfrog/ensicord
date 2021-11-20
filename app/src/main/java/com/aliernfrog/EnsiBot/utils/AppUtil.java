@@ -9,6 +9,7 @@ import android.widget.EditText;
 
 import androidx.annotation.Nullable;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class AppUtil {
@@ -18,13 +19,6 @@ public class AppUtil {
         String finalText = current+mention;
         input.setText(finalText);
         input.setSelection(input.length());
-    }
-
-    public static String fixTextForHtml(String text) {
-        text = text.replace("   ", "&nbsp;&nbsp;&nbsp;");
-        text = text.replace("  ", "&nbsp;&nbsp;");
-        text = text.replace("\n", "<br>");
-        return text;
     }
 
     public static JSONObject buildMessageData(String author, String content, String userUsername, String ensiUsername) {
@@ -39,6 +33,25 @@ public class AppUtil {
         } catch (Exception e) {
             return object;
         }
+    }
+
+    public static String fixTextForHtml(String text) {
+        text = text.replace("   ", "&nbsp;&nbsp;&nbsp;");
+        text = text.replace("  ", "&nbsp;&nbsp;");
+        text = text.replace("\n", "<br>");
+        return text;
+    }
+
+    public static JSONArray removeIndexFromJsonArray(JSONArray array, Integer index) {
+        JSONArray newArray = new JSONArray();
+        try {
+            for (int i = 0; i < array.length(); i++) {
+                if (i != index) newArray.put(array.get(i));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return newArray;
     }
 
     public static void handleOnPressEvent(View view, MotionEvent event, @Nullable Runnable onClick) {
