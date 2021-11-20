@@ -52,19 +52,6 @@ public class EnsiUtil {
         return full.toString();
     }
 
-    public static String listJoin(String chars, List<String> list) {
-        StringBuilder finalStr = new StringBuilder();
-        for (int i = 0; i < list.size(); i++) {
-            String current = list.get(i);
-            if (finalStr.toString().equals("")) {
-                finalStr.append(current);
-            } else {
-                finalStr.append(chars).append(current);
-            }
-        }
-        return finalStr.toString();
-    }
-
     static String randomize(List<String> list) {
         Random random = new Random();
         return list.get(random.nextInt(list.size()));
