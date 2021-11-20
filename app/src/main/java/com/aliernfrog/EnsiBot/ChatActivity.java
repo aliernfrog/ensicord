@@ -105,10 +105,10 @@ public class ChatActivity extends AppCompatActivity {
         getDlcTheme();
         getSavedWordsAndVerbs();
         getChannel(null);
-        getChatOptions();
         getAvatar();
-        loadChatHistory();
         setListeners();
+        getChatOptions();
+        loadChatHistory();
     }
 
     void sendMessage(@Nullable Drawable avatar, String username, String content, Boolean saveToHistory) {
@@ -167,7 +167,7 @@ public class ChatActivity extends AppCompatActivity {
 
     void applyChatOptions() {
         if (isStarboard) {
-            avatar.setVisibility(View.GONE);
+            avatar.setOnClickListener(view -> Toast.makeText(getApplicationContext(), R.string.starboard_optionsDisabled, Toast.LENGTH_SHORT).show());
             getChannel(getString(R.string.starboard));
         }
         if (!sendMessageAllowed) {
