@@ -34,6 +34,9 @@
     <string name="options_moreOptions">More options</string>
     <string name="options_autoUpdate">Automatically check for updates</string>
     <string name="options_debugMode">Debug mode</string>
+    <string name="options_experimentalOptions">Experimental options</string>
+    <string name="options_experimentalOptions_warning">Do not change experimental options if you do not know what they do!</string>
+    <string name="options_allowExperimentalDlcs">Allow experimental DLCs</string>
     <string name="viewLogs">View logs</string>
     <string name="logs_clear">Clear logs</string>
 </resources>

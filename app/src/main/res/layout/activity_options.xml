@@ -173,6 +173,51 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/options_experimental_linear"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="8dp"
+                android:background="@drawable/linear"
+                android:orientation="vertical"
+                android:padding="8dp"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:text="@string/options_experimentalOptions"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/linear_red"
+                    android:padding="8dp"
+                    android:text="@string/options_experimentalOptions_warning"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold" />
+
+                <CheckBox
+                    android:id="@+id/options_experimental_allowExperimentalDlcs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/linear_button"
+                    android:padding="8dp"
+                    android:text="@string/options_allowExperimentalDlcs"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/options_changelog_linear"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
