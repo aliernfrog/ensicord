@@ -156,7 +156,7 @@ public class ChatActivity extends AppCompatActivity {
         if (!username.equals(ensiUsername) && saveToHistory && sendMessageAllowed) {
             sendMessage(ensiAvatar, ensiUsername, EnsiUtil.buildMessage(username, content, savedWords, savedVerbs, savedConcs, savedTypes), true);
             int randomInt = random.nextInt(10);
-            if (randomInt == 3) {
+            if (randomInt == 3 && ensiSaveWords) {
                 String[] args = content.split(" ");
                 String word = args[random.nextInt(args.length)];
                 saveWord(word);
