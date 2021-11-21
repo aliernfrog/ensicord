@@ -34,6 +34,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     SharedPreferences config;
     SharedPreferences.Editor configEdit;
+    Boolean debugMode = false;
 
     String avatarPath;
     Integer REQUEST_PICK_AVATAR = 1;
@@ -45,6 +46,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         config = getSharedPreferences("APP_CONFIG", MODE_PRIVATE);
         configEdit = config.edit();
+        debugMode = config.getBoolean("debugMode", false);
 
         avatarPath = getExternalFilesDir(".saved").toString()+"/avatar.png";
 
@@ -56,35 +58,42 @@ public class ProfileActivity extends AppCompatActivity {
         usernameConfirm = findViewById(R.id.profile_username_confirm);
         redirectDlcs = findViewById(R.id.profile_dlcs);
 
+        devLog("ProfileActivity started");
+
         setListeners();
         updateOptions();
     }
 
-    void changeName(String name) {
+    public void changeName(String name) {
         if (name.replace(" ","").equals("")) name = "Some frok";
+        devLog("changing name to: "+name);
         configEdit.putString("username", name);
         configEdit.commit();
         Toast.makeText(getApplicationContext(), R.string.profile_username_changed, Toast.LENGTH_SHORT).show();
     }
 
-    void pickAvatar() {
+    public void pickAvatar() {
         if (!hasPerms()) return;
+        devLog("picking avatar");
         Intent intent = new Intent(this, FilePickerActivity.class);
         intent.putExtra("FILE_TYPE", "image/*");
         startActivityForResult(intent, REQUEST_PICK_AVATAR);
     }
 
-    void setAvatar(String path) {
+    public void setAvatar(String path) {
+        devLog("attempting to set avatar");
         try {
             FileUtil.copyFile(path, avatarPath);
             getAvatar();
             Toast.makeText(getApplicationContext(), R.string.profile_avatar_changed, Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             e.printStackTrace();
+            devLog(e.toString());
         }
     }
 
-    void getAvatar() {
+    public void getAvatar() {
+        devLog("getting avatar");
         File avatarFile = new File(avatarPath);
         if (avatarFile.exists()) {
             Drawable userAvatar = Drawable.createFromPath(avatarPath);
@@ -100,6 +109,10 @@ public class ProfileActivity extends AppCompatActivity {
     void switchActivity(Class activity) {
         Intent intent = new Intent(this, activity);
         startActivity(intent);
+    }
+
+    void devLog(String text) {
+        if (debugMode) AppUtil.devLog(text, getApplicationContext());
     }
 
     Boolean hasPerms() {

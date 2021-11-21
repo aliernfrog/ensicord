@@ -3,6 +3,7 @@ package com.aliernfrog.EnsiBot;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
@@ -27,6 +28,9 @@ public class DlcActivity extends AppCompatActivity {
     LinearLayout chatRoot;
     LinearLayout experimentalRoot;
 
+    SharedPreferences config;
+    Boolean debugMode = false;
+
     String url = "https://aliernfrog.repl.co";
     JSONArray rawDlcs;
 
@@ -37,11 +41,16 @@ public class DlcActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dlc);
 
+        config = getSharedPreferences("APP_CONFIG", MODE_PRIVATE);
+        debugMode = config.getBoolean("debugMode", false);
+
         goBack = findViewById(R.id.dlc_goBack);
         loading = findViewById(R.id.dlc_loading);
         themeRoot = findViewById(R.id.dlc_theme_root);
         chatRoot = findViewById(R.id.dlc_chat_root);
         experimentalRoot = findViewById(R.id.dlc_experimental_root);
+
+        devLog("DlcActivity started");
 
         setListeners();
 
@@ -49,7 +58,8 @@ public class DlcActivity extends AppCompatActivity {
         handler.postDelayed(this::getDlcs, 1000);
     }
 
-    void getDlcs() {
+    public void getDlcs() {
+        devLog("attempting to fetch dlcs");
         try {
             JSONObject obj = new JSONObject();
             obj.put("type", "dlcGet");
@@ -58,10 +68,12 @@ public class DlcActivity extends AppCompatActivity {
             loadDlcs();
         } catch (Exception e) {
             e.printStackTrace();
+            devLog(e.toString());
         }
     }
 
-    void loadDlcs() {
+    public void loadDlcs() {
+        devLog("attempting to load "+rawDlcs.length()+" dlcs");
         try {
             for (int i = 0; i < rawDlcs.length(); i++) {
                 JSONObject current = rawDlcs.getJSONObject(i);
@@ -75,10 +87,11 @@ public class DlcActivity extends AppCompatActivity {
             loading.setVisibility(View.GONE);
         } catch (Exception e) {
             e.printStackTrace();
+            devLog(e.toString());
         }
     }
 
-    void setDlcView(JSONObject object, LinearLayout root, ViewGroup dlc) {
+    public void setDlcView(JSONObject object, LinearLayout root, ViewGroup dlc) {
         try {
             LinearLayout dlcLinear = dlc.findViewById(R.id.dlc_linear);
             ImageView thumbnailView = dlc.findViewById(R.id.dlc_thumbnail);
@@ -94,10 +107,11 @@ public class DlcActivity extends AppCompatActivity {
             root.addView(dlc);
         } catch (Exception e) {
             e.printStackTrace();
+            devLog(e.toString());
         }
     }
 
-    void getDlcThumbnail(ImageView thumbnaiView, JSONObject dlc) {
+    public void getDlcThumbnail(ImageView thumbnaiView, JSONObject dlc) {
         try {
             if (dlc.has("thumbnailUrl")) {
                 thumbnaiView.setImageBitmap(WebUtil.getBipmapFromURL(dlc.getString("thumbnailUrl")));
@@ -106,6 +120,7 @@ public class DlcActivity extends AppCompatActivity {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            devLog(e.toString());
         }
     }
 
@@ -114,6 +129,10 @@ public class DlcActivity extends AppCompatActivity {
         intent.putExtra("dlc_id", id);
         finish();
         startActivity(intent);
+    }
+
+    void devLog(String text) {
+        if (debugMode) AppUtil.devLog(text, getApplicationContext());
     }
 
     void setListeners() {

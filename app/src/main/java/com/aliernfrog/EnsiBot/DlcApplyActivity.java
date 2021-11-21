@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.os.StrictMode;
 import android.widget.TextView;
 
+import com.aliernfrog.EnsiBot.utils.AppUtil;
 import com.aliernfrog.EnsiBot.utils.FileUtil;
 import com.aliernfrog.EnsiBot.utils.WebUtil;
 
@@ -29,6 +30,7 @@ public class DlcApplyActivity extends AppCompatActivity {
     SharedPreferences dlc;
     SharedPreferences.Editor configEdit;
     SharedPreferences.Editor dlcEdit;
+    Boolean debugMode = false;
 
     String dlcId;
     Boolean applyDefault;
@@ -51,28 +53,33 @@ public class DlcApplyActivity extends AppCompatActivity {
         dlc = getSharedPreferences("APP_DLC", MODE_PRIVATE);
         configEdit = config.edit();
         dlcEdit = dlc.edit();
+        debugMode = config.getBoolean("debugMode", false);
 
         dlcId = getIntent().getStringExtra("dlc_id");
         applyDefault = getIntent().getBooleanExtra("applyDefault", false);
         dataPath = getExternalFilesDir(".saved").toString();
         ensiAvatarPath = dataPath+"/ensi.png";
 
+        devLog("DlcApplyActivity started");
+
         inform("Please wait..");
         Handler handler = new Handler();
         handler.postDelayed(this::getDlc, 1000);
     }
 
-    void getDlc() {
+    public void getDlc() {
         if (dlcId != null) {
             getDlcFromWebsite();
         } else if (applyDefault) {
             getDlcFromFile();
         } else {
+            devLog("no dlc to apply, finishing");
             finish();
         }
     }
 
-    void getDlcFromWebsite() {
+    public void getDlcFromWebsite() {
+        devLog("attempting to apply from website: "+dlcId);
         try {
             JSONObject object = new JSONObject();
             object.put("type", "dlcGet");
@@ -83,10 +90,12 @@ public class DlcApplyActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
             inform(e.toString());
+            devLog(e.toString());
         }
     }
 
-    void getDlcFromFile() {
+    public void getDlcFromFile() {
+        devLog("attempting to apply from file");
         try {
             String content = FileUtil.readFileFromAssets(getApplicationContext(), "default.json");
             rawDlc = new JSONObject(content);
@@ -94,10 +103,12 @@ public class DlcApplyActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
             inform(e.toString());
+            devLog(e.toString());
         }
     }
 
-    void applyDlc() {
+    public void applyDlc() {
+        devLog("attempting to apply the dlc");
         try {
             if (rawDlc.has("words")) dlcEdit.putString("words", rawDlc.getString("words"));
             if (rawDlc.has("verbs")) dlcEdit.putString("verbs", rawDlc.getString("verbs"));
@@ -121,10 +132,12 @@ public class DlcApplyActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
             inform(e.toString());
+            devLog(e.toString());
         }
     }
 
-    void applyEnsiAvatar(String avatarUrl) {
+    public void applyEnsiAvatar(String avatarUrl) {
+        devLog("attempting to apply ensi avatar");
         try {
             File ensiAvatarFile = new File(ensiAvatarPath);
             Bitmap avatar = WebUtil.getBipmapFromURL(avatarUrl);
@@ -134,6 +147,7 @@ public class DlcApplyActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
             inform(e.toString());
+            devLog(e.toString());
         }
     }
 
@@ -149,5 +163,9 @@ public class DlcApplyActivity extends AppCompatActivity {
 
     void inform(String text) {
         info.setText(text);
+    }
+
+    void devLog(String text) {
+        if (debugMode) AppUtil.devLog(text, getApplicationContext());
     }
 }

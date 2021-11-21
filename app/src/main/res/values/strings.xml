@@ -27,10 +27,10 @@
     <string name="dlcs_experimental">Experimental packs</string>
     <string name="dlcs_experimental_warning">Experimental DLCs can be unstable, so be careful while using them!</string>
     <string name="dlc_hint">Click to apply this pack</string>
-    <string name="dlc_applied">Applied the pack!</string>
     <string name="options">Options</string>
     <string name="options_chatOptions">Chat options</string>
     <string name="options_saveHistory">Save chat history</string>
     <string name="options_moreOptions">More options</string>
     <string name="options_autoUpdate">Automatically check for updates</string>
+    <string name="options_debugMode">Debug mode</string>
 </resources>

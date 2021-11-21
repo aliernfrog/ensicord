@@ -18,6 +18,7 @@ public class OptionsActivity extends AppCompatActivity {
     CheckBox saveHistory;
     LinearLayout moreOptions;
     CheckBox autoUpdate;
+    CheckBox debugMode;
     LinearLayout changelogLinear;
     TextView changelogText;
 
@@ -38,6 +39,7 @@ public class OptionsActivity extends AppCompatActivity {
         saveHistory = findViewById(R.id.options_chat_saveHistory);
         moreOptions = findViewById(R.id.options_more_linear);
         autoUpdate = findViewById(R.id.options_more_autoUpdate);
+        debugMode = findViewById(R.id.options_more_debugMode);
         changelogLinear = findViewById(R.id.options_changelog_linear);
         changelogText = findViewById(R.id.options_changelog);
 
@@ -54,6 +56,7 @@ public class OptionsActivity extends AppCompatActivity {
     void getConfig() {
         saveHistory.setChecked(config.getBoolean("saveHistory", true));
         autoUpdate.setChecked(config.getBoolean("autoUpdate", true));
+        debugMode.setChecked(config.getBoolean("debugMode", false));
     }
 
     void changeBoolean(String name, Boolean value) {
@@ -85,5 +88,6 @@ public class OptionsActivity extends AppCompatActivity {
         AppUtil.handleOnPressEvent(changelogLinear);
         saveHistory.setOnCheckedChangeListener((compoundButton, b) -> changeBoolean("saveHistory", b));
         autoUpdate.setOnCheckedChangeListener((compoundButton, b) -> changeBoolean("autoUpdate", b));
+        debugMode.setOnCheckedChangeListener((compoundButton, b) -> changeBoolean("debugMode", b));
     }
 }
