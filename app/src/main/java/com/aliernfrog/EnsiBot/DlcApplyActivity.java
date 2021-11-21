@@ -114,6 +114,7 @@ public class DlcApplyActivity extends AppCompatActivity {
             if (rawDlc.has("verbs")) dlcEdit.putString("verbs", rawDlc.getString("verbs"));
             if (rawDlc.has("concs")) dlcEdit.putString("concs", rawDlc.getString("concs"));
             if (rawDlc.has("types")) dlcEdit.putString("types", rawDlc.getString("types"));
+            if (rawDlc.has("ensiSaveWords")) dlcEdit.putBoolean("ensiSaveWords", rawDlc.getBoolean("ensiSaveWords"));
             if (rawDlc.has("ensiName")) dlcEdit.putString("ensiName", rawDlc.getString("ensiName"));
             if (rawDlc.has("ensiAvatarUrl")) applyEnsiAvatar(rawDlc.getString("ensiAvatarUrl"));
             if (rawDlc.has("channelName")) dlcEdit.putString("channelName", rawDlc.getString("channelName"));

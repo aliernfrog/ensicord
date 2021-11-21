@@ -34,6 +34,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
 
 public class ChatActivity extends AppCompatActivity {
     ConstraintLayout background;
@@ -50,6 +51,7 @@ public class ChatActivity extends AppCompatActivity {
     SharedPreferences config;
     SharedPreferences dlc;
     SharedPreferences update;
+    SharedPreferences.Editor dlcEdit;
     Boolean debugMode = false;
 
     String ensiAvatarPath;
@@ -78,7 +80,10 @@ public class ChatActivity extends AppCompatActivity {
     JSONArray chatHistory;
 
     Integer chosenMessage;
+    Boolean ensiSaveWords = true;
     Boolean requiresProfileUpdate = false;
+
+    Random random = new Random();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,7 +111,9 @@ public class ChatActivity extends AppCompatActivity {
         config = getSharedPreferences("APP_CONFIG", MODE_PRIVATE);
         dlc = getSharedPreferences("APP_DLC", MODE_PRIVATE);
         update = getSharedPreferences("APP_UPDATE", MODE_PRIVATE);
+        dlcEdit = dlc.edit();
         debugMode = config.getBoolean("debugMode", false);
+        ensiSaveWords = dlc.getBoolean("ensiSaveWords", true);
 
         devLog("ChatActivity started");
 
@@ -139,10 +146,22 @@ public class ChatActivity extends AppCompatActivity {
             return true;
         });
         chatRoot.addView(message);
+        onMessage(username, content, saveToHistory);
+    }
+
+    void onMessage(String username, String content, Boolean saveToHistory) {
         scrollToBottom();
-        if (saveToHistory) chatHistory.put(AppUtil.buildMessageData(username, content, userUsername, ensiUsername));
-        if (!username.equals(ensiUsername) && saveToHistory && sendMessageAllowed) sendMessage(ensiAvatar, ensiUsername, EnsiUtil.buildMessage(username, content, savedWords, savedVerbs, savedConcs, savedTypes), true);
         if (requiresProfileUpdate) getAvatarsAndUsernames();
+        if (saveToHistory) chatHistory.put(AppUtil.buildMessageData(username, content, userUsername, ensiUsername));
+        if (!username.equals(ensiUsername) && saveToHistory && sendMessageAllowed) {
+            sendMessage(ensiAvatar, ensiUsername, EnsiUtil.buildMessage(username, content, savedWords, savedVerbs, savedConcs, savedTypes), true);
+            int randomInt = random.nextInt(10);
+            if (randomInt == 3) {
+                String[] args = content.split(" ");
+                String word = args[random.nextInt(args.length)];
+                saveWord(word);
+            }
+        }
     }
 
     public void deleteChosenMessage() {
@@ -274,6 +293,23 @@ public class ChatActivity extends AppCompatActivity {
         savedConcs = new ArrayList<>(Arrays.asList(_concs.split("\n")));
         savedTypes = new ArrayList<>(Arrays.asList(_types.split("\n")));
         if (_types.equals("")) applyDefaultDlc();
+    }
+
+    public void saveWord(String word) {
+        devLog("attempting to save word: "+word);
+        boolean isVerb = word.endsWith("ed") || word.endsWith("ing");
+        devLog("isVerb: "+isVerb);
+        if (!isVerb) {
+            String fullStr = dlc.getString("words", "");
+            String finalStr = fullStr+"\n"+word;
+            dlcEdit.putString("words", finalStr);
+        } else {
+            String fullStr = dlc.getString("verbs", "");
+            String finalStr = fullStr+"\n"+word;
+            dlcEdit.putString("verbs", finalStr);
+        }
+        dlcEdit.commit();
+        getSavedWordsAndVerbs();
     }
 
     public void checkUpdates() {
