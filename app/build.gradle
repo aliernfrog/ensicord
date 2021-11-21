@@ -40,6 +40,8 @@ android {
             jniDebuggable true
             renderscriptDebuggable true
             applicationIdSuffix '.debug'
+            minifyEnabled true
+            shrinkResources true
         }
     }
     compileOptions {
