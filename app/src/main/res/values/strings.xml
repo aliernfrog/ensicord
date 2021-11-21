@@ -21,6 +21,7 @@
     <string name="profile_avatar_changed">Changed the avatar!</string>
     <string name="profile_username">Username</string>
     <string name="profile_username_changed">Changed the username!</string>
+    <string name="profile_appOptions">More options</string>
     <string name="dlcs">Chat &amp; theme packs</string>
     <string name="dlcs_theme">Theme packs</string>
     <string name="dlcs_chat">Chat packs</string>
