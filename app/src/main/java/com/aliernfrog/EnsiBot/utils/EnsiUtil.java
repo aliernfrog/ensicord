@@ -1,23 +1,19 @@
 package com.aliernfrog.EnsiBot.utils;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
 public class EnsiUtil {
-    static String[] defaultConcs = {"and","then","or","becans","like"};
-    static String[] defaultTypes = {"W V W","W V","V W","W","V","W V W C W V W","V W V V W","V W V V W C V W V V W","W + W = W"};
-
     public static String buildMention(String username) {
         return "<b><font color=#0098FF>@"+username+"</font></b>";
     }
 
-    public static String buildMessage(String username, String content, List<String> savedWords, List<String> savedVerbs, List<String> concs, List<String> types) {
+    public static String buildMessage(String username, String content, List<String> words, List<String> verbs, List<String> concs, List<String> types) {
         content = content.toLowerCase();
         List<String> args = Arrays.asList(content.split(" "));
 
-        String response = buildStory(savedWords, savedVerbs, concs, types);
+        String response = buildStory(words, verbs, concs, types);
 
         if (args.contains("hi") || args.contains("hello")) response = "wow hi bro";
         if (args.contains("gn")) response = buildMention(username)+", gn my,";
@@ -25,11 +21,7 @@ public class EnsiUtil {
         return response;
     }
 
-    public static String buildStory(List<String> savedWords, List<String> savedVerbs, List<String> concs, List<String> types) {
-        List<String> defaultC = new ArrayList<>(Arrays.asList(defaultConcs));
-        List<String> defaultT = new ArrayList<>(Arrays.asList(defaultTypes));
-        if (concs == null || concs.size() < 1) concs = defaultC;
-        if (types == null || types.size() < 1) types = defaultT;
+    public static String buildStory(List<String> words, List<String> verbs, List<String> concs, List<String> types) {
         Random random = new Random();
         String type = types.get(random.nextInt(types.size()));
         String[] typeArr = type.split("");
@@ -37,10 +29,10 @@ public class EnsiUtil {
         for (String cur : typeArr) {
             switch (cur) {
                 case "W":
-                    full.append(randomize(savedWords));
+                    full.append(randomize(words));
                     break;
                 case "V":
-                    full.append(randomize(savedVerbs));
+                    full.append(randomize(verbs));
                     break;
                 case "C":
                     full.append(randomize(concs));
@@ -50,19 +42,6 @@ public class EnsiUtil {
             }
         }
         return full.toString();
-    }
-
-    public static String listJoin(String chars, List<String> list) {
-        StringBuilder finalStr = new StringBuilder();
-        for (int i = 0; i < list.size(); i++) {
-            String current = list.get(i);
-            if (finalStr.toString().equals("")) {
-                finalStr.append(current);
-            } else {
-                finalStr.append(chars).append(current);
-            }
-        }
-        return finalStr.toString();
     }
 
     static String randomize(List<String> list) {

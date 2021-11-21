@@ -5,29 +5,38 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
 import android.widget.TextView;
 
+import com.aliernfrog.EnsiBot.utils.AppUtil;
 import com.aliernfrog.EnsiBot.utils.FileUtil;
 import com.aliernfrog.EnsiBot.utils.WebUtil;
 
-import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 
 @SuppressLint("CommitPrefEdits")
 public class DlcApplyActivity extends AppCompatActivity {
     TextView info;
 
     SharedPreferences config;
+    SharedPreferences dlc;
     SharedPreferences.Editor configEdit;
+    SharedPreferences.Editor dlcEdit;
+    Boolean debugMode = false;
 
     String dlcId;
+    Boolean applyDefault;
     String dataPath;
-    String wordsFileName = "words.txt";
-    String verbsFileName = "verbs.txt";
-    String url = "https://ensiapp.aliernfrog.repl.co";
+    String ensiAvatarPath;
+    String url = "https://aliernfrog.repl.co";
 
     JSONObject rawDlc;
 
@@ -41,17 +50,36 @@ public class DlcApplyActivity extends AppCompatActivity {
         info = findViewById(R.id.dlcApply_info);
 
         config = getSharedPreferences("APP_CONFIG", MODE_PRIVATE);
+        dlc = getSharedPreferences("APP_DLC", MODE_PRIVATE);
         configEdit = config.edit();
+        dlcEdit = dlc.edit();
+        debugMode = config.getBoolean("debugMode", false);
 
         dlcId = getIntent().getStringExtra("dlc_id");
-        dataPath = getExternalFilesDir("saved").toString();
+        applyDefault = getIntent().getBooleanExtra("applyDefault", false);
+        dataPath = getExternalFilesDir(".saved").toString();
+        ensiAvatarPath = dataPath+"/ensi.png";
 
-        inform("Downloading DLC");
+        devLog("DlcApplyActivity started");
+
+        inform("Please wait..");
         Handler handler = new Handler();
         handler.postDelayed(this::getDlc, 1000);
     }
 
-    void getDlc() {
+    public void getDlc() {
+        if (dlcId != null) {
+            getDlcFromWebsite();
+        } else if (applyDefault) {
+            getDlcFromFile();
+        } else {
+            devLog("no dlc to apply, finishing");
+            finish();
+        }
+    }
+
+    public void getDlcFromWebsite() {
+        devLog("attempting to apply from website: "+dlcId);
         try {
             JSONObject object = new JSONObject();
             object.put("type", "dlcGet");
@@ -62,105 +90,83 @@ public class DlcApplyActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
             inform(e.toString());
+            devLog(e.toString());
         }
     }
 
-    void applyDlc() {
-        inform("Getting DLC type");
+    public void getDlcFromFile() {
+        devLog("attempting to apply from file");
         try {
-            String type = rawDlc.getString("type");
-            switch(type) {
-                case "chat":
-                    applyChatDlc();
-                    break;
-                case "theme":
-                    applyThemeDlc();
-                    break;
-                default:
-                    inform("Not a valid DLC type");
-            }
-        } catch (JSONException e) {
+            String content = FileUtil.readFileFromAssets(getApplicationContext(), "default.json");
+            rawDlc = new JSONObject(content);
+            applyDlc();
+        } catch (Exception e) {
             e.printStackTrace();
             inform(e.toString());
+            devLog(e.toString());
         }
     }
 
-    void applyChatDlc() {
-        inform("Applying chat DLC");
+    public void applyDlc() {
+        devLog("attempting to apply the dlc");
         try {
-            String words = null;
-            String verbs = null;
-            String concs = null;
-            String types = null;
-            String ensiName = null;
-            if (rawDlc.has("words")) words = rawDlc.getString("words");
-            if (rawDlc.has("verbs")) verbs = rawDlc.getString("verbs");
-            if (rawDlc.has("concs")) concs = rawDlc.getString("concs");
-            if (rawDlc.has("types")) types = rawDlc.getString("types");
-            if (rawDlc.has("ensiName")) ensiName = rawDlc.getString("ensiName");
-            if (words != null) saveFile(wordsFileName, words);
-            if (verbs != null) saveFile(verbsFileName, verbs);
-            configEdit.putString("concs", concs);
-            configEdit.putString("types", types);
-            configEdit.putString("ensiName", ensiName);
-            configEdit.commit();
+            if (rawDlc.has("words")) dlcEdit.putString("words", rawDlc.getString("words"));
+            if (rawDlc.has("verbs")) dlcEdit.putString("verbs", rawDlc.getString("verbs"));
+            if (rawDlc.has("concs")) dlcEdit.putString("concs", rawDlc.getString("concs"));
+            if (rawDlc.has("types")) dlcEdit.putString("types", rawDlc.getString("types"));
+            if (rawDlc.has("ensiSaveWords")) dlcEdit.putBoolean("ensiSaveWords", rawDlc.getBoolean("ensiSaveWords"));
+            if (rawDlc.has("ensiName")) dlcEdit.putString("ensiName", rawDlc.getString("ensiName"));
+            if (rawDlc.has("ensiAvatarUrl")) applyEnsiAvatar(rawDlc.getString("ensiAvatarUrl"));
+            if (rawDlc.has("channelName")) dlcEdit.putString("channelName", rawDlc.getString("channelName"));
+            if (rawDlc.has("background")) dlcEdit.putString("background", rawDlc.getString("background"));
+            if (rawDlc.has("topBar")) dlcEdit.putString("topBar", rawDlc.getString("topBar"));
+            if (rawDlc.has("title")) dlcEdit.putString("title", rawDlc.getString("title"));
+            if (rawDlc.has("hint")) dlcEdit.putString("hint", rawDlc.getString("hint"));
+            if (rawDlc.has("chatBox")) dlcEdit.putString("chatBox", rawDlc.getString("chatBox"));
+            if (rawDlc.has("chatBoxHint")) dlcEdit.putString("chatBoxHint", rawDlc.getString("chatBoxHint"));
+            if (rawDlc.has("chatBoxText")) dlcEdit.putString("chatBoxText", rawDlc.getString("chatBoxText"));
+            if (rawDlc.has("message")) dlcEdit.putString("message", rawDlc.getString("message"));
+            if (rawDlc.has("messageAuthor")) dlcEdit.putString("messageAuthor", rawDlc.getString("messageAuthor"));
+            if (rawDlc.has("messageContent")) dlcEdit.putString("messageContent", rawDlc.getString("messageContent"));
+            dlcEdit.commit();
             finishApplying();
         } catch (Exception e) {
             e.printStackTrace();
             inform(e.toString());
+            devLog(e.toString());
         }
     }
 
-    void applyThemeDlc() {
-        inform("Applying theme DLC");
+    public void applyEnsiAvatar(String avatarUrl) {
+        devLog("attempting to apply ensi avatar");
         try {
-            String background = rawDlc.getString("background");
-            String topBar = rawDlc.getString("topBar");
-            String title = rawDlc.getString("title");
-            String hint = rawDlc.getString("hint");
-            String chatBox = rawDlc.getString("chatBox");
-            String chatBoxHint = rawDlc.getString("chatBoxHint");
-            String chatBoxText = rawDlc.getString("chatBoxText");
-            String message = rawDlc.getString("message");
-            String messageAuthor = rawDlc.getString("messageAuthor");
-            String messageContent = rawDlc.getString("messageContent");
-            configEdit.putString("theme_background", background);
-            configEdit.putString("theme_topBar", topBar);
-            configEdit.putString("theme_title", title);
-            configEdit.putString("theme_hint", hint);
-            configEdit.putString("theme_chatBox", chatBox);
-            configEdit.putString("theme_chatBoxHint", chatBoxHint);
-            configEdit.putString("theme_chatBoxText", chatBoxText);
-            configEdit.putString("theme_message", message);
-            configEdit.putString("theme_message_author", messageAuthor);
-            configEdit.putString("theme_message_content", messageContent);
-            configEdit.commit();
-            finishApplying();
+            File ensiAvatarFile = new File(ensiAvatarPath);
+            Bitmap avatar = WebUtil.getBipmapFromURL(avatarUrl);
+            OutputStream os = new BufferedOutputStream(new FileOutputStream(ensiAvatarFile));
+            avatar.compress(Bitmap.CompressFormat.PNG, 100, os);
+            os.close();
         } catch (Exception e) {
             e.printStackTrace();
             inform(e.toString());
+            devLog(e.toString());
         }
     }
 
     void finishApplying() {
-        inform("Applied the DLC!");
-        Intent intent = new Intent(this, SplashActivity.class);
-        Handler handler = new Handler();
-        handler.postDelayed(() -> {
+        inform("Done!");
+        Intent intent = new Intent(getApplicationContext(), SplashActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        new Handler().postDelayed(() -> {
             finish();
             startActivity(intent);
-        }, 2000);
+        }, 1000);
     }
 
     void inform(String text) {
         info.setText(text);
     }
 
-    void saveFile(String name, String content) {
-        try {
-            FileUtil.saveFile(dataPath, name, content);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    void devLog(String text) {
+        if (debugMode) AppUtil.devLog(text, getApplicationContext());
     }
 }

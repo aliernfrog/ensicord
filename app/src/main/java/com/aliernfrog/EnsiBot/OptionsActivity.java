@@ -2,68 +2,99 @@ package com.aliernfrog.EnsiBot;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.text.Html;
+import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.CheckBox;
 import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
-import java.io.File;
+import com.aliernfrog.EnsiBot.utils.AppUtil;
 
-import com.aliernfrog.EnsiBot.utils.FileUtil;
-import com.hbisoft.pickit.PickiT;
-import com.hbisoft.pickit.PickiTCallbacks;
-
-@SuppressLint("CommitPrefEdits")
-public class OptionsActivity extends AppCompatActivity implements PickiTCallbacks {
-    ImageView avatar;
-    EditText usernameInput;
-    Button usernameConfirm;
+public class OptionsActivity extends AppCompatActivity {
+    ImageView goBack;
+    LinearLayout otherOptions;
+    Button redirectProfile;
     Button redirectDlcs;
+    LinearLayout chatOptions;
+    CheckBox saveHistory;
+    LinearLayout moreOptions;
+    CheckBox autoUpdate;
+    CheckBox debugMode;
+    LinearLayout experimentalOptions;
+    CheckBox allowExperimentalDlcs;
+    LinearLayout changelogLinear;
+    TextView changelogText;
+
+    String appVers;
+    Integer appVersCode;
 
     SharedPreferences config;
+    SharedPreferences update;
     SharedPreferences.Editor configEdit;
 
-    String avatarPath;
-    Integer REQUEST_PICK_AVATAR = 1;
-
-    PickiT pickiT;
+    Integer changelogClick = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_options);
 
+        goBack = findViewById(R.id.options_goBack);
+        otherOptions = findViewById(R.id.options_other_linear);
+        redirectProfile = findViewById(R.id.options_profile);
+        redirectDlcs = findViewById(R.id.options_dlcs);
+        chatOptions = findViewById(R.id.options_chat_linear);
+        saveHistory = findViewById(R.id.options_chat_saveHistory);
+        moreOptions = findViewById(R.id.options_more_linear);
+        autoUpdate = findViewById(R.id.options_more_autoUpdate);
+        debugMode = findViewById(R.id.options_more_debugMode);
+        experimentalOptions = findViewById(R.id.options_experimental_linear);
+        allowExperimentalDlcs = findViewById(R.id.options_experimental_allowExperimentalDlcs);
+        changelogLinear = findViewById(R.id.options_changelog_linear);
+        changelogText = findViewById(R.id.options_changelog);
+
         config = getSharedPreferences("APP_CONFIG", MODE_PRIVATE);
+        update = getSharedPreferences("APP_UPDATE", MODE_PRIVATE);
         configEdit = config.edit();
 
-        avatarPath = Environment.getExternalStorageDirectory().toString()+"/Android/data/com.aliernfrog.EnsiBot/files/saved/avatar.png";
-
-        avatar = findViewById(R.id.options_avatar);
-        usernameInput = findViewById(R.id.options_username_input);
-        usernameConfirm = findViewById(R.id.options_username_confirm);
-        redirectDlcs = findViewById(R.id.options_dlcs);
-
-        pickiT = new PickiT(this, this, this);
-
+        getConfig();
+        getVersion();
+        getChangelog();
         setListeners();
-        updateOptions();
     }
 
-    void changeName(String name) {
-        if (name.replace(" ","").equals("")) name = "Some frok";
-        configEdit.putString("username", name);
+    void getConfig() {
+        saveHistory.setChecked(config.getBoolean("saveHistory", true));
+        autoUpdate.setChecked(config.getBoolean("autoUpdate", true));
+        debugMode.setChecked(config.getBoolean("debugMode", false));
+        allowExperimentalDlcs.setChecked(config.getBoolean("allowExperimentalDlcs", false));
+    }
+
+    void changeBoolean(String name, Boolean value) {
+        configEdit.putBoolean(name, value);
         configEdit.commit();
-        Toast.makeText(getApplicationContext(), R.string.options_username_changed, Toast.LENGTH_SHORT).show();
+    }
+
+    void getVersion() {
+        try {
+            appVers = AppUtil.getVersName(getApplicationContext());
+            appVersCode = AppUtil.getVersCode(getApplicationContext());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    void getChangelog() {
+        String versInfo = "<b>Current version:</b> "+appVers+" ("+appVersCode+")";
+        String _changelog = update.getString("updateChangelog", "No changelog has been found");
+        String _changelogVers = update.getString("updateChangelogVersion", "-");
+        String _full = _changelog+"<br /><br />"+"<b>Changelog version:</b> "+_changelogVers+"<br />"+versInfo;
+        changelogText.setText(Html.fromHtml(_full));
     }
 
     void switchActivity(Class activity) {
@@ -71,91 +102,21 @@ public class OptionsActivity extends AppCompatActivity implements PickiTCallback
         startActivity(intent);
     }
 
-    void pickAvatar() {
-        if (!hasPerms()) return;
-        Intent intent = new Intent(this, FilePickerActivity.class);
-        intent.putExtra("FILE_TYPE", "image/*");
-        startActivityForResult(intent, REQUEST_PICK_AVATAR);
-    }
-
-    void setAvatar(String path) {
-        try {
-            FileUtil.copyFile(path, avatarPath);
-            getAvatar();
-            Toast.makeText(getApplicationContext(), R.string.options_avatar_changed, Toast.LENGTH_SHORT).show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    void getAvatar() {
-        File avatarFile = new File(avatarPath);
-        if (avatarFile.exists()) {
-            Drawable userAvatar = Drawable.createFromPath(avatarPath);
-            avatar.setImageDrawable(userAvatar);
-        }
-    }
-
-    void updateOptions() {
-        getAvatar();
-        usernameInput.setText(config.getString("username", "Some frok"));
-    }
-
-    Boolean hasPerms() {
-        if (Build.VERSION.SDK_INT >= 23) {
-            if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, 3);
-                return false;
-            } else {
-                return true;
-            }
-        } else {
-            return true;
-        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-            if (requestCode == REQUEST_PICK_AVATAR) {
-                String path = data.getStringExtra("path");
-                setAvatar(path);
-            }
-        }
-    }
-
     void setListeners() {
-        avatar.setOnClickListener(v -> pickAvatar());
-        usernameConfirm.setOnClickListener(v -> changeName(Html.fromHtml(usernameInput.getText().toString()).toString()));
-        redirectDlcs.setOnClickListener(v -> switchActivity(DlcActivity.class));
-    }
-
-    @Override
-    public void PickiTonUriReturned() {
-
-    }
-
-    @Override
-    public void PickiTonStartListener() {
-
-    }
-
-    @Override
-    public void PickiTonProgressUpdate(int progress) {
-
-    }
-
-    @Override
-    public void PickiTonCompleteListener(String path, boolean wasDriveFile, boolean wasUnknownProvider, boolean wasSuccessful, String Reason) {
-        setAvatar(path);
-    }
-
-    @Override
-    public void onBackPressed() {
-        pickiT.deleteTemporaryFile(this);
-        finish();
-        switchActivity(SplashActivity.class);
-        super.onBackPressed();
+        AppUtil.handleOnPressEvent(goBack, this::finish);
+        AppUtil.handleOnPressEvent(otherOptions);
+        AppUtil.handleOnPressEvent(chatOptions);
+        AppUtil.handleOnPressEvent(moreOptions);
+        AppUtil.handleOnPressEvent(experimentalOptions);
+        AppUtil.handleOnPressEvent(changelogLinear, () -> {
+            changelogClick = changelogClick+1;
+            if (changelogClick > 15) experimentalOptions.setVisibility(View.VISIBLE);
+        });
+        AppUtil.handleOnPressEvent(redirectProfile, () -> switchActivity(ProfileActivity.class));
+        AppUtil.handleOnPressEvent(redirectDlcs, () -> switchActivity(DlcActivity.class));
+        saveHistory.setOnCheckedChangeListener((compoundButton, b) -> changeBoolean("saveHistory", b));
+        autoUpdate.setOnCheckedChangeListener((compoundButton, b) -> changeBoolean("autoUpdate", b));
+        debugMode.setOnCheckedChangeListener((compoundButton, b) -> changeBoolean("debugMode", b));
+        allowExperimentalDlcs.setOnCheckedChangeListener((compoundButton, b) -> changeBoolean("allowExperimentalDlcs", b));
     }
 }

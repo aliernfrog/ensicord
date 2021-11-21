@@ -13,7 +13,8 @@
         android:layout_height="wrap_content"
         card_view:cardBackgroundColor="#00FFFFFF"
         card_view:cardCornerRadius="20dp"
-        card_view:cardPreventCornerOverlap="false">
+        card_view:cardPreventCornerOverlap="false"
+        card_view:cardElevation="0dp">
 
         <ImageView
             android:id="@+id/message_author_avatar"
@@ -21,7 +22,6 @@
             android:layout_height="40dp"
             android:adjustViewBounds="true"
             android:contentDescription="@string/avatar"
-            android:scaleType="centerInside"
             tools:srcCompat="@drawable/user" />
     </androidx.cardview.widget.CardView>
 
@@ -47,7 +47,8 @@
             android:layout_height="wrap_content"
             android:linksClickable="true"
             android:text="@string/content"
-            android:textColor="#DDDDDD" />
+            android:textColor="#DDDDDD"
+            android:autoLink="web" />
 
     </LinearLayout>
 </LinearLayout>

@@ -1,14 +1,40 @@
 package com.aliernfrog.EnsiBot.utils;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class WebUtil {
+    public static String getContentFromURL(String urlString) throws Exception {
+        URL url = new URL(urlString);
+        String _line;
+        String _full = "";
+        BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
+        while ((_line = reader.readLine()) != null) {
+            _full += "\n"+_line;
+        }
+        reader.close();
+        if (_full.startsWith("\n")) _full.replace("\n", "");
+        return _full;
+    }
+
+    public static Bitmap getBipmapFromURL(String urlString) throws Exception {
+        URL url = new URL(urlString);
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setDoInput(true);
+        connection.connect();
+        InputStream input = connection.getInputStream();
+        return BitmapFactory.decodeStream(input);
+    }
+
     public static String doPostRequest(String Url, JSONObject obj) throws Exception {
         URL url = new URL(Url);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
