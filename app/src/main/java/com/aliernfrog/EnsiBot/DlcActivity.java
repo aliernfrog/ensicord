@@ -30,6 +30,7 @@ public class DlcActivity extends AppCompatActivity {
 
     SharedPreferences config;
     Boolean debugMode = false;
+    Boolean allowExperimentalDlcs = false;
 
     String url = "https://aliernfrog.repl.co";
     JSONArray rawDlcs;
@@ -43,6 +44,7 @@ public class DlcActivity extends AppCompatActivity {
 
         config = getSharedPreferences("APP_CONFIG", MODE_PRIVATE);
         debugMode = config.getBoolean("debugMode", false);
+        allowExperimentalDlcs = config.getBoolean("allowExperimentalDlcs", false);
 
         goBack = findViewById(R.id.dlc_goBack);
         loading = findViewById(R.id.dlc_loading);
@@ -81,6 +83,7 @@ public class DlcActivity extends AppCompatActivity {
                 if (current.getString("type").equals("theme")) root = themeRoot;
                 if (current.getString("type").equals("experimental")) root = experimentalRoot;
                 if (root.getVisibility() != View.VISIBLE) root.setVisibility(View.VISIBLE);
+                if (root == experimentalRoot && !allowExperimentalDlcs) root.setVisibility(View.GONE);
                 ViewGroup dlc = (ViewGroup) getLayoutInflater().inflate(R.layout.inflate_dlc, root, false);
                 setDlcView(current, root, dlc);
             }

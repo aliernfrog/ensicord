@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Html;
+import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -24,6 +25,8 @@ public class OptionsActivity extends AppCompatActivity {
     LinearLayout moreOptions;
     CheckBox autoUpdate;
     CheckBox debugMode;
+    LinearLayout experimentalOptions;
+    CheckBox allowExperimentalDlcs;
     LinearLayout changelogLinear;
     TextView changelogText;
 
@@ -33,6 +36,8 @@ public class OptionsActivity extends AppCompatActivity {
     SharedPreferences config;
     SharedPreferences update;
     SharedPreferences.Editor configEdit;
+
+    Integer changelogClick = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +53,8 @@ public class OptionsActivity extends AppCompatActivity {
         moreOptions = findViewById(R.id.options_more_linear);
         autoUpdate = findViewById(R.id.options_more_autoUpdate);
         debugMode = findViewById(R.id.options_more_debugMode);
+        experimentalOptions = findViewById(R.id.options_experimental_linear);
+        allowExperimentalDlcs = findViewById(R.id.options_experimental_allowExperimentalDlcs);
         changelogLinear = findViewById(R.id.options_changelog_linear);
         changelogText = findViewById(R.id.options_changelog);
 
@@ -65,6 +72,7 @@ public class OptionsActivity extends AppCompatActivity {
         saveHistory.setChecked(config.getBoolean("saveHistory", true));
         autoUpdate.setChecked(config.getBoolean("autoUpdate", true));
         debugMode.setChecked(config.getBoolean("debugMode", false));
+        allowExperimentalDlcs.setChecked(config.getBoolean("allowExperimentalDlcs", false));
     }
 
     void changeBoolean(String name, Boolean value) {
@@ -99,11 +107,16 @@ public class OptionsActivity extends AppCompatActivity {
         AppUtil.handleOnPressEvent(otherOptions);
         AppUtil.handleOnPressEvent(chatOptions);
         AppUtil.handleOnPressEvent(moreOptions);
-        AppUtil.handleOnPressEvent(changelogLinear);
+        AppUtil.handleOnPressEvent(experimentalOptions);
+        AppUtil.handleOnPressEvent(changelogLinear, () -> {
+            changelogClick = changelogClick+1;
+            if (changelogClick > 15) experimentalOptions.setVisibility(View.VISIBLE);
+        });
         AppUtil.handleOnPressEvent(redirectProfile, () -> switchActivity(ProfileActivity.class));
         AppUtil.handleOnPressEvent(redirectDlcs, () -> switchActivity(DlcActivity.class));
         saveHistory.setOnCheckedChangeListener((compoundButton, b) -> changeBoolean("saveHistory", b));
         autoUpdate.setOnCheckedChangeListener((compoundButton, b) -> changeBoolean("autoUpdate", b));
         debugMode.setOnCheckedChangeListener((compoundButton, b) -> changeBoolean("debugMode", b));
+        allowExperimentalDlcs.setOnCheckedChangeListener((compoundButton, b) -> changeBoolean("allowExperimentalDlcs", b));
     }
 }
