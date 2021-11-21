@@ -24,3 +24,8 @@
 -keepclassmembers class com.aliernfrog.EnsiBot.*  {
     public <methods>;
 }
+
+-keep class com.aliernfrog.EnsiBot.fragments.*
+-keepclassmembers class com.aliernfrog.EnsiBot.fragments.*  {
+    public <methods>;
+}

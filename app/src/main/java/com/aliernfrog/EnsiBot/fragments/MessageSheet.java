@@ -1,5 +1,7 @@
 package com.aliernfrog.EnsiBot.fragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +30,9 @@ public class MessageSheet extends BottomSheetDialogFragment {
 
     ChatActivity context;
 
+    SharedPreferences config;
+    Boolean debugMode;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -40,13 +45,19 @@ public class MessageSheet extends BottomSheetDialogFragment {
 
         context = (ChatActivity) getActivity();
 
+        if (context != null) config = context.getSharedPreferences("APP_CONFIG", Context.MODE_PRIVATE);
+        debugMode = config.getBoolean("debugMode", false);
+
+        devLog("MessageSheet started");
+
         loadMessage();
         setListeners();
 
         return view;
     }
 
-    void addToStarboard() {
+    public void addToStarboard() {
+        devLog("attempting to add to starboard");
         try {
             String starboardPath = context.getExternalFilesDir(".saved").getPath()+"/starboard.json";
             File starboardFile = new File(starboardPath);
@@ -59,6 +70,7 @@ public class MessageSheet extends BottomSheetDialogFragment {
             dismiss();
         } catch (Exception e) {
             e.printStackTrace();
+            devLog(e.toString());
         }
     }
 
@@ -67,7 +79,8 @@ public class MessageSheet extends BottomSheetDialogFragment {
         dismiss();
     }
 
-    void loadMessage() {
+    public void loadMessage() {
+        devLog("loading the message");
         View view = context.getChosenMessage();
         TextView authorView = view.findViewById(R.id.message_author_username);
         TextView contentView = view.findViewById(R.id.message_content);
@@ -76,6 +89,11 @@ public class MessageSheet extends BottomSheetDialogFragment {
         message_author.setText(author);
         message_content.setText(content);
         if (context.getIsStarboard()) addToStarboard.setVisibility(View.GONE);
+        devLog("is starboard: "+context.getIsStarboard());
+    }
+
+    void devLog(String text) {
+        if (debugMode) AppUtil.devLog(text, context.getApplicationContext());
     }
 
     void setListeners() {
