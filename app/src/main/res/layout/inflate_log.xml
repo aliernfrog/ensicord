@@ -14,12 +14,15 @@
         android:layout_height="wrap_content"
         android:text="@string/app_name"
         android:textColor="#00D9FF"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:textIsSelectable="true" />
 
     <TextView
         android:id="@+id/log_log"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/app_name"
-        android:textColor="#C6C6C6" />
+        android:textColor="#C6C6C6"
+        android:textIsSelectable="true"
+        android:autoLink="web" />
 </LinearLayout>
