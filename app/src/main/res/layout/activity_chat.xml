@@ -2,14 +2,13 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_constraint"
+    android:id="@+id/chat_constraint"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000"
-    tools:context=".ChatActivity">
+    android:background="#000000">
 
     <LinearLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/chat_linear"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:orientation="vertical"
@@ -19,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:id="@+id/main_topBar"
+            android:id="@+id/chat_topBar"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="#FF18191D"
@@ -28,7 +27,7 @@
             android:padding="14dp">
 
             <TextView
-                android:id="@+id/main_channel_name"
+                android:id="@+id/chat_channel_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -45,18 +44,19 @@
                 app:cardPreventCornerOverlap="false">
 
                 <ImageView
-                    android:id="@+id/main_options"
+                    android:id="@+id/chat_options"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
+                    android:adjustViewBounds="true"
                     android:contentDescription="@string/options"
-                    android:scaleType="centerInside"
-                    app:srcCompat="@drawable/user" />
+                    app:srcCompat="@drawable/user"
+                    tools:ignore="ImageContrastCheck" />
             </androidx.cardview.widget.CardView>
 
         </LinearLayout>
 
         <RelativeLayout
-            android:id="@+id/main_chat"
+            android:id="@+id/chat_chat"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -69,19 +69,19 @@
                 tools:ignore="UselessParent">
 
                 <ScrollView
-                    android:id="@+id/main_chatScroll"
+                    android:id="@+id/chat_chatScroll"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="60dp">
+                    android:paddingBottom="74dp">
 
                     <LinearLayout
-                        android:id="@+id/main_chatRoot"
+                        android:id="@+id/chat_chatRoot"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/main_chat_hint"
+                            android:id="@+id/chat_chat_hint"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="16dp"
@@ -97,37 +97,52 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/main_chatBox"
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:background="#FF18191D"
-                android:orientation="horizontal"
-                android:padding="8dp">
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="#00FFFFFF"
+                app:cardCornerRadius="20dp"
+                app:cardPreventCornerOverlap="false">
 
-                <EditText
-                    android:id="@+id/main_chatInput"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:autofillHints="false"
-                    android:background="#00FFFFFF"
-                    android:ems="10"
-                    android:hint="@string/sendMessage"
-                    android:inputType="text|textMultiLine|textImeMultiLine|textNoSuggestions"
-                    android:textColor="#FFFFFF"
-                    android:textColorHint="#636363" />
-
-                <ImageView
-                    android:id="@+id/main_chatSend"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/chat_chatBox"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:contentDescription="@string/send"
-                    android:scaleType="centerInside"
-                    app:srcCompat="@drawable/send" />
+                    android:background="#FF18191D"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
 
-            </LinearLayout>
+                    <EditText
+                        android:id="@+id/chat_chatInput"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+                        android:autofillHints="false"
+                        android:background="#00FFFFFF"
+                        android:ems="10"
+                        android:hint="@string/sendMessage"
+                        android:inputType="text|textMultiLine|textImeMultiLine|textNoSuggestions"
+                        android:textColor="#FFFFFF"
+                        android:textColorHint="#78909C"
+                        tools:ignore="TouchTargetSizeCheck" />
+
+                    <ImageView
+                        android:id="@+id/chat_chatSend"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:contentDescription="@string/send"
+                        android:scaleType="centerInside"
+                        app:srcCompat="@drawable/send" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
         </RelativeLayout>
 

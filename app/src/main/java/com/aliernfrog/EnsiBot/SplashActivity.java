@@ -6,77 +6,82 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
+import android.os.StrictMode;
 
+import com.aliernfrog.EnsiBot.utils.AppUtil;
 import com.aliernfrog.EnsiBot.utils.FileUtil;
 
 import java.io.File;
 
-@SuppressLint("CommitPrefEdits")
+@SuppressLint({"CommitPrefEdits", "CustomSplashScreen"})
 public class SplashActivity extends AppCompatActivity {
     String dataPath;
-    String wordsPath;
-    String verbsPath;
-
-    String wordsFileName = "words.txt";
-    String verbsFileName = "verbs.txt";
-
-    String defaultWords = "me\nyou\nwe\nthey\nalierns\nindinibee\nbees\nmomes\nfrogs\nmouse\nchicken\nfurries\nfrog\nExi's basement\nfree candies\nensi\nvan\nlaptop\nmarchmilos\nmouse\nuwu\nhackers\n\uD83D\uDE10\ntryhards\nmohamme\n\uD83C\uDDE7\uD83C\uDDF7\nat 3am\nat 3am *gone wrong*\ndaily\nopa\nfrok\nalizade\ndislike\nreply\ninfini\nmohamet\nsuicide\n ";
-    String defaultVerbs = "went to\nate\ndrove\nkidnapped\ntalked\nhacked\ngermanized\nmoused\nstalked\ntrapped\nraped\nexported\nadded\nsnorted\nliked\nred\nmohammed\n ";
 
     SharedPreferences config;
-    SharedPreferences.Editor configEdit;
+    Boolean saveHistory = true;
+    Boolean autoUpdate = true;
+    Boolean debugMode = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        dataPath = getExternalFilesDir("saved").toString();
-        wordsPath = dataPath+"/"+wordsFileName;
-        verbsPath = dataPath+"/"+verbsFileName;
+        dataPath = getExternalFilesDir(".saved").getPath();
 
         config = getSharedPreferences("APP_CONFIG", MODE_PRIVATE);
-        configEdit = config.edit();
+        saveHistory = config.getBoolean("saveHistory", true);
+        autoUpdate = config.getBoolean("autoUpdate", true);
+        debugMode = config.getBoolean("debugMode", false);
 
+        devLog("SplashActivity started");
+
+        getUpdates();
         checkFiles();
+        switchActivity();
     }
 
-    void checkFiles() {
-        File wordsFile = new File(wordsPath);
-        File verbsFile = new File(verbsPath);
-        if (!wordsFile.exists()) saveFile(wordsFileName, defaultWords);
-        if (!verbsFile.exists()) saveFile(verbsFileName, defaultVerbs);
-        getSavedWordsAndVerbs();
-    }
-
-    void getSavedWordsAndVerbs() {
+    public void getUpdates() {
+        if (!autoUpdate) return;
+        devLog("attempting to get updates");
         try {
-            String savedWords = FileUtil.readFile(wordsPath);
-            String savedVerbs = FileUtil.readFile(verbsPath);
-            configEdit.putString("savedWords", savedWords);
-            configEdit.putString("savedVerbs", savedVerbs);
-            configEdit.commit();
-            switchActivity();
+            AppUtil.getUpdates(getApplicationContext());
         } catch (Exception e) {
             e.printStackTrace();
+            devLog(e.toString());
         }
     }
 
-    void saveFile(String name, String content) {
+    public void checkFiles() {
+        devLog("attempting to check files");
         try {
-            FileUtil.saveFile(dataPath, name, content);
+            String historyPath = dataPath+"/history.json";
+            String starboardPath = dataPath+"/starboard.json";
+            String logPath = dataPath+"/log.txt";
+            File historyFile = new File(historyPath);
+            File starboardFile = new File(starboardPath);
+            File logFile = new File(logPath);
+            if (!historyFile.exists()) FileUtil.saveFile(dataPath, historyFile.getName(), "[]");
+            if (!starboardFile.exists()) FileUtil.saveFile(dataPath, starboardFile.getName(), "[]");
+            if (!logFile.exists()) FileUtil.saveFile(dataPath, logFile.getName(), "");
         } catch (Exception e) {
             e.printStackTrace();
+            devLog(e.toString());
         }
     }
 
-    void switchActivity() {
+    public void switchActivity() {
+        devLog("switching activity");
         Intent intent = new Intent(this, ChatActivity.class);
-        Handler handler = new Handler();
-        handler.postDelayed(() -> {
-            startActivity(intent);
-            finish();
-        }, 500);
+        intent.putExtra("chatHistoryPath", dataPath+"/history.json");
+        intent.putExtra("saveNewMessages", saveHistory);
+        startActivity(intent);
+        finish();
+    }
+
+    void devLog(String text) {
+        if (debugMode) AppUtil.devLog(text, getApplicationContext());
     }
 }
