@@ -39,6 +39,20 @@ public class AppUtil {
         }
     }
 
+    public static void devLog(String text, Context context) {
+        String logPath = context.getExternalFilesDir(".saved").getPath()+"/log.txt";
+        StackTraceElement stackTrace = Thread.currentThread().getStackTrace()[4];
+        String className = stackTrace.getClassName();
+        String methodName = stackTrace.getMethodName();
+        if (text.contains("Exception")) className = "[ERR] "+className;
+        String full = className+" || "+methodName+" || "+text;
+        try {
+            FileUtil.appendFile(logPath, full);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public static String getVersName(Context context) throws Exception {
         PackageManager pm = context.getPackageManager();
         PackageInfo pInfo = pm.getPackageInfo(context.getPackageName(), 0);

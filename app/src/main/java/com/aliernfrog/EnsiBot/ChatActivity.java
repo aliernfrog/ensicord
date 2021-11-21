@@ -50,6 +50,7 @@ public class ChatActivity extends AppCompatActivity {
     SharedPreferences config;
     SharedPreferences dlc;
     SharedPreferences update;
+    Boolean debugMode = false;
 
     String ensiAvatarPath;
     String avatarPath;
@@ -105,6 +106,9 @@ public class ChatActivity extends AppCompatActivity {
         config = getSharedPreferences("APP_CONFIG", MODE_PRIVATE);
         dlc = getSharedPreferences("APP_DLC", MODE_PRIVATE);
         update = getSharedPreferences("APP_UPDATE", MODE_PRIVATE);
+        debugMode = config.getBoolean("debugMode", false);
+
+        devLog("ChatActivity started");
 
         getDlcTheme();
         getSavedWordsAndVerbs();
@@ -142,13 +146,15 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     public void deleteChosenMessage() {
+        devLog("deleting message: "+chosenMessage);
         View message = getChosenMessage();
         chatRoot.removeView(message);
         chatHistory = AppUtil.removeIndexFromJsonArray(chatHistory, chosenMessage-1);
     }
 
-    void getChannel(@Nullable String name) {
+    public void getChannel(@Nullable String name) {
         if (name == null) name = dlc.getString("channelName", "#general");
+        devLog("getting channel name: "+name);
         String hint = getString(R.string.channelStart).replace("%NAME%", name);
         String inputHint = getString(R.string.sendMessage).replace("%NAME%", name);
         channelTitle.setText(name);
@@ -156,7 +162,7 @@ public class ChatActivity extends AppCompatActivity {
         chatInput.setHint(inputHint);
     }
 
-    void getChatOptions() {
+    public void getChatOptions() {
         try {
             chatHistoryPath = getIntent().getStringExtra("chatHistoryPath");
             sendMessageAllowed = getIntent().getBooleanExtra("sendMessageAllowed", true);
@@ -164,10 +170,14 @@ public class ChatActivity extends AppCompatActivity {
             isStarboard = getIntent().getBooleanExtra("isStarboard", false);
             if (chatHistoryPath != null) chatHistory = new JSONArray(FileUtil.readFile(chatHistoryPath));
             if (chatHistoryPath == null) chatHistory = new JSONArray("[]");
+            devLog("chatHistoryPath: "+chatHistoryPath);
+            devLog("sendMessageAllowed: "+sendMessageAllowed);
+            devLog("saveNewMessages: "+saveNewMessages);
+            devLog("isStarboard: "+isStarboard);
             applyChatOptions();
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
+            devLog(e.toString());
         }
     }
 
@@ -183,7 +193,8 @@ public class ChatActivity extends AppCompatActivity {
         }
     }
 
-    void getAvatarsAndUsernames() {
+    public void getAvatarsAndUsernames() {
+        devLog("getting avatars and usernames");
         File avatarFile = new File(avatarPath);
         File ensiAvatarFile = new File(ensiAvatarPath);
         if (avatarFile.exists()) userAvatar = Drawable.createFromPath(avatarPath);
@@ -194,8 +205,9 @@ public class ChatActivity extends AppCompatActivity {
         requiresProfileUpdate = false;
     }
 
-    void saveChatHistory() {
+    public void saveChatHistory() {
         if (!saveNewMessages) return;
+        devLog("attempting to save chat history");
         try {
             File file = new File(chatHistoryPath);
             String parentPath = file.getParent();
@@ -204,11 +216,14 @@ public class ChatActivity extends AppCompatActivity {
             FileUtil.saveFile(parentPath, fileName, history);
         } catch (Exception e) {
             e.printStackTrace();
+            devLog(e.toString());
         }
     }
 
-    void loadChatHistory() {
+    public void loadChatHistory() {
         if (!saveNewMessages) return;
+        devLog("attempting to load chat history");
+        devLog("loading "+chatHistory.length()+" messages");
         for (int i = 0; i < chatHistory.length(); i++) {
             try {
                 JSONObject message = chatHistory.getJSONObject(i);
@@ -222,11 +237,13 @@ public class ChatActivity extends AppCompatActivity {
                 sendMessage(avatarDrawable, author, content, false);
             } catch (Exception e) {
                 e.printStackTrace();
+                devLog(e.toString());
             }
         }
     }
 
-    void getDlcTheme() {
+    public void getDlcTheme() {
+        devLog("attempting to load theme");
         String backgroundColor = dlc.getString("background", "#000000");
         String topBarColor = dlc.getString("topBar", "#FF18191D");
         String titleColor = dlc.getString("title", "#FFFFFF");
@@ -246,7 +263,8 @@ public class ChatActivity extends AppCompatActivity {
         chatInput.setTextColor(Color.parseColor(chatBoxTextColor));
     }
 
-    void getSavedWordsAndVerbs() {
+    public void getSavedWordsAndVerbs() {
+        devLog("attempting to get saved words");
         String words = dlc.getString("words", "");
         String verbs = dlc.getString("verbs", "");
         String _concs = dlc.getString("concs", "");
@@ -258,8 +276,9 @@ public class ChatActivity extends AppCompatActivity {
         if (_types.equals("")) applyDefaultDlc();
     }
 
-    void checkUpdates() {
+    public void checkUpdates() {
         if (isStarboard) return;
+        devLog("checking updates");
         try {
             int currentVersion = AppUtil.getVersCode(getApplicationContext());
             int latestVersion = update.getInt("updateLatest", currentVersion);
@@ -272,6 +291,7 @@ public class ChatActivity extends AppCompatActivity {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            devLog(e.toString());
         }
     }
 
@@ -297,6 +317,7 @@ public class ChatActivity extends AppCompatActivity {
             return chatHistory.getJSONObject(chosenMessage-1);
         } catch (JSONException e) {
             e.printStackTrace();
+            devLog(e.toString());
             return new JSONObject();
         }
     }
@@ -314,6 +335,10 @@ public class ChatActivity extends AppCompatActivity {
     void scrollToBottom() {
         Handler handler = new Handler();
         handler.postDelayed(() -> chatScroll.fullScroll(View.FOCUS_DOWN), 100);
+    }
+
+    void devLog(String text) {
+        if (debugMode) AppUtil.devLog(text, getApplicationContext());
     }
 
     void setListeners() {
