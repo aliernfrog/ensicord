@@ -13,7 +13,7 @@ android {
             storePassword properties.getProperty('storePassword')
         }
     }
-    compileSdkVersion 30
+    compileSdkVersion 31
     buildToolsVersion "30.0.3"
 
     defaultConfig {
@@ -21,8 +21,7 @@ android {
         versionCode 2
         versionName "1.2"
         signingConfig signingConfigs.release
-        //noinspection OldTargetApi
-        targetSdkVersion 30
+        targetSdkVersion 31
         minSdkVersion 16
     }
 
