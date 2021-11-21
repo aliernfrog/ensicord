@@ -2,9 +2,11 @@ package com.aliernfrog.EnsiBot;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Html;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -14,6 +16,9 @@ import com.aliernfrog.EnsiBot.utils.AppUtil;
 
 public class OptionsActivity extends AppCompatActivity {
     ImageView goBack;
+    LinearLayout otherOptions;
+    Button redirectProfile;
+    Button redirectDlcs;
     LinearLayout chatOptions;
     CheckBox saveHistory;
     LinearLayout moreOptions;
@@ -35,6 +40,9 @@ public class OptionsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_options);
 
         goBack = findViewById(R.id.options_goBack);
+        otherOptions = findViewById(R.id.options_other_linear);
+        redirectProfile = findViewById(R.id.options_profile);
+        redirectDlcs = findViewById(R.id.options_dlcs);
         chatOptions = findViewById(R.id.options_chat_linear);
         saveHistory = findViewById(R.id.options_chat_saveHistory);
         moreOptions = findViewById(R.id.options_more_linear);
@@ -81,11 +89,19 @@ public class OptionsActivity extends AppCompatActivity {
         changelogText.setText(Html.fromHtml(_full));
     }
 
+    void switchActivity(Class activity) {
+        Intent intent = new Intent(this, activity);
+        startActivity(intent);
+    }
+
     void setListeners() {
         AppUtil.handleOnPressEvent(goBack, this::finish);
+        AppUtil.handleOnPressEvent(otherOptions);
         AppUtil.handleOnPressEvent(chatOptions);
         AppUtil.handleOnPressEvent(moreOptions);
         AppUtil.handleOnPressEvent(changelogLinear);
+        AppUtil.handleOnPressEvent(redirectProfile, () -> switchActivity(ProfileActivity.class));
+        AppUtil.handleOnPressEvent(redirectDlcs, () -> switchActivity(DlcActivity.class));
         saveHistory.setOnCheckedChangeListener((compoundButton, b) -> changeBoolean("saveHistory", b));
         autoUpdate.setOnCheckedChangeListener((compoundButton, b) -> changeBoolean("autoUpdate", b));
         debugMode.setOnCheckedChangeListener((compoundButton, b) -> changeBoolean("debugMode", b));

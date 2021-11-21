@@ -30,7 +30,9 @@ public class ProfileActivity extends AppCompatActivity {
     LinearLayout usernameLinear;
     TextInputLayout usernameInput;
     Button usernameConfirm;
+    LinearLayout moreLinear;
     Button redirectDlcs;
+    Button redirectOptions;
 
     SharedPreferences config;
     SharedPreferences.Editor configEdit;
@@ -56,7 +58,9 @@ public class ProfileActivity extends AppCompatActivity {
         usernameLinear = findViewById(R.id.profile_username_linear);
         usernameInput = findViewById(R.id.profile_username_input);
         usernameConfirm = findViewById(R.id.profile_username_confirm);
+        moreLinear = findViewById(R.id.profile_more);
         redirectDlcs = findViewById(R.id.profile_dlcs);
+        redirectOptions = findViewById(R.id.profile_options);
 
         devLog("ProfileActivity started");
 
@@ -144,6 +148,8 @@ public class ProfileActivity extends AppCompatActivity {
         AppUtil.handleOnPressEvent(avatarLinear, this::pickAvatar);
         AppUtil.handleOnPressEvent(usernameLinear);
         AppUtil.handleOnPressEvent(usernameConfirm, () -> changeName(Html.fromHtml(usernameInput.getEditText().getText().toString()).toString()));
+        AppUtil.handleOnPressEvent(moreLinear);
         AppUtil.handleOnPressEvent(redirectDlcs, () -> switchActivity(DlcActivity.class));
+        AppUtil.handleOnPressEvent(redirectOptions, () -> switchActivity(OptionsActivity.class));
     }
 }

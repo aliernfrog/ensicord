@@ -162,17 +162,41 @@
 
             </LinearLayout>
 
-            <Button
-                android:id="@+id/profile_dlcs"
+            <LinearLayout
+                android:id="@+id/profile_more"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                android:background="@drawable/linear_blue"
-                android:padding="8dp"
-                android:text="@string/dlcs"
-                android:textColor="#FFFFFF"
-                android:textStyle="bold"
-                app:backgroundTint="#005DFF" />
+                android:background="@drawable/linear"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <Button
+                    android:id="@+id/profile_dlcs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/linear_blue"
+                    android:padding="8dp"
+                    android:text="@string/dlcs"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    app:backgroundTint="#005DFF" />
+
+                <Button
+                    android:id="@+id/profile_options"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/linear_button"
+                    android:padding="8dp"
+                    android:text="@string/profile_appOptions"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    app:backgroundTint="#FF0E0E0E"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
