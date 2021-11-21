@@ -36,6 +36,7 @@ public class OptionsSheet extends BottomSheetDialogFragment {
     String avatarPath;
 
     SharedPreferences config;
+    Boolean debugMode = false;
 
     Context context;
 
@@ -55,7 +56,10 @@ public class OptionsSheet extends BottomSheetDialogFragment {
 
         if (context != null) avatarPath = context.getExternalFilesDir(".saved").toString()+"/avatar.png";
         if (context != null) config = context.getSharedPreferences("APP_CONFIG", Context.MODE_PRIVATE);
-        if (config.getBoolean("debugMode", false)) viewLogs.setVisibility(View.VISIBLE);
+        debugMode = config.getBoolean("debugMode", false);
+        if (debugMode) viewLogs.setVisibility(View.VISIBLE);
+
+        devLog("OptionsSheet started");
 
         getUsername();
         getAvatar();
@@ -64,12 +68,14 @@ public class OptionsSheet extends BottomSheetDialogFragment {
         return view;
     }
 
-    void getUsername() {
+    public void getUsername() {
+        devLog("attempting to get username");
         String _username = config.getString("username", "Some frok");
         username.setText(_username);
     }
 
-    void getAvatar() {
+    public void getAvatar() {
+        devLog("attempting to get avatar");
         File avatarFile = new File(avatarPath);
         if (avatarFile.exists()) {
             Drawable userAvatar = Drawable.createFromPath(avatarPath);
@@ -77,7 +83,8 @@ public class OptionsSheet extends BottomSheetDialogFragment {
         }
     }
 
-    void switchStarboard() {
+    public void switchStarboard() {
+        devLog("starting starboard");
         Intent intent = new Intent(context, ChatActivity.class);
         intent.putExtra("chatHistoryPath", context.getExternalFilesDir(".saved").getPath()+"/starboard.json");
         intent.putExtra("sendMessageAllowed", false);
@@ -90,6 +97,10 @@ public class OptionsSheet extends BottomSheetDialogFragment {
         Intent intent = new Intent(context, activity);
         startActivity(intent);
         dismiss();
+    }
+
+    void devLog(String text) {
+        if (debugMode) AppUtil.devLog(text, context.getApplicationContext());
     }
 
     void setListeners() {
