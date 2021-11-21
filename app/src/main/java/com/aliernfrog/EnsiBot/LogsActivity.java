@@ -48,10 +48,12 @@ public class LogsActivity extends AppCompatActivity {
             String content = FileUtil.readFile(logPath);
             String[] lines = content.split("\n");
             for (String line : lines) {
-                String[] array = line.split(" \\|\\| ");
-                String methodName = array[0].replace(getPackageName(), "");
-                String text = array[1];
-                addLogView(methodName, text);
+                if (line.contains(" ")) {
+                    String[] array = line.split(" \\|\\| ");
+                    String methodName = array[0].replace(getPackageName(), "");
+                    String text = array[1];
+                    addLogView(methodName, text);
+                }
             }
             scrollToBottom();
         } catch (Exception e) {
@@ -81,6 +83,8 @@ public class LogsActivity extends AppCompatActivity {
             e.printStackTrace();
             Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
         }
+        root.removeAllViews();
+        loadLogs();
     }
 
     void scrollToBottom() {
