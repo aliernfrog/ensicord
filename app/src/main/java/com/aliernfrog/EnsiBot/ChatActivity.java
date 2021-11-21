@@ -280,6 +280,7 @@ public class ChatActivity extends AppCompatActivity {
         String topBarColor = dlc.getString("topBar", "#FF18191D");
         String titleColor = dlc.getString("title", "#FFFFFF");
         String hintColor = dlc.getString("hint", "#8C8C8C");
+        String typingTextColor = dlc.getString("typingText", "#FFFFFF");
         String chatBoxColor = dlc.getString("chatBox", "#FF18191D");
         String chatBoxHintColor = dlc.getString("chatBoxHint", "#636363");
         String chatBoxTextColor = dlc.getString("chatBoxText", "#FFFFFF");
@@ -290,6 +291,7 @@ public class ChatActivity extends AppCompatActivity {
         topBar.setBackgroundColor(Color.parseColor(topBarColor));
         channelTitle.setTextColor(Color.parseColor(titleColor));
         channelHint.setTextColor(Color.parseColor(hintColor));
+        typingText.setTextColor(Color.parseColor(typingTextColor));
         chatBox.setBackgroundColor(Color.parseColor(chatBoxColor));
         chatInput.setHintTextColor(Color.parseColor(chatBoxHintColor));
         chatInput.setTextColor(Color.parseColor(chatBoxTextColor));
