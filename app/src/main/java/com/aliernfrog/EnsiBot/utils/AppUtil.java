@@ -88,6 +88,10 @@ public class AppUtil {
         return text;
     }
 
+    public static int dpToPx(int dp, float density) {
+        return (int) (dp*density+0.5f);
+    }
+
     public static JSONArray removeIndexFromJsonArray(JSONArray array, Integer index) {
         JSONArray newArray = new JSONArray();
         try {
