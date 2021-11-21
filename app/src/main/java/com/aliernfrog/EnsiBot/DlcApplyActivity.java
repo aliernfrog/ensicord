@@ -122,6 +122,7 @@ public class DlcApplyActivity extends AppCompatActivity {
             if (rawDlc.has("topBar")) dlcEdit.putString("topBar", rawDlc.getString("topBar"));
             if (rawDlc.has("title")) dlcEdit.putString("title", rawDlc.getString("title"));
             if (rawDlc.has("hint")) dlcEdit.putString("hint", rawDlc.getString("hint"));
+            if (rawDlc.has("typingText")) dlcEdit.putString("typingText", rawDlc.getString("typingText"));
             if (rawDlc.has("chatBox")) dlcEdit.putString("chatBox", rawDlc.getString("chatBox"));
             if (rawDlc.has("chatBoxHint")) dlcEdit.putString("chatBoxHint", rawDlc.getString("chatBoxHint"));
             if (rawDlc.has("chatBoxText")) dlcEdit.putString("chatBoxText", rawDlc.getString("chatBoxText"));
