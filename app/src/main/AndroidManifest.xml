@@ -26,9 +26,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".FilePickerActivity" />
-        <activity android:name=".DlcApplyActivity" />
         <activity android:name=".OptionsActivity" android:exported="true" />
+        <activity android:name=".FilePickerActivity" />
+        <activity android:name=".LogsActivity" />
+        <activity android:name=".DlcApplyActivity" />
         <activity android:name=".DlcActivity" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".ChatActivity" />

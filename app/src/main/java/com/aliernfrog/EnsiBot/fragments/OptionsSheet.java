@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.aliernfrog.EnsiBot.ChatActivity;
+import com.aliernfrog.EnsiBot.LogsActivity;
 import com.aliernfrog.EnsiBot.OptionsActivity;
 import com.aliernfrog.EnsiBot.ProfileActivity;
 import com.aliernfrog.EnsiBot.R;
@@ -30,6 +31,7 @@ public class OptionsSheet extends BottomSheetDialogFragment {
     TextView username;
     LinearLayout starboard;
     LinearLayout options;
+    TextView viewLogs;
 
     String avatarPath;
 
@@ -47,11 +49,13 @@ public class OptionsSheet extends BottomSheetDialogFragment {
         username = view.findViewById(R.id.optionssheet_avatar_username);
         starboard = view.findViewById(R.id.optionssheet_starboard);
         options = view.findViewById(R.id.optionssheet_options);
+        viewLogs = view.findViewById(R.id.optionssheet_logs);
 
         context = getActivity();
 
         if (context != null) avatarPath = context.getExternalFilesDir(".saved").toString()+"/avatar.png";
         if (context != null) config = context.getSharedPreferences("APP_CONFIG", Context.MODE_PRIVATE);
+        if (config.getBoolean("debugMode", false)) viewLogs.setVisibility(View.VISIBLE);
 
         getUsername();
         getAvatar();
@@ -92,5 +96,6 @@ public class OptionsSheet extends BottomSheetDialogFragment {
         AppUtil.handleOnPressEvent(avatar_linear, () -> switchActivity(ProfileActivity.class));
         AppUtil.handleOnPressEvent(starboard, this::switchStarboard);
         AppUtil.handleOnPressEvent(options, () -> switchActivity(OptionsActivity.class));
+        AppUtil.handleOnPressEvent(viewLogs, () -> switchActivity(LogsActivity.class));
     }
 }

@@ -45,7 +45,7 @@ public class AppUtil {
         String className = stackTrace.getClassName();
         String methodName = stackTrace.getMethodName();
         if (text.contains("Exception")) className = "[ERR] "+className;
-        String full = className+" || "+methodName+" || "+text;
+        String full = className+"."+methodName+" || "+text;
         try {
             FileUtil.appendFile(logPath, full);
         } catch (Exception e) {
