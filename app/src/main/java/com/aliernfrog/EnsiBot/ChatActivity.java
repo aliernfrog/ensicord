@@ -201,7 +201,7 @@ public class ChatActivity extends AppCompatActivity {
             saveNewMessages = getIntent().getBooleanExtra("saveNewMessages", true);
             isStarboard = getIntent().getBooleanExtra("isStarboard", false);
             if (chatHistoryPath == null) chatHistory = new JSONArray("[]");
-            if (chatHistory == null) chatHistory = new JSONArray("[]");
+            if (!saveNewMessages) chatHistory = new JSONArray("[]");
             if (saveNewMessages) chatHistory = new JSONArray(FileUtil.readFile(chatHistoryPath));
             devLog("chatHistoryPath: "+chatHistoryPath);
             devLog("sendMessageAllowed: "+sendMessageAllowed);
