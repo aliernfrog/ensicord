@@ -5,6 +5,7 @@
     <string name="channelStart">This is the beginning of %NAME%</string>
     <string name="sendMessageDisabled">You can\'t send messages here</string>
     <string name="sendMessage">Message %NAME%</string>
+    <string name="typing">%NAME% is typing...</string>
     <string name="username">Username</string>
     <string name="content">Content</string>
     <string name="avatar">Avatar</string>

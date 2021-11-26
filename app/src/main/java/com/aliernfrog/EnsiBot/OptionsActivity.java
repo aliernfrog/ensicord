@@ -38,6 +38,7 @@ public class OptionsActivity extends AppCompatActivity {
     SharedPreferences.Editor configEdit;
 
     Integer changelogClick = 0;
+    Boolean restart = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,9 +76,10 @@ public class OptionsActivity extends AppCompatActivity {
         allowExperimentalDlcs.setChecked(config.getBoolean("allowExperimentalDlcs", false));
     }
 
-    void changeBoolean(String name, Boolean value) {
+    void changeBoolean(String name, Boolean value, Boolean requiresRestart) {
         configEdit.putBoolean(name, value);
         configEdit.commit();
+        if (requiresRestart) restart = true;
     }
 
     void getVersion() {
@@ -97,13 +99,24 @@ public class OptionsActivity extends AppCompatActivity {
         changelogText.setText(Html.fromHtml(_full));
     }
 
+    void restartApp() {
+        Intent intent = new Intent(this, SplashActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+    }
+
     void switchActivity(Class activity) {
         Intent intent = new Intent(this, activity);
         startActivity(intent);
     }
 
+    void exit() {
+        finish();
+        if (restart) restartApp();
+    }
+
     void setListeners() {
-        AppUtil.handleOnPressEvent(goBack, this::finish);
+        AppUtil.handleOnPressEvent(goBack, this::exit);
         AppUtil.handleOnPressEvent(otherOptions);
         AppUtil.handleOnPressEvent(chatOptions);
         AppUtil.handleOnPressEvent(moreOptions);
@@ -114,9 +127,15 @@ public class OptionsActivity extends AppCompatActivity {
         });
         AppUtil.handleOnPressEvent(redirectProfile, () -> switchActivity(ProfileActivity.class));
         AppUtil.handleOnPressEvent(redirectDlcs, () -> switchActivity(DlcActivity.class));
-        saveHistory.setOnCheckedChangeListener((compoundButton, b) -> changeBoolean("saveHistory", b));
-        autoUpdate.setOnCheckedChangeListener((compoundButton, b) -> changeBoolean("autoUpdate", b));
-        debugMode.setOnCheckedChangeListener((compoundButton, b) -> changeBoolean("debugMode", b));
-        allowExperimentalDlcs.setOnCheckedChangeListener((compoundButton, b) -> changeBoolean("allowExperimentalDlcs", b));
+        saveHistory.setOnCheckedChangeListener((compoundButton, b) -> changeBoolean("saveHistory", b, true));
+        autoUpdate.setOnCheckedChangeListener((compoundButton, b) -> changeBoolean("autoUpdate", b, false));
+        debugMode.setOnCheckedChangeListener((compoundButton, b) -> changeBoolean("debugMode", b, false));
+        allowExperimentalDlcs.setOnCheckedChangeListener((compoundButton, b) -> changeBoolean("allowExperimentalDlcs", b, false));
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        exit();
     }
 }
