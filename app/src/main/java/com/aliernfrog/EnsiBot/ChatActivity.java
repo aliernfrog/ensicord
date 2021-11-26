@@ -44,6 +44,7 @@ public class ChatActivity extends AppCompatActivity {
     ScrollView chatScroll;
     LinearLayout chatRoot;
     TextView channelHint;
+    TextView typingText;
     LinearLayout chatBox;
     EditText chatInput;
     ImageView chatSend;
@@ -84,6 +85,7 @@ public class ChatActivity extends AppCompatActivity {
     Boolean requiresProfileUpdate = false;
 
     Random random = new Random();
+    Handler handler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +106,7 @@ public class ChatActivity extends AppCompatActivity {
         chatScroll = findViewById(R.id.chat_chatScroll);
         chatRoot = findViewById(R.id.chat_chatRoot);
         channelHint = findViewById(R.id.chat_chat_hint);
+        typingText = findViewById(R.id.chat_typing);
         chatBox = findViewById(R.id.chat_chatBox);
         chatInput = findViewById(R.id.chat_chatInput);
         chatSend = findViewById(R.id.chat_chatSend);
@@ -154,7 +157,7 @@ public class ChatActivity extends AppCompatActivity {
         if (requiresProfileUpdate) getAvatarsAndUsernames();
         if (saveToHistory) chatHistory.put(AppUtil.buildMessageData(username, content, userUsername, ensiUsername));
         if (!username.equals(ensiUsername) && saveToHistory && sendMessageAllowed) {
-            sendMessage(ensiAvatar, ensiUsername, EnsiUtil.buildMessage(username, content, savedWords, savedVerbs, savedConcs, savedTypes), true);
+            ensiRespond(username, content);
             int randomInt = random.nextInt(10);
             if (randomInt == 3 && ensiSaveWords) {
                 String[] args = content.split(" ");
@@ -162,6 +165,16 @@ public class ChatActivity extends AppCompatActivity {
                 saveWord(word);
             }
         }
+    }
+
+    void ensiRespond(String username, String content) {
+        startTyping(ensiUsername);
+        String message = EnsiUtil.buildMessage(username, content, savedWords, savedVerbs, savedConcs, savedTypes);
+        int delay = message.length()*100;
+        handler.postDelayed(() -> {
+            sendMessage(ensiAvatar, ensiUsername, message, true);
+            stopTyping();
+        }, delay);
     }
 
     public void deleteChosenMessage() {
@@ -187,8 +200,9 @@ public class ChatActivity extends AppCompatActivity {
             sendMessageAllowed = getIntent().getBooleanExtra("sendMessageAllowed", true);
             saveNewMessages = getIntent().getBooleanExtra("saveNewMessages", true);
             isStarboard = getIntent().getBooleanExtra("isStarboard", false);
-            if (chatHistoryPath != null) chatHistory = new JSONArray(FileUtil.readFile(chatHistoryPath));
             if (chatHistoryPath == null) chatHistory = new JSONArray("[]");
+            if (!saveNewMessages) chatHistory = new JSONArray("[]");
+            if (saveNewMessages) chatHistory = new JSONArray(FileUtil.readFile(chatHistoryPath));
             devLog("chatHistoryPath: "+chatHistoryPath);
             devLog("sendMessageAllowed: "+sendMessageAllowed);
             devLog("saveNewMessages: "+saveNewMessages);
@@ -267,6 +281,7 @@ public class ChatActivity extends AppCompatActivity {
         String topBarColor = dlc.getString("topBar", "#FF18191D");
         String titleColor = dlc.getString("title", "#FFFFFF");
         String hintColor = dlc.getString("hint", "#8C8C8C");
+        String typingTextColor = dlc.getString("typingText", "#FFFFFF");
         String chatBoxColor = dlc.getString("chatBox", "#FF18191D");
         String chatBoxHintColor = dlc.getString("chatBoxHint", "#636363");
         String chatBoxTextColor = dlc.getString("chatBoxText", "#FFFFFF");
@@ -277,6 +292,7 @@ public class ChatActivity extends AppCompatActivity {
         topBar.setBackgroundColor(Color.parseColor(topBarColor));
         channelTitle.setTextColor(Color.parseColor(titleColor));
         channelHint.setTextColor(Color.parseColor(hintColor));
+        typingText.setTextColor(Color.parseColor(typingTextColor));
         chatBox.setBackgroundColor(Color.parseColor(chatBoxColor));
         chatInput.setHintTextColor(Color.parseColor(chatBoxHintColor));
         chatInput.setTextColor(Color.parseColor(chatBoxTextColor));
@@ -366,6 +382,18 @@ public class ChatActivity extends AppCompatActivity {
         Intent intent = new Intent(this, DlcApplyActivity.class);
         intent.putExtra("applyDefault", true);
         startActivity(intent);
+    }
+
+    void startTyping(String username) {
+        String text = getString(R.string.typing).replace("%NAME%", "<b>"+username+"</b>");
+        typingText.setText(Html.fromHtml(text));
+        typingText.setVisibility(View.VISIBLE);
+        chatScroll.setPadding(0,0,0,AppUtil.dpToPx(96, getResources().getDisplayMetrics().density));
+    }
+
+    void stopTyping() {
+        typingText.setVisibility(View.INVISIBLE);
+        chatScroll.setPadding(0,0,0,AppUtil.dpToPx(76, getResources().getDisplayMetrics().density));
     }
 
     void scrollToBottom() {

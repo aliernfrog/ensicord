@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,58 +11,65 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="30dp"
-        android:background="@drawable/linear"
-        android:orientation="vertical"
-        android:padding="8dp">
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
 
-        <TextView
-            android:id="@+id/messageSheet_message_author"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="30dp"
+            android:background="@drawable/linear"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/messageSheet_message_author"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/username"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/messageSheet_message_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/content"
+                android:textColor="#DDDDDD"
+                android:textIsSelectable="true"
+                tools:ignore="TouchTargetSizeCheck" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/messageSheet_starboard"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/username"
+            android:layout_margin="8dp"
+            android:background="@drawable/linear"
+            android:padding="8dp"
+            android:text="@string/message_addToStarboard"
             android:textColor="#FFFFFF"
-            android:textSize="16sp" />
+            android:textStyle="bold"
+            app:backgroundTint="#FF202020" />
 
-        <TextView
-            android:id="@+id/messageSheet_message_content"
-            android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/messageSheet_delete"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/content"
-            android:textColor="#DDDDDD"
-            android:textIsSelectable="true"
-            tools:ignore="TouchTargetSizeCheck" />
+            android:layout_margin="8dp"
+            android:background="@drawable/linear_red"
+            android:padding="8dp"
+            android:text="@string/message_delete"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            app:backgroundTint="#960000" />
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/messageSheet_starboard"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:background="@drawable/linear"
-        android:padding="8dp"
-        android:text="@string/message_addToStarboard"
-        android:textColor="#FFFFFF"
-        android:textStyle="bold"
-        app:backgroundTint="#FF202020" />
-
-    <Button
-        android:id="@+id/messageSheet_delete"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:background="@drawable/linear_red"
-        android:padding="8dp"
-        android:text="@string/message_delete"
-        android:textColor="#FFFFFF"
-        android:textStyle="bold"
-        app:backgroundTint="#960000" />
-
-</LinearLayout>
+</androidx.core.widget.NestedScrollView>
