@@ -8,4 +8,4 @@
 - Any Android version above Android 4.1
 
 # Notes
-- `READ_EXTERNAL_STORAGE` and `WRITE_EXTERNAL_STORAGE` is needed for custom avatars.
+- `READ_EXTERNAL_STORAGE` and `WRITE_EXTERNAL_STORAGE` are needed for custom avatars.
