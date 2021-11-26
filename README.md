@@ -9,3 +9,9 @@
 
 # Notes
 - `READ_EXTERNAL_STORAGE` and `WRITE_EXTERNAL_STORAGE` are needed for custom avatars.
+
+
+# Building
+- Clone the repository
+- Open it in Android Studio
+- Remove signingConfigs from `app/build.gradle` if needed
