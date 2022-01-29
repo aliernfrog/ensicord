@@ -9,7 +9,6 @@
 # Notes
 - `READ_EXTERNAL_STORAGE` and `WRITE_EXTERNAL_STORAGE` are needed for custom avatars.
 
-
 # Building
 - Clone the repository
 - Open it in Android Studio
