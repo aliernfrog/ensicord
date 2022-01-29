@@ -1,5 +1,4 @@
 # Ensicord
-
 <a href="https://aliernfrog.glitch.me/ensibot">Ensi Bot</a>, but in a separate app
 
 # <a href="https://github.com/aliernfrog/ensi-app/releases">Download</a>
