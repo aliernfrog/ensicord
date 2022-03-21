@@ -8,7 +8,6 @@
     android:background="#000000">
 
     <LinearLayout
-        android:id="@+id/chat_linear"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:orientation="vertical"
@@ -56,7 +55,6 @@
         </LinearLayout>
 
         <RelativeLayout
-            android:id="@+id/chat_chat"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
