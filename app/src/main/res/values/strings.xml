@@ -17,7 +17,6 @@
     <string name="starboard">Starboard</string>
     <string name="starboard_optionsDisabled">You can\'t access options in starboard</string>
     <string name="profile">Profile customization</string>
-    <string name="profile_avatar">Avatar</string>
     <string name="profile_avatar_hint">Click to change your avatar</string>
     <string name="profile_avatar_changed">Changed the avatar!</string>
     <string name="profile_username">Username</string>
