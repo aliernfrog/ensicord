@@ -9,6 +9,8 @@ import android.os.Bundle;
 import com.hbisoft.pickit.PickiT;
 import com.hbisoft.pickit.PickiTCallbacks;
 
+import java.util.ArrayList;
+
 public class FilePickerActivity extends AppCompatActivity implements PickiTCallbacks {
     String fileType;
 
@@ -67,5 +69,10 @@ public class FilePickerActivity extends AppCompatActivity implements PickiTCallb
     @Override
     public void PickiTonCompleteListener(String path, boolean wasDriveFile, boolean wasUnknownProvider, boolean wasSuccessful, String Reason) {
         finishGettingFile(path);
+    }
+
+    @Override
+    public void PickiTonMultipleCompleteListener(ArrayList<String> paths, boolean wasSuccessful, String Reason) {
+
     }
 }
