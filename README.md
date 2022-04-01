@@ -1,7 +1,7 @@
 # Ensicord
-<a href="https://aliernfrog.glitch.me/ensibot">Ensi Bot</a>, but in a separate app
+<a href="https://aliernfrog.github.io/ensibot">Ensi Bot</a>, but in a separate & offline app
 
-# <a href="https://github.com/aliernfrog/ensi-app/releases">Download</a>
+# <a href="https://github.com/aliernfrog/ensicord/releases">Download</a>
 
 # Requirements
 - Any Android version above Android 4.1
