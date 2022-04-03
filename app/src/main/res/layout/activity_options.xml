@@ -24,7 +24,9 @@
                 android:id="@+id/options_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin" />
+                app:layout_collapseMode="pin"
+                app:navigationIcon="?attr/homeAsUpIndicator"
+                app:navigationContentDescription="@string/action_back" />
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -42,22 +44,6 @@
             android:orientation="vertical"
             android:paddingLeft="24dp"
             android:paddingRight="24dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:background="@drawable/linear"
-                android:orientation="horizontal"
-                android:padding="1dp">
-
-                <ImageView
-                    android:id="@+id/options_goBack"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:contentDescription="@string/action_back"
-                    app:srcCompat="@drawable/goback" />
-            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/options_other_linear"

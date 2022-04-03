@@ -1,6 +1,7 @@
 package com.aliernfrog.EnsiBot;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -22,7 +23,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class DlcActivity extends AppCompatActivity {
-    ImageView goBack;
+    Toolbar toolbar;
     ProgressBar loading;
     LinearLayout themeRoot;
     LinearLayout chatRoot;
@@ -46,7 +47,7 @@ public class DlcActivity extends AppCompatActivity {
         debugMode = config.getBoolean("debugMode", false);
         allowExperimentalDlcs = config.getBoolean("allowExperimentalDlcs", false);
 
-        goBack = findViewById(R.id.dlc_goBack);
+        toolbar = findViewById(R.id.dlc_toolbar);
         loading = findViewById(R.id.dlc_loading);
         themeRoot = findViewById(R.id.dlc_theme_root);
         chatRoot = findViewById(R.id.dlc_chat_root);
@@ -139,7 +140,7 @@ public class DlcActivity extends AppCompatActivity {
     }
 
     void setListeners() {
-        AppUtil.handleOnPressEvent(goBack, this::finish);
+        toolbar.setNavigationOnClickListener(v -> finish());
         AppUtil.handleOnPressEvent(themeRoot);
         AppUtil.handleOnPressEvent(chatRoot);
         AppUtil.handleOnPressEvent(experimentalRoot);
