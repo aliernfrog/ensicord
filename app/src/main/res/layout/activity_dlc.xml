@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-
-
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000">
+    android:background="?ensicord_background">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -16,11 +14,11 @@
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            app:contentScrim="?ensicord_linear"
             app:expandedTitleGravity="center"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:title="@string/dlcs"
-            app:toolbarId="@+id/dlc_toolbar"
-            app:contentScrim="#FF18191D">
+            app:toolbarId="@+id/dlc_toolbar">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/dlc_toolbar"
@@ -83,7 +81,7 @@
                     android:layout_marginEnd="8dp"
                     android:layout_marginRight="8dp"
                     android:text="@string/dlcs_theme"
-                    android:textColor="#FFFFFF"
+                    android:textColor="?android:textColorPrimary"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -106,7 +104,7 @@
                     android:layout_marginEnd="8dp"
                     android:layout_marginRight="8dp"
                     android:text="@string/dlcs_chat"
-                    android:textColor="#FFFFFF"
+                    android:textColor="?android:textColorPrimary"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -129,7 +127,7 @@
                     android:layout_marginEnd="8dp"
                     android:layout_marginRight="8dp"
                     android:text="@string/dlcs_experimental"
-                    android:textColor="#FFFFFF"
+                    android:textColor="?android:textColorPrimary"
                     android:textStyle="bold" />
 
                 <TextView
@@ -139,7 +137,7 @@
                     android:background="@drawable/linear_red"
                     android:padding="8dp"
                     android:text="@string/dlcs_experimental_warning"
-                    android:textColor="#FFFFFF"
+                    android:textColor="?ensicord_textOnRed"
                     android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>
