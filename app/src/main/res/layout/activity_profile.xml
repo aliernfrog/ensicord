@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000">
+    android:background="?ensicord_background">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -14,11 +14,11 @@
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            app:contentScrim="?ensicord_linear"
             app:expandedTitleGravity="center"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:title="@string/profile"
-            app:toolbarId="@+id/profile_toolbar"
-            app:contentScrim="#FF18191D">
+            app:toolbarId="@+id/profile_toolbar">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/profile_toolbar"
@@ -74,7 +74,7 @@
                     android:layout_marginEnd="8dp"
                     android:layout_marginRight="8dp"
                     android:text="@string/avatar"
-                    android:textColor="#FFFFFF"
+                    android:textColor="?android:textColorPrimary"
                     android:textStyle="bold" />
 
                 <androidx.cardview.widget.CardView
@@ -98,7 +98,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/profile_avatar_hint"
-                    android:textColor="#78909C"
+                    android:textColor="?ensicord_hint"
                     android:textSize="11sp" />
 
             </LinearLayout>
@@ -120,7 +120,7 @@
                     android:layout_marginEnd="8dp"
                     android:layout_marginRight="8dp"
                     android:text="@string/profile_username"
-                    android:textColor="#FFFFFF"
+                    android:textColor="?android:textColorPrimary"
                     android:textStyle="bold" />
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -131,7 +131,7 @@
                     android:layout_marginLeft="8dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginRight="8dp"
-                    android:textColorHint="#777777"
+                    android:textColorHint="?ensicord_hint"
                     app:boxStrokeColor="#005DFF">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -141,8 +141,8 @@
                         android:hint="@string/profile_username"
                         android:imeOptions="actionDone"
                         android:singleLine="true"
-                        android:textColor="#FFFFFF"
-                        android:textColorHint="#777777"
+                        android:textColor="?android:textColorPrimary"
+                        android:textColorHint="?ensicord_hint"
                         android:textStyle="bold"
                         tools:ignore="DuplicateSpeakableTextCheck" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -155,9 +155,9 @@
                     android:background="@drawable/linear_button"
                     android:padding="8dp"
                     android:text="@string/confirm"
-                    android:textColor="#FFFFFF"
+                    android:textColor="?android:textColorPrimary"
                     android:textStyle="bold"
-                    app:backgroundTint="#FF0E0E0E" />
+                    app:backgroundTint="?ensicord_button" />
 
             </LinearLayout>
 
@@ -178,9 +178,9 @@
                     android:background="@drawable/linear_blue"
                     android:padding="8dp"
                     android:text="@string/dlcs"
-                    android:textColor="#FFFFFF"
+                    android:textColor="?android:textColorPrimary"
                     android:textStyle="bold"
-                    app:backgroundTint="#005DFF" />
+                    app:backgroundTint="?ensicord_button" />
 
                 <Button
                     android:id="@+id/profile_options"
@@ -190,9 +190,9 @@
                     android:background="@drawable/linear_button"
                     android:padding="8dp"
                     android:text="@string/profile_appOptions"
-                    android:textColor="#FFFFFF"
+                    android:textColor="?android:textColorPrimary"
                     android:textStyle="bold"
-                    app:backgroundTint="#FF0E0E0E"
+                    app:backgroundTint="?ensicord_button"
                     tools:ignore="TouchTargetSizeCheck" />
 
             </LinearLayout>

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#000000"
+    android:background="?ensicord_background"
     android:orientation="vertical"
     android:paddingLeft="24dp"
     android:paddingRight="24dp">
@@ -12,7 +12,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -32,7 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/username"
-                android:textColor="#FFFFFF"
+                android:textColor="?android:textColorPrimary"
                 android:textSize="16sp" />
 
             <TextView
@@ -40,7 +40,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/content"
-                android:textColor="#DDDDDD"
+                android:textColor="?ensicord_hint"
                 android:textIsSelectable="true"
                 tools:ignore="TouchTargetSizeCheck" />
 
@@ -54,9 +54,9 @@
             android:background="@drawable/linear"
             android:padding="8dp"
             android:text="@string/message_addToStarboard"
-            android:textColor="#FFFFFF"
+            android:textColor="?android:textColorPrimary"
             android:textStyle="bold"
-            app:backgroundTint="#FF202020" />
+            app:backgroundTint="?ensicord_linear" />
 
         <Button
             android:id="@+id/messageSheet_delete"
@@ -66,9 +66,9 @@
             android:background="@drawable/linear_red"
             android:padding="8dp"
             android:text="@string/message_delete"
-            android:textColor="#FFFFFF"
+            android:textColor="?ensicord_textOnRed"
             android:textStyle="bold"
-            app:backgroundTint="#960000" />
+            app:backgroundTint="?ensicord_red" />
 
     </LinearLayout>
 

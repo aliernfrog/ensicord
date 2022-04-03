@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000">
+    android:background="?ensicord_background">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -14,11 +14,11 @@
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            app:contentScrim="?ensicord_linear"
             app:expandedTitleGravity="center"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:title="@string/viewLogs"
-            app:toolbarId="@+id/logs_toolbar"
-            app:contentScrim="#FF18191D">
+            app:toolbarId="@+id/logs_toolbar">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/logs_toolbar"
@@ -73,9 +73,9 @@
                 android:background="@drawable/linear_red"
                 android:padding="8dp"
                 android:text="@string/logs_clear"
-                android:textColor="#FFFFFF"
+                android:textColor="?ensicord_textOnRed"
                 android:textStyle="bold"
-                app:backgroundTint="#960000" />
+                app:backgroundTint="?ensicord_red" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

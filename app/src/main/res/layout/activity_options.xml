@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000">
+    android:background="?ensicord_background">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -14,11 +14,11 @@
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            app:contentScrim="?ensicord_linear"
             app:expandedTitleGravity="center"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:title="@string/options"
-            app:toolbarId="@+id/options_toolbar"
-            app:contentScrim="#FF18191D">
+            app:toolbarId="@+id/options_toolbar">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/options_toolbar"
@@ -75,9 +75,9 @@
                     android:background="@drawable/linear_button"
                     android:padding="8dp"
                     android:text="@string/profile"
-                    android:textColor="#FFFFFF"
+                    android:textColor="?android:textColorPrimary"
                     android:textStyle="bold"
-                    app:backgroundTint="#FF0E0E0E"
+                    app:backgroundTint="?ensicord_button"
                     tools:ignore="TouchTargetSizeCheck" />
 
                 <Button
@@ -88,9 +88,9 @@
                     android:background="@drawable/linear_button"
                     android:padding="8dp"
                     android:text="@string/dlcs"
-                    android:textColor="#FFFFFF"
+                    android:textColor="?android:textColorPrimary"
                     android:textStyle="bold"
-                    app:backgroundTint="#FF0E0E0E" />
+                    app:backgroundTint="?ensicord_button" />
 
             </LinearLayout>
 
@@ -111,7 +111,7 @@
                     android:layout_marginEnd="8dp"
                     android:layout_marginRight="8dp"
                     android:text="@string/options_chatOptions"
-                    android:textColor="#FFFFFF"
+                    android:textColor="?android:textColorPrimary"
                     android:textStyle="bold" />
 
                 <CheckBox
@@ -122,7 +122,7 @@
                     android:background="@drawable/linear_button"
                     android:padding="8dp"
                     android:text="@string/options_saveHistory"
-                    android:textColor="#FFFFFF"
+                    android:textColor="?android:textColorPrimary"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -144,7 +144,7 @@
                     android:layout_marginEnd="8dp"
                     android:layout_marginRight="8dp"
                     android:text="@string/options_moreOptions"
-                    android:textColor="#FFFFFF"
+                    android:textColor="?android:textColorPrimary"
                     android:textStyle="bold" />
 
                 <CheckBox
@@ -155,7 +155,7 @@
                     android:background="@drawable/linear_button"
                     android:padding="8dp"
                     android:text="@string/options_autoUpdate"
-                    android:textColor="#FFFFFF"
+                    android:textColor="?android:textColorPrimary"
                     android:textStyle="bold" />
 
                 <CheckBox
@@ -166,7 +166,7 @@
                     android:background="@drawable/linear_button"
                     android:padding="8dp"
                     android:text="@string/options_debugMode"
-                    android:textColor="#FFFFFF"
+                    android:textColor="?android:textColorPrimary"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -190,7 +190,7 @@
                     android:layout_marginEnd="8dp"
                     android:layout_marginRight="8dp"
                     android:text="@string/options_experimentalOptions"
-                    android:textColor="#FFFFFF"
+                    android:textColor="?android:textColorPrimary"
                     android:textStyle="bold" />
 
                 <TextView
@@ -200,7 +200,7 @@
                     android:background="@drawable/linear_red"
                     android:padding="8dp"
                     android:text="@string/options_experimentalOptions_warning"
-                    android:textColor="#FFFFFF"
+                    android:textColor="?ensicord_textOnRed"
                     android:textStyle="bold" />
 
                 <CheckBox
@@ -211,7 +211,7 @@
                     android:background="@drawable/linear_button"
                     android:padding="8dp"
                     android:text="@string/options_allowExperimentalDlcs"
-                    android:textColor="#FFFFFF"
+                    android:textColor="?android:textColorPrimary"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -233,7 +233,7 @@
                     android:layout_marginLeft="8dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginRight="8dp"
-                    android:textColor="#FFFFFF" />
+                    android:textColor="?android:textColorPrimary" />
             </LinearLayout>
 
         </LinearLayout>
