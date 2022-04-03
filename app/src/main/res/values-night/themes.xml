@@ -18,7 +18,7 @@
         <item name="colorControlActivated">@color/blueDark</item>
         <item name="android:textColorPrimary">@color/white</item>
         <item name="android:windowBackground">@drawable/splash</item>
-        <!-- LAC Tool -->
+        <!-- Ensicord -->
         <item name="ensicord_background">@color/backgroundDark</item>
         <item name="ensicord_hint">@color/hintDark</item>
         <item name="ensicord_textOnRed">@color/textOnRedDark</item>
