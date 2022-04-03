@@ -1,6 +1,7 @@
 package com.aliernfrog.EnsiBot;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,14 +10,13 @@ import android.text.Html;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.aliernfrog.EnsiBot.utils.AppUtil;
 
 public class OptionsActivity extends AppCompatActivity {
-    ImageView goBack;
+    Toolbar toolbar;
     LinearLayout otherOptions;
     Button redirectProfile;
     Button redirectDlcs;
@@ -45,7 +45,7 @@ public class OptionsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_options);
 
-        goBack = findViewById(R.id.options_goBack);
+        toolbar = findViewById(R.id.options_toolbar);
         otherOptions = findViewById(R.id.options_other_linear);
         redirectProfile = findViewById(R.id.options_profile);
         redirectDlcs = findViewById(R.id.options_dlcs);
@@ -116,7 +116,7 @@ public class OptionsActivity extends AppCompatActivity {
     }
 
     void setListeners() {
-        AppUtil.handleOnPressEvent(goBack, this::exit);
+        toolbar.setNavigationOnClickListener(v -> exit());
         AppUtil.handleOnPressEvent(otherOptions);
         AppUtil.handleOnPressEvent(chatOptions);
         AppUtil.handleOnPressEvent(moreOptions);

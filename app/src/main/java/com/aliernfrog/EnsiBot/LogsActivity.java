@@ -1,6 +1,7 @@
 package com.aliernfrog.EnsiBot;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
 
@@ -9,7 +10,6 @@ import android.os.Handler;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,8 +20,8 @@ import com.aliernfrog.EnsiBot.utils.FileUtil;
 import java.io.File;
 
 public class LogsActivity extends AppCompatActivity {
+    Toolbar toolbar;
     NestedScrollView nestedScrollView;
-    ImageView goBack;
     LinearLayout root;
     Button clearLogs;
 
@@ -34,8 +34,8 @@ public class LogsActivity extends AppCompatActivity {
 
         logPath = getExternalFilesDir(".saved").getPath()+"/log.txt";
 
+        toolbar = findViewById(R.id.logs_toolbar);
         nestedScrollView = findViewById(R.id.logs_nestedScrollView);
-        goBack = findViewById(R.id.logs_goBack);
         root = findViewById(R.id.logs_root);
         clearLogs = findViewById(R.id.logs_clear);
 
@@ -93,7 +93,7 @@ public class LogsActivity extends AppCompatActivity {
     }
 
     void setListeners() {
-        AppUtil.handleOnPressEvent(goBack, this::finish);
+        toolbar.setNavigationOnClickListener(v -> finish());
         AppUtil.handleOnPressEvent(clearLogs, this::deleteLogs);
     }
 }

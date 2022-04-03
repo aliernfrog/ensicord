@@ -1,6 +1,7 @@
 package com.aliernfrog.EnsiBot;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -24,7 +25,7 @@ import com.google.android.material.textfield.TextInputLayout;
 
 @SuppressLint("CommitPrefEdits")
 public class ProfileActivity extends AppCompatActivity {
-    ImageView goBack;
+    Toolbar toolbar;
     LinearLayout avatarLinear;
     ImageView avatar;
     LinearLayout usernameLinear;
@@ -52,7 +53,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         avatarPath = getExternalFilesDir(".saved").toString()+"/avatar.png";
 
-        goBack = findViewById(R.id.profile_goBack);
+        toolbar = findViewById(R.id.profile_toolbar);
         avatarLinear = findViewById(R.id.profile_avatar_linear);
         avatar = findViewById(R.id.profile_avatar);
         usernameLinear = findViewById(R.id.profile_username_linear);
@@ -144,7 +145,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     void setListeners() {
-        AppUtil.handleOnPressEvent(goBack, this::finish);
+        toolbar.setNavigationOnClickListener(v -> finish());
         AppUtil.handleOnPressEvent(avatarLinear, this::pickAvatar);
         AppUtil.handleOnPressEvent(usernameLinear);
         AppUtil.handleOnPressEvent(usernameConfirm, () -> changeName(Html.fromHtml(usernameInput.getEditText().getText().toString()).toString()));
