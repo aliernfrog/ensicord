@@ -18,6 +18,7 @@
         <item name="colorControlActivated">@color/blueDark</item>
         <item name="android:textColorPrimary">@color/white</item>
         <item name="android:windowBackground">@drawable/splash</item>
+        <item name="bottomSheetDialogTheme">@style/Theme.Ensi.BottomSheetDialog</item>
         <!-- Ensicord -->
         <item name="ensicord_background">@color/backgroundDark</item>
         <item name="ensicord_hint">@color/hintDark</item>
