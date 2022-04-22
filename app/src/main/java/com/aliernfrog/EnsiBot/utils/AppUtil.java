@@ -70,7 +70,7 @@ public class AppUtil {
         SharedPreferences update = context.getSharedPreferences("APP_UPDATE", Context.MODE_PRIVATE);
         SharedPreferences config = context.getSharedPreferences("APP_CONFIG", Context.MODE_PRIVATE);
         SharedPreferences.Editor updateEdit = update.edit();
-        String updateUrl = config.getString("updateUrl", "https://aliernfrog.glitch.me/ensicord/update.json");
+        String updateUrl = config.getString("updateUrl", "https://aliernfrog.github.io/ensicord/update.json");
         String rawUpdate = WebUtil.getContentFromURL(updateUrl);
         JSONObject object = new JSONObject(rawUpdate);
         updateEdit.putInt("updateLatest", object.getInt("latest"));
