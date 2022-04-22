@@ -66,7 +66,7 @@ public class AppUtil {
     }
 
     @SuppressLint("ApplySharedPref")
-    public static Boolean getUpdates(Context context) throws Exception {
+    public static void fetchUpdates(Context context) throws Exception {
         SharedPreferences update = context.getSharedPreferences("APP_UPDATE", Context.MODE_PRIVATE);
         SharedPreferences config = context.getSharedPreferences("APP_CONFIG", Context.MODE_PRIVATE);
         SharedPreferences.Editor updateEdit = update.edit();
@@ -78,7 +78,6 @@ public class AppUtil {
         updateEdit.putString("updateChangelog", object.getString("changelog"));
         updateEdit.putString("updateChangelogVersion", object.getString("changelogVersion"));
         updateEdit.commit();
-        return true;
     }
 
     public static String fixTextForHtml(String text) {
