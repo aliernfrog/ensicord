@@ -9,6 +9,8 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.aliernfrog.EnsiBot.utils.AppUtil;
@@ -25,6 +27,7 @@ import java.io.OutputStream;
 @SuppressLint("CommitPrefEdits")
 public class DlcApplyActivity extends AppCompatActivity {
     TextView info;
+    ProgressBar progressBar;
 
     SharedPreferences config;
     SharedPreferences dlc;
@@ -48,6 +51,7 @@ public class DlcApplyActivity extends AppCompatActivity {
         setContentView(R.layout.activity_dlc_apply);
 
         info = findViewById(R.id.dlcApply_info);
+        progressBar = findViewById(R.id.dlcApply_progress);
 
         config = getSharedPreferences("APP_CONFIG", MODE_PRIVATE);
         dlc = getSharedPreferences("APP_DLC", MODE_PRIVATE);
@@ -155,6 +159,7 @@ public class DlcApplyActivity extends AppCompatActivity {
 
     void finishApplying() {
         inform("Done!");
+        progressBar.setVisibility(View.GONE);
         Intent intent = new Intent(getApplicationContext(), SplashActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         new Handler().postDelayed(() -> {
