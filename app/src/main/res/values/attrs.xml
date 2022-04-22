@@ -10,5 +10,4 @@
     <attr name="ensicord_red" format="reference"/>
     <attr name="ensicord_sheetIndicatorColor" format="reference"/>
     <attr name="ensicord_sheetBackgroundDrawable" format="reference"/>
-    <attr name="ensicord_indicatorDrawable" format="reference"/>
 </resources>
