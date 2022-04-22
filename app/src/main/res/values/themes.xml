@@ -28,5 +28,6 @@
         <item name="ensicord_button">@color/buttonLight</item>
         <item name="ensicord_blue">@color/blueLight</item>
         <item name="ensicord_red">@color/redLight</item>
+        <item name="ensicord_sheetIndicatorColor">@color/buttonLight</item>
     </style>
 </resources>
