@@ -10,6 +10,14 @@
     android:paddingLeft="24dp"
     android:paddingRight="24dp">
 
+    <View
+        android:layout_width="30dp"
+        android:layout_height="5dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/sheet_indicator" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
