@@ -38,16 +38,16 @@ public class SplashActivity extends AppCompatActivity {
 
         devLog("SplashActivity started");
 
-        getUpdates();
+        fetchUpdates();
         checkFiles();
         switchActivity();
     }
 
-    public void getUpdates() {
+    public void fetchUpdates() {
         if (!autoUpdate) return;
         devLog("attempting to get updates");
         try {
-            AppUtil.getUpdates(getApplicationContext());
+            AppUtil.fetchUpdates(getApplicationContext());
         } catch (Exception e) {
             e.printStackTrace();
             devLog(e.toString());
