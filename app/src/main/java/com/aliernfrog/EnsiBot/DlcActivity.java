@@ -24,6 +24,7 @@ import org.json.JSONObject;
 
 public class DlcActivity extends AppCompatActivity {
     Toolbar toolbar;
+    TextView errorText;
     ProgressBar loading;
     LinearLayout themeRoot;
     LinearLayout chatRoot;
@@ -48,6 +49,7 @@ public class DlcActivity extends AppCompatActivity {
         allowExperimentalDlcs = config.getBoolean("allowExperimentalDlcs", false);
 
         toolbar = findViewById(R.id.dlc_toolbar);
+        errorText = findViewById(R.id.dlc_error);
         loading = findViewById(R.id.dlc_loading);
         themeRoot = findViewById(R.id.dlc_theme_root);
         chatRoot = findViewById(R.id.dlc_chat_root);
@@ -135,7 +137,15 @@ public class DlcActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    void informError(String err) {
+        String fullText = getString(R.string.dlcs_somethingWentWrong)+":\n"+err;
+        errorText.setText(fullText);
+        errorText.setVisibility(View.VISIBLE);
+        loading.setVisibility(View.GONE);
+    }
+
     void devLog(String text) {
+        if (text.contains("Exception")) informError(text);
         if (debugMode) AppUtil.devLog(text, getApplicationContext());
     }
 
