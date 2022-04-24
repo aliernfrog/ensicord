@@ -1,11 +1,11 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Ensicord</string>
     <string name="action_back">Go back</string>
     <string name="channel_name">#unnamed</string>
     <string name="channelStart">This is the beginning of %NAME%</string>
     <string name="sendMessageDisabled">You can\'t send messages here</string>
     <string name="sendMessage">Message %NAME%</string>
-    <string name="typing">%NAME% is typing...</string>
+    <string name="typing" tools:ignore="TypographyEllipsis">%NAME% is typing...</string>
     <string name="username">Username</string>
     <string name="content">Content</string>
     <string name="avatar">Avatar</string>
@@ -23,6 +23,7 @@
     <string name="profile_username_changed">Changed the username!</string>
     <string name="profile_appOptions">More options</string>
     <string name="dlcs">Chat &amp; theme packs</string>
+    <string name="dlcs_somethingWentWrong">Something went wrong while loading DLCs, try again later</string>
     <string name="dlcs_theme">Theme packs</string>
     <string name="dlcs_chat">Chat packs</string>
     <string name="dlcs_experimental">Experimental packs</string>
