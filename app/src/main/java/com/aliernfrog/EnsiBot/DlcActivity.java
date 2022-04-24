@@ -141,8 +141,5 @@ public class DlcActivity extends AppCompatActivity {
 
     void setListeners() {
         toolbar.setNavigationOnClickListener(v -> finish());
-        AppUtil.handleOnPressEvent(themeRoot);
-        AppUtil.handleOnPressEvent(chatRoot);
-        AppUtil.handleOnPressEvent(experimentalRoot);
     }
 }
