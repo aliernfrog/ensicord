@@ -4,10 +4,10 @@
 # <a href="https://github.com/aliernfrog/ensicord/releases">Download</a>
 
 # Requirements
-- Any Android version above Android 4.1
+- Android 5.0 and above
 
 # Notes
-- `READ_EXTERNAL_STORAGE` and `WRITE_EXTERNAL_STORAGE` are needed for custom avatars.
+- Storage permissions are needed for custom avatars.
 
 # Building
 - Clone the repository
