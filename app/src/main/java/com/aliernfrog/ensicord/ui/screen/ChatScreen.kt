@@ -59,7 +59,7 @@ private fun ChatView(modifier: Modifier) {
 @Composable
 private fun ChatInput() {
     val context = LocalContext.current
-    Row(Modifier.padding(end = 8.dp), verticalAlignment = Alignment.CenterVertically) {
+    Row(verticalAlignment = Alignment.CenterVertically) {
         EnsicordTextField(
             value = messageInput.value,
             onValueChange = { messageInput.value = it },
@@ -68,7 +68,7 @@ private fun ChatInput() {
             colors = TextFieldDefaults.textFieldColors(focusedIndicatorColor = MaterialTheme.colors.secondaryVariant, unfocusedIndicatorColor = MaterialTheme.colors.secondaryVariant)
         )
         AnimatedVisibility(visible = messageInput.value.trim() != "") {
-            IconButton(modifier = Modifier.height(48.dp).width(48.dp), onClick = { }) {
+            IconButton(modifier = Modifier.padding(top = 8.dp, bottom = 8.dp, end = 8.dp).height(48.dp).width(48.dp), onClick = { }) {
                 Image(
                     painter = painterResource(id = R.drawable.send),
                     context.getString(R.string.chatSendMessageDescription)
