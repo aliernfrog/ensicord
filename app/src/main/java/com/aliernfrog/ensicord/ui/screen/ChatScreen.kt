@@ -59,7 +59,7 @@ private fun ChatView(modifier: Modifier) {
 @Composable
 private fun ChatInput() {
     val context = LocalContext.current
-    Row(verticalAlignment = Alignment.CenterVertically) {
+    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.heightIn(0.dp, 160.dp)) {
         EnsicordTextField(
             value = messageInput.value,
             onValueChange = { messageInput.value = it },
