@@ -4,11 +4,14 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -18,17 +21,28 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.aliernfrog.ensicord.R
+import com.aliernfrog.ensicord.data.Message
+import com.aliernfrog.ensicord.ui.composable.EnsicordMessage
 import com.aliernfrog.ensicord.ui.composable.EnsicordTextField
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 private val messageInput = mutableStateOf("")
+private val messageList = ArrayList<Message>()
+private val recompose = mutableStateOf(true)
 
 private const val chatName = "#ensicord-development"
 
+private lateinit var scope: CoroutineScope
+private lateinit var messageListState: LazyListState
+
 @Composable
 fun ChatScreen() {
+    scope = rememberCoroutineScope()
+    messageListState = rememberLazyListState()
     Column {
         TopBar()
-        ChatView(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = 24.dp).weight(1f))
+        ChatView(Modifier.fillMaxSize().weight(1f))
         ChatInput()
         Spacer(Modifier.height(5.dp))
     }
@@ -44,16 +58,21 @@ private fun TopBar() {
 @Composable
 private fun ChatView(modifier: Modifier) {
     val context = LocalContext.current
-    Column(modifier, verticalArrangement = Arrangement.Bottom) {
-        Text(
-            text = context.getString(R.string.chatBeginning).replace("%CHAT%", chatName),
-            color = MaterialTheme.colors.onBackground,
-            fontWeight = FontWeight.Bold,
-            fontSize = 30.sp,
-            modifier = Modifier.alpha(0.5f).padding(top = 100.dp, bottom = 60.dp)
-        )
-        Text(text = "Ensi: hi bro\n\n\n\n\ntest\ntest\ntest\ntest\ntest\ntest\ntest\ntest\ntest\ntest\ntest\ntest\ntest\ntest\ntest\ntest\ntest\ntest\ntest\ntest\ntest\ntest\ntest\ntest\ntest\ntest\ntest\ntest\ntest\ntest\ntest\ntest\ntest\ntest\ntest\ntest\ntest\ntest\ntest\ntest\ntest\ntest\ntest\ntest\ntest\ntest\ntest\ntest\ntest\ntest\ntest\ntest\ntest\ntest\ntest\ntest\ntest\ntest\ntest\ntest\ntest\ntest\ntest\ntest\ntest\ntest\ntest\ntest\ntest\n===== END =====", color = MaterialTheme.colors.onBackground)
+    LazyColumn(modifier, verticalArrangement = Arrangement.Bottom, contentPadding = PaddingValues(horizontal = 8.dp), state = messageListState) {
+        item {
+            Text(
+                text = context.getString(R.string.chatBeginning).replace("%CHAT%", chatName),
+                color = MaterialTheme.colors.onBackground,
+                fontWeight = FontWeight.Bold,
+                fontSize = 30.sp,
+                modifier = Modifier.alpha(0.5f).padding(top = 100.dp, bottom = 60.dp)
+            )
+        }
+        items(messageList) { message ->
+            EnsicordMessage(message)
+        }
     }
+    recompose.value
 }
 
 @Composable
@@ -65,10 +84,13 @@ private fun ChatInput() {
             onValueChange = { messageInput.value = it },
             modifier = Modifier.weight(1f),
             placeholder = { Text(text = context.getString(R.string.chatSendMessage).replace("%CHAT%", chatName)) },
-            colors = TextFieldDefaults.textFieldColors(focusedIndicatorColor = MaterialTheme.colors.secondaryVariant, unfocusedIndicatorColor = MaterialTheme.colors.secondaryVariant)
+            colors = TextFieldDefaults.textFieldColors(backgroundColor = MaterialTheme.colors.secondaryVariant, textColor = MaterialTheme.colors.onSecondary, focusedIndicatorColor = MaterialTheme.colors.secondaryVariant, unfocusedIndicatorColor = MaterialTheme.colors.secondaryVariant)
         )
         AnimatedVisibility(visible = messageInput.value.trim() != "") {
-            IconButton(modifier = Modifier.padding(top = 8.dp, bottom = 8.dp, end = 8.dp).height(48.dp).width(48.dp), onClick = { }) {
+            IconButton(modifier = Modifier.padding(top = 8.dp, bottom = 8.dp, end = 8.dp).height(48.dp).width(48.dp), enabled = messageInput.value.trim() != "", onClick = {
+                addMessage(Message("user", "Some frok", messageInput.value), clearInput = true)
+            }
+            ) {
                 Image(
                     painter = painterResource(id = R.drawable.send),
                     context.getString(R.string.chatSendMessageDescription)
@@ -76,4 +98,17 @@ private fun ChatInput() {
             }
         }
     }
+}
+
+private fun addMessage(message: Message, clearInput: Boolean = false) {
+    messageList.add(message)
+    recompose.value = !recompose.value
+    if (isAtBottom()) scope.launch { messageListState.animateScrollToItem(messageList.size) }
+    if (clearInput) messageInput.value = ""
+}
+
+private fun isAtBottom(): Boolean {
+    val layoutInfo = messageListState.layoutInfo
+    if (layoutInfo.visibleItemsInfo.lastOrNull() == null) return true
+    return layoutInfo.visibleItemsInfo.last().index >= messageListState.layoutInfo.totalItemsCount - 7
 }
