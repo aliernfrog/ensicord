@@ -3,11 +3,13 @@ package com.aliernfrog.ensicord.ui.screen
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -15,6 +17,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -87,15 +90,13 @@ private fun ChatInput() {
             colors = TextFieldDefaults.textFieldColors(backgroundColor = MaterialTheme.colors.secondaryVariant, textColor = MaterialTheme.colors.onSecondary, focusedIndicatorColor = MaterialTheme.colors.secondaryVariant, unfocusedIndicatorColor = MaterialTheme.colors.secondaryVariant)
         )
         AnimatedVisibility(visible = messageInput.value.trim() != "") {
-            IconButton(modifier = Modifier.padding(top = 8.dp, bottom = 8.dp, end = 8.dp).height(48.dp).width(48.dp), enabled = messageInput.value.trim() != "", onClick = {
-                addMessage(Message("user", "Some frok", messageInput.value), clearInput = true)
-            }
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.send),
-                    context.getString(R.string.chatSendMessageDescription)
-                )
-            }
+            Image(
+                painter = painterResource(id = R.drawable.send),
+                contentDescription = context.getString(R.string.chatSendMessageDescription),
+                modifier = Modifier.padding(top = 8.dp, bottom = 8.dp, end = 8.dp).size(height = 48.dp, width = 48.dp).clip(CircleShape).clickable {
+                    if (messageInput.value.trim() != "") addMessage(Message("user", "Some frok", messageInput.value), clearInput = true)
+                }
+            )
         }
     }
 }
