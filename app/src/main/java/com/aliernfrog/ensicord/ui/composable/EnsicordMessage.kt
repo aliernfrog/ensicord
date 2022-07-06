@@ -1,11 +1,14 @@
 package com.aliernfrog.ensicord.ui.composable
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
@@ -15,12 +18,18 @@ import com.aliernfrog.ensicord.R
 import com.aliernfrog.ensicord.data.Message
 
 @Composable
-fun EnsicordMessage(message: Message) {
+fun EnsicordMessage(message: Message, onNicknameClick: (() -> Unit)? = null) {
     val avatar = getAvatarId(message.avatar)
     Row(Modifier.padding(vertical = 8.dp)) {
         Image(painter = painterResource(id = avatar), contentDescription = "", Modifier.padding(end = 8.dp).clip(CircleShape).size(44.dp, 44.dp))
         Column(Modifier.weight(1f)) {
-            Text(text = message.author, fontWeight = FontWeight.Bold, color = MaterialTheme.colors.onBackground)
+            Text(
+                text = message.author,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colors.onBackground,
+                modifier = Modifier.clickable(indication = null, interactionSource = remember { MutableInteractionSource() }) {
+                    if (onNicknameClick != null) onNicknameClick()
+                })
             Text(text = message.content, color = MaterialTheme.colors.onBackground)
         }
     }
