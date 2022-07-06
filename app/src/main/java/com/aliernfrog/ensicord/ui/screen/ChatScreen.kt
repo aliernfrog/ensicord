@@ -10,6 +10,7 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -46,6 +47,7 @@ fun ChatScreen() {
     Column {
         TopBar()
         ChatView(Modifier.fillMaxSize().weight(1f))
+        ScrollToBottom()
         ChatInput()
         Spacer(Modifier.height(5.dp))
     }
@@ -79,6 +81,21 @@ private fun ChatView(modifier: Modifier) {
 }
 
 @Composable
+private fun ScrollToBottom() {
+    val context = LocalContext.current
+    AnimatedVisibility(visible = !isAtBottom()) {
+        Text(
+            text = context.getString(R.string.chatScrollToBottom),
+            color = MaterialTheme.colors.onPrimary,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp).clip(RoundedCornerShape(20.dp)).background(MaterialTheme.colors.primary).clickable {
+                scrollToBottom(true)
+            }.padding(all = 8.dp)
+        )
+    }
+}
+
+@Composable
 private fun ChatInput() {
     val context = LocalContext.current
     Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.heightIn(0.dp, 160.dp)) {
@@ -104,8 +121,12 @@ private fun ChatInput() {
 private fun addMessage(message: Message, clearInput: Boolean = false) {
     messageList.add(message)
     recompose.value = !recompose.value
-    if (isAtBottom()) scope.launch { messageListState.animateScrollToItem(messageList.size) }
     if (clearInput) messageInput.value = ""
+    scrollToBottom()
+}
+
+private fun scrollToBottom(force: Boolean = false) {
+    if (isAtBottom() || force) scope.launch { messageListState.animateScrollToItem(messageList.size) }
 }
 
 private fun isAtBottom(): Boolean {
