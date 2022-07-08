@@ -28,6 +28,7 @@ import com.aliernfrog.ensicord.R
 import com.aliernfrog.ensicord.data.Message
 import com.aliernfrog.ensicord.ui.composable.EnsicordMessage
 import com.aliernfrog.ensicord.ui.composable.EnsicordTextField
+import com.aliernfrog.ensicord.utils.EnsiUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -123,6 +124,12 @@ private fun addMessage(message: Message, clearInput: Boolean = false) {
     recompose.value = !recompose.value
     if (clearInput) messageInput.value = ""
     scrollToBottom()
+    if (message.avatar == "user") createEnsiResponse()
+}
+
+private fun createEnsiResponse() {
+    val response = EnsiUtil.getResponse(type = listOf("RAW","RAW","RAW","RAW","RAW","LEGIT","ALLCAPS").random(), lowCharChance = true)
+    addMessage(Message("ensi", "Ensi", response))
 }
 
 private fun scrollToBottom(force: Boolean = false) {

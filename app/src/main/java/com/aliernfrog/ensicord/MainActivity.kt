@@ -14,11 +14,16 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.aliernfrog.ensicord.ui.screen.ChatScreen
 import com.aliernfrog.ensicord.ui.theme.EnsicordTheme
+import com.aliernfrog.ensicord.utils.EnsiUtil
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        EnsiUtil.prepare(
+            _verbs = listOf("sobbed","adsed","feed","featured","faced","undefined","petted","mousing"),
+            _words = listOf("me","you","we","they","alierns","indinibee","bees","momes","frogs","mouse","chicken","furries","frog","Exi's basement","free candies","ensi","van","laptop","marchmilos","mouse")
+        )
         setContent {
             EnsicordTheme {
                 Box(Modifier.background(MaterialTheme.colors.background).fillMaxSize())
