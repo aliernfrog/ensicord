@@ -33,7 +33,7 @@ class EnsiUtil {
             punctuations: Boolean = false
         ): String {
             var response = ""
-            if (starting) response = createStartingSentence(type, lowCharChance, punctuations)
+            if (starting) response = createStartingSentence(type, lowCharChance, punctuations)+" "
             for (i in 0..sentenceCount) response += createNormalSentence(type, lowCharChance, punctuations)+" "
             return response
         }

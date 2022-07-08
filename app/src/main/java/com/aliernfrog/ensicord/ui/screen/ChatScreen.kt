@@ -124,11 +124,13 @@ private fun addMessage(message: Message, clearInput: Boolean = false) {
     recompose.value = !recompose.value
     if (clearInput) messageInput.value = ""
     scrollToBottom()
-    if (message.avatar == "user") createEnsiResponse()
+    if (message.avatar == "user") createEnsiResponse(message)
 }
 
-private fun createEnsiResponse() {
-    val response = EnsiUtil.getResponse(type = listOf("RAW","RAW","RAW","RAW","RAW","LEGIT","ALLCAPS").random(), lowCharChance = true)
+private fun createEnsiResponse(message: Message) {
+    val args = message.content.lowercase().split(" ")
+    val response = if (args.contains("tell") && (args.contains("story") || args.contains("stories"))) EnsiUtil.getResponse(type = "LEGIT", sentenceCount = (5..50).random(), starting = true, punctuations = true)
+    else EnsiUtil.getResponse(type = listOf("RAW","RAW","RAW","RAW","RAW","LEGIT","ALLCAPS").random(), lowCharChance = true)
     addMessage(Message("ensi", "Ensi", response))
 }
 
