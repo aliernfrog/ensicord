@@ -58,7 +58,7 @@ fun messagesPanel(chatModel: ChatModel): @Composable (BoxScope.() -> Unit) {
 @Composable
 private fun TopBar(chatModel: ChatModel) {
     Column(Modifier.fillMaxWidth().background(MaterialTheme.colors.secondary).padding(horizontal = 24.dp, vertical = 15.dp)) {
-        Text(text = chatModel.chatName, color = MaterialTheme.colors.onBackground, fontWeight = FontWeight.Bold, fontSize = 20.sp)
+        Text(text = chatModel.chosenChannel, color = MaterialTheme.colors.onBackground, fontWeight = FontWeight.Bold, fontSize = 20.sp)
     }
 }
 
@@ -68,7 +68,7 @@ private fun ChatView(modifier: Modifier, chatModel: ChatModel) {
     LazyColumn(modifier, verticalArrangement = Arrangement.Bottom, state = messageListState) {
         item {
             Text(
-                text = context.getString(R.string.chatBeginning).replace("%CHAT%", chatModel.chatName),
+                text = context.getString(R.string.chatBeginning).replace("%CHAT%", chatModel.chosenChannel),
                 color = MaterialTheme.colors.onBackground,
                 fontWeight = FontWeight.Bold,
                 fontSize = 30.sp,
@@ -105,7 +105,7 @@ private fun ChatInput(chatModel: ChatModel) {
             value = messageInput.value,
             onValueChange = { messageInput.value = it },
             modifier = Modifier.weight(1f),
-            placeholder = { Text(text = context.getString(R.string.chatSendMessage).replace("%CHAT%", chatModel.chatName)) },
+            placeholder = { Text(text = context.getString(R.string.chatSendMessage).replace("%CHAT%", chatModel.chosenChannel)) },
             colors = TextFieldDefaults.textFieldColors(backgroundColor = MaterialTheme.colors.secondaryVariant, textColor = MaterialTheme.colors.onSecondary, focusedIndicatorColor = MaterialTheme.colors.secondaryVariant, unfocusedIndicatorColor = MaterialTheme.colors.secondaryVariant)
         )
         AnimatedVisibility(visible = messageInput.value.trim() != "") {
