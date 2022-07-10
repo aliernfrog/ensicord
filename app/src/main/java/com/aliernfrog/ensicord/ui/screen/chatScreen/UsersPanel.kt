@@ -20,10 +20,10 @@ import com.aliernfrog.ensicord.ui.screen.ChatModel
 @Composable
 fun usersPanel(chatModel: ChatModel): @Composable (BoxScope.() -> Unit) {
     return {
-        Column(Modifier.clip(RoundedCornerShape(topStart = 20.dp, bottomStart = 20.dp)).fillMaxSize().background(MaterialTheme.colors.secondary)) {
+        Column(Modifier.clip(RoundedCornerShape(topStart = 20.dp)).fillMaxSize().background(MaterialTheme.colors.secondary)) {
             LazyColumn {
                 item {
-                    Text(chatModel.chatName, fontWeight = FontWeight.Bold, fontSize = 25.sp, color = MaterialTheme.colors.onBackground,  modifier = Modifier.padding(16.dp))
+                    Text(chatModel.chatName, fontWeight = FontWeight.Bold, fontSize = 25.sp, color = MaterialTheme.colors.onBackground, modifier = Modifier.padding(16.dp))
                     Box(modifier = Modifier.alpha(0.2f).fillMaxWidth().height(1.dp).background(MaterialTheme.colors.onBackground))
                 }
                 items(chatModel.users) { user ->
