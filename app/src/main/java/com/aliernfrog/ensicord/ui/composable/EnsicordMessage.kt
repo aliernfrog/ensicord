@@ -18,7 +18,7 @@ import com.aliernfrog.ensicord.data.Message
 import com.aliernfrog.ensicord.utils.GeneralUtil
 
 @Composable
-fun EnsicordMessage(message: Message, onNicknameClick: (() -> Unit)? = null) {
+fun EnsicordMessage(message: Message, onNameClick: (() -> Unit)? = null) {
     val avatar = GeneralUtil.getAvatarId(message.author.avatar)
     Row(Modifier.clickable{}.padding(8.dp)) {
         Image(painter = painterResource(id = avatar), contentDescription = "", Modifier.padding(end = 8.dp).clip(CircleShape).size(44.dp, 44.dp))
@@ -28,7 +28,7 @@ fun EnsicordMessage(message: Message, onNicknameClick: (() -> Unit)? = null) {
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colors.onBackground,
                 modifier = Modifier.clickable(indication = null, interactionSource = remember { MutableInteractionSource() }) {
-                    if (onNicknameClick != null) onNicknameClick()
+                    if (onNameClick != null) onNameClick()
                 }
             )
             Text(text = message.content, color = MaterialTheme.colors.onBackground)
