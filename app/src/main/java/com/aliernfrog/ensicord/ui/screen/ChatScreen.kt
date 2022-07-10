@@ -9,6 +9,7 @@ import com.aliernfrog.ensicord.ui.screen.chatScreen.messagesPanel
 import com.aliernfrog.ensicord.ui.screen.chatScreen.usersPanel
 import com.aliernfrog.ensicord.utils.EnsiUtil
 import com.xinto.overlappingpanels.OverlappingPanels
+import com.xinto.overlappingpanels.rememberOverlappingPanelsState
 
 class ChatModel: ViewModel() {
     val chosenChannel = "#ensicord-development"
@@ -22,9 +23,11 @@ class ChatModel: ViewModel() {
 @Composable
 fun ChatScreen() {
     val chatModel = ChatModel()
+    val panelsState = rememberOverlappingPanelsState()
     OverlappingPanels(
+        panelsState = panelsState,
         panelStart = channelsPanel(chatModel),
         panelEnd = usersPanel(chatModel),
-        panelCenter = messagesPanel(chatModel)
+        panelCenter = messagesPanel(chatModel, panelsState)
     )
 }

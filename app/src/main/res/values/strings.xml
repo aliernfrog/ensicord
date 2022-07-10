@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Ensicord</string>
+    <string name="chatChannels">Channels</string>
+    <string name="chatUsers">Users</string>
     <string name="chatBeginning">This is the beginning of %CHAT%</string>
     <string name="chatScrollToBottom">Scroll to latest messages</string>
     <string name="chatSendMessage">Message %CHAT%</string>

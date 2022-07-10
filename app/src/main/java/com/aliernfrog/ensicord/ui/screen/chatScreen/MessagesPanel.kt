@@ -26,10 +26,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.aliernfrog.ensicord.R
 import com.aliernfrog.ensicord.data.Message
+import com.aliernfrog.ensicord.ui.composable.EnsicordChatTopButton
 import com.aliernfrog.ensicord.ui.composable.EnsicordMessage
 import com.aliernfrog.ensicord.ui.composable.EnsicordTextField
 import com.aliernfrog.ensicord.ui.screen.ChatModel
 import com.aliernfrog.ensicord.utils.EnsiUtil
+import com.xinto.overlappingpanels.OverlappingPanelsState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -40,13 +42,14 @@ private val recompose = mutableStateOf(true)
 private lateinit var scope: CoroutineScope
 private lateinit var messageListState: LazyListState
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun messagesPanel(chatModel: ChatModel): @Composable (BoxScope.() -> Unit) {
+fun messagesPanel(chatModel: ChatModel, panelsState: OverlappingPanelsState): @Composable (BoxScope.() -> Unit) {
     scope = rememberCoroutineScope()
     messageListState = rememberLazyListState()
     return {
         Column(Modifier.background(MaterialTheme.colors.background)) {
-            TopBar(chatModel)
+            TopBar(chatModel, panelsState)
             ChatView(Modifier.fillMaxSize().weight(1f), chatModel)
             ScrollToBottom()
             ChatInput(chatModel)
@@ -55,10 +58,18 @@ fun messagesPanel(chatModel: ChatModel): @Composable (BoxScope.() -> Unit) {
     }
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
-private fun TopBar(chatModel: ChatModel) {
-    Column(Modifier.fillMaxWidth().background(MaterialTheme.colors.secondary).padding(horizontal = 24.dp, vertical = 15.dp)) {
-        Text(text = chatModel.chosenChannel, color = MaterialTheme.colors.onBackground, fontWeight = FontWeight.Bold, fontSize = 20.sp)
+private fun TopBar(chatModel: ChatModel, panelsState: OverlappingPanelsState) {
+    val context = LocalContext.current
+    Row(Modifier.fillMaxWidth().background(MaterialTheme.colors.secondary).padding(horizontal = 8.dp, vertical = 16.dp), verticalAlignment = Alignment.CenterVertically) {
+        EnsicordChatTopButton(painterLight = painterResource(id = R.drawable.menu_black), painterDark = painterResource(id = R.drawable.menu_white), contentDescription = context.getString(R.string.chatChannels)) {
+            scope.launch { panelsState.openStartPanel() }
+        }
+        Text(text = chatModel.chosenChannel, color = MaterialTheme.colors.onBackground, fontWeight = FontWeight.Bold, fontSize = 20.sp, modifier = Modifier.fillMaxWidth().weight(1f))
+        EnsicordChatTopButton(painterLight = painterResource(id = R.drawable.users_black), painterDark = painterResource(id = R.drawable.users_white), contentDescription = context.getString(R.string.chatUsers)) {
+            scope.launch { panelsState.openEndPanel() }
+        }
     }
 }
 
