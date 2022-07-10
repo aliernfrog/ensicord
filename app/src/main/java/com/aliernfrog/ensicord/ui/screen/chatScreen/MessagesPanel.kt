@@ -65,14 +65,14 @@ private fun TopBar(chatModel: ChatModel) {
 @Composable
 private fun ChatView(modifier: Modifier, chatModel: ChatModel) {
     val context = LocalContext.current
-    LazyColumn(modifier, verticalArrangement = Arrangement.Bottom, contentPadding = PaddingValues(horizontal = 8.dp), state = messageListState) {
+    LazyColumn(modifier, verticalArrangement = Arrangement.Bottom, state = messageListState) {
         item {
             Text(
                 text = context.getString(R.string.chatBeginning).replace("%CHAT%", chatModel.chatName),
                 color = MaterialTheme.colors.onBackground,
                 fontWeight = FontWeight.Bold,
                 fontSize = 30.sp,
-                modifier = Modifier.alpha(0.5f).padding(top = 100.dp, bottom = 60.dp)
+                modifier = Modifier.alpha(0.5f).padding(top = 100.dp, bottom = 60.dp, start = 8.dp, end = 8.dp)
             )
         }
         items(messageList) { message ->
