@@ -87,7 +87,7 @@ private fun ChatView(modifier: Modifier, chatModel: ChatModel) {
             )
         }
         items(messageList) { message ->
-            EnsicordMessage(message, onNicknameClick = { messageInput.value += "@${message.author}" })
+            EnsicordMessage(message, onNicknameClick = { messageInput.value += "@${message.author.name}" })
         }
     }
     recompose.value
