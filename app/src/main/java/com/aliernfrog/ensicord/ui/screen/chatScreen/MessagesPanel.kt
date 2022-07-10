@@ -66,7 +66,7 @@ private fun TopBar(chatModel: ChatModel, panelsState: OverlappingPanelsState) {
         EnsicordChatTopButton(painterLight = painterResource(id = R.drawable.menu_black), painterDark = painterResource(id = R.drawable.menu_white), contentDescription = context.getString(R.string.chatChannels)) {
             scope.launch { panelsState.openStartPanel() }
         }
-        Text(text = chatModel.chosenChannel, color = MaterialTheme.colors.onBackground, fontWeight = FontWeight.Bold, fontSize = 20.sp, modifier = Modifier.fillMaxWidth().weight(1f))
+        Text(text = chatModel.chosenChannel, color = MaterialTheme.colors.onBackground, fontWeight = FontWeight.Bold, fontSize = 20.sp, modifier = Modifier.fillMaxWidth().weight(1f).padding(start = 8.dp))
         EnsicordChatTopButton(painterLight = painterResource(id = R.drawable.users_black), painterDark = painterResource(id = R.drawable.users_white), contentDescription = context.getString(R.string.chatUsers)) {
             scope.launch { panelsState.openEndPanel() }
         }
