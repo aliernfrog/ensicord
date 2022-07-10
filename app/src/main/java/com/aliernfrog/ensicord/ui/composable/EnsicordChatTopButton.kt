@@ -23,5 +23,5 @@ fun EnsicordChatTopButton(painterLight: Painter, painterDark: Painter, contentDe
         interactionSource = remember { MutableInteractionSource() },
         indication = rememberRipple(bounded = false),
         onClick = onClick
-    ).alpha(0.9f))
+    ).alpha(0.6f))
 }
