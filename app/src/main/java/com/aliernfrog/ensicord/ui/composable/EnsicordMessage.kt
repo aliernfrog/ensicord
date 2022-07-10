@@ -14,32 +14,24 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.aliernfrog.ensicord.R
 import com.aliernfrog.ensicord.data.Message
+import com.aliernfrog.ensicord.utils.GeneralUtil
 
 @Composable
 fun EnsicordMessage(message: Message, onNicknameClick: (() -> Unit)? = null) {
-    val avatar = getAvatarId(message.avatar)
+    val avatar = GeneralUtil.getAvatarId(message.author.avatar)
     Row(Modifier.padding(vertical = 8.dp)) {
         Image(painter = painterResource(id = avatar), contentDescription = "", Modifier.padding(end = 8.dp).clip(CircleShape).size(44.dp, 44.dp))
         Column(Modifier.weight(1f)) {
             Text(
-                text = message.author,
+                text = message.author.name,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colors.onBackground,
                 modifier = Modifier.clickable(indication = null, interactionSource = remember { MutableInteractionSource() }) {
                     if (onNicknameClick != null) onNicknameClick()
-                })
+                }
+            )
             Text(text = message.content, color = MaterialTheme.colors.onBackground)
         }
-    }
-}
-
-private fun getAvatarId(avatar: String): Int {
-    return when(avatar) {
-        "ensi" -> R.drawable.ensi
-        "system" -> R.drawable.system
-        "user" -> R.drawable.user
-        else -> R.drawable.user
     }
 }
