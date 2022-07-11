@@ -6,4 +6,5 @@
     <string name="chatScrollToBottom">Scroll to latest messages</string>
     <string name="chatSendMessage">Message %CHAT%</string>
     <string name="chatSendMessageDescription">Send a message</string>
+    <string name="options">Options</string>
 </resources>
