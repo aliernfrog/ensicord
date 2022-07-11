@@ -15,6 +15,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.aliernfrog.ensicord.R
 import com.aliernfrog.ensicord.ui.composable.EnsicordChannel
 import com.aliernfrog.ensicord.ui.composable.EnsicordBorderlessButton
@@ -22,7 +23,7 @@ import com.aliernfrog.ensicord.ui.composable.EnsicordUser
 import com.aliernfrog.ensicord.ui.screen.ChatModel
 
 @Composable
-fun channelsPanel(chatModel: ChatModel): @Composable (BoxScope.() -> Unit) {
+fun channelsPanel(chatModel: ChatModel, navController: NavController): @Composable (BoxScope.() -> Unit) {
     val context = LocalContext.current
     return {
         Column(Modifier.clip(RoundedCornerShape(topEnd = 20.dp)).fillMaxSize().background(MaterialTheme.colors.secondary)) {
@@ -35,7 +36,9 @@ fun channelsPanel(chatModel: ChatModel): @Composable (BoxScope.() -> Unit) {
                 Box(modifier = Modifier.alpha(0.2f).fillMaxWidth().height(1.dp).background(MaterialTheme.colors.onBackground))
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     EnsicordUser(user = chatModel.userUser, Modifier.weight(1f))
-                    EnsicordBorderlessButton(painterLight = painterResource(id = R.drawable.gear_black), painterDark = painterResource(id = R.drawable.gear_white), contentDescription = context.getString(R.string.options)) {}
+                    EnsicordBorderlessButton(painterLight = painterResource(id = R.drawable.gear_black), painterDark = painterResource(id = R.drawable.gear_white), contentDescription = context.getString(R.string.options)) {
+                        navController.navigate("options")
+                    }
                     Spacer(Modifier.width(8.dp))
                 }
             }
