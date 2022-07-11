@@ -15,13 +15,13 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun EnsicordChatTopButton(painterLight: Painter, painterDark: Painter, contentDescription: String, onClick: () -> Unit) {
+fun EnsicordBorderlessButton(painterLight: Painter, painterDark: Painter, contentDescription: String, onClick: () -> Unit) {
     Image(
         painter = if (MaterialTheme.colors.isLight) painterLight else painterDark,
         contentDescription = contentDescription,
         Modifier.padding(horizontal = 8.dp).size(25.dp, 25.dp).clickable(
         interactionSource = remember { MutableInteractionSource() },
-        indication = rememberRipple(bounded = false),
+        indication = rememberRipple(bounded = false, radius = 25.dp),
         onClick = onClick
     ).alpha(0.6f))
 }
