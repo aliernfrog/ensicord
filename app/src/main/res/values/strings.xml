@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Ensicord</string>
+    <string name="action_back">Go back</string>
+    <string name="action_restartNow">Restart now</string>
     <string name="chatChannels">Channels</string>
     <string name="chatUsers">Users</string>
     <string name="chatBeginning">This is the beginning of %CHAT%</string>
@@ -7,4 +9,9 @@
     <string name="chatSendMessage">Message %CHAT%</string>
     <string name="chatSendMessageDescription">Send a message</string>
     <string name="options">Options</string>
+    <string name="optionsTheme">Theme</string>
+    <string name="optionsThemeSystem">Follow system</string>
+    <string name="optionsThemeLight">Light</string>
+    <string name="optionsThemeDark">Dark</string>
+    <string name="optionsThemeChanged">Theme will be applied after app restart</string>
 </resources>

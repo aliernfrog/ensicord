@@ -3,6 +3,7 @@ package com.aliernfrog.ensicord.ui.screen
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.ViewModel
+import androidx.navigation.NavController
 import com.aliernfrog.ensicord.data.User
 import com.aliernfrog.ensicord.ui.screen.chatScreen.channelsPanel
 import com.aliernfrog.ensicord.ui.screen.chatScreen.messagesPanel
@@ -21,12 +22,12 @@ class ChatModel: ViewModel() {
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun ChatScreen() {
+fun ChatScreen(navController: NavController) {
     val chatModel = ChatModel()
     val panelsState = rememberOverlappingPanelsState()
     OverlappingPanels(
         panelsState = panelsState,
-        panelStart = channelsPanel(chatModel),
+        panelStart = channelsPanel(chatModel, navController),
         panelEnd = usersPanel(chatModel),
         panelCenter = messagesPanel(chatModel, panelsState)
     )
