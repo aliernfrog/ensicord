@@ -1,6 +1,7 @@
 package com.aliernfrog.ensicord.ui.screen
 
 import android.content.Context
+import android.content.SharedPreferences
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
@@ -14,9 +15,9 @@ import com.aliernfrog.ensicord.utils.EnsiUtil
 import com.xinto.overlappingpanels.OverlappingPanels
 import com.xinto.overlappingpanels.rememberOverlappingPanelsState
 
-class ChatModel(context: Context): ViewModel() {
+class ChatModel(context: Context, config: SharedPreferences): ViewModel() {
     val chosenChannel = "#ensicord-development"
-    val userUser = User("user", "Some frok", "user")
+    val userUser = User("user", config.getString("username", "Some frok")!!, "user")
     val ensiUser = User("ensi", "Ensi", "ensi", EnsiUtil.getStatus(context), true)
     val users = listOf(userUser,ensiUser)
     val channels = listOf("#ensicord-development")
@@ -24,8 +25,8 @@ class ChatModel(context: Context): ViewModel() {
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun ChatScreen(navController: NavController) {
-    val chatModel = ChatModel(LocalContext.current)
+fun ChatScreen(navController: NavController, config: SharedPreferences) {
+    val chatModel = ChatModel(LocalContext.current, config)
     val panelsState = rememberOverlappingPanelsState()
     OverlappingPanels(
         panelsState = panelsState,
