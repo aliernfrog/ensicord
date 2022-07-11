@@ -20,12 +20,14 @@ class GeneralUtil {
         }
 
         fun getUserStatusText(status: UserStatus): AnnotatedString {
-            val split = status.type?.split("%n")
-            val before = split?.get(0) ?: ""
-            val after = split?.get(1) ?: ""
+            var type = status.type ?: "%n"
+            if (!type.contains("%n")) type += "%n"
+            val split = type.split("%n")
+            val before = split[0]
+            val after = split[1]
             return buildAnnotatedString {
                 append(before)
-                withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) { append(status.name) }
+                if (status.name != null) withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) { append(status.name) }
                 append(after)
             }
         }
