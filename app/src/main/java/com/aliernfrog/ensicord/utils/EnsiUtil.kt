@@ -1,5 +1,9 @@
 package com.aliernfrog.ensicord.utils
 
+import android.content.Context
+import com.aliernfrog.ensicord.R
+import com.aliernfrog.ensicord.data.UserStatus
+
 class EnsiUtil {
     companion object {
         private val dates = listOf("one day","weeks ago","yesterday","years ago","tomorrow")
@@ -36,6 +40,19 @@ class EnsiUtil {
             if (starting) response = createStartingSentence(type, lowCharChance, punctuations)+" "
             for (i in 0..sentenceCount) response += createNormalSentence(type, lowCharChance, punctuations)+" "
             return response
+        }
+
+        fun getStatus(context: Context): UserStatus {
+            val name = getResponse().removeSuffix(" ")
+            val type = listOf(
+                context.getString(R.string.status_playing),
+                context.getString(R.string.status_streaming),
+                context.getString(R.string.status_watching),
+                context.getString(R.string.status_listening),
+                context.getString(R.string.status_competing),
+                null
+            ).random()
+            return UserStatus(type, name)
         }
 
         private fun createNormalSentence(
