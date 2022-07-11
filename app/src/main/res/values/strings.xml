@@ -2,6 +2,11 @@
     <string name="app_name">Ensicord</string>
     <string name="action_back">Go back</string>
     <string name="action_restartNow">Restart now</string>
+    <string name="status_playing">Playing %n</string>
+    <string name="status_streaming">Streaming %n</string>
+    <string name="status_watching">Watching %n</string>
+    <string name="status_listening">Listening to %n</string>
+    <string name="status_competing">Competing in %n</string>
     <string name="chatChannels">Channels</string>
     <string name="chatUsers">Users</string>
     <string name="chatBeginning">This is the beginning of %CHAT%</string>
