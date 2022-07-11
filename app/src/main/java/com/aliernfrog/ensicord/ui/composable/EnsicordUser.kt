@@ -21,9 +21,9 @@ import com.aliernfrog.ensicord.data.User
 import com.aliernfrog.ensicord.utils.GeneralUtil
 
 @Composable
-fun EnsicordUser(user: User) {
+fun EnsicordUser(user: User, modifier: Modifier = Modifier) {
     val avatar = GeneralUtil.getAvatarId(user.avatar)
-    Row(Modifier.clickable{}.padding(8.dp)) {
+    Row(modifier.padding(8.dp)) {
         Image(painter = painterResource(id = avatar), contentDescription = "", Modifier.padding(end = 8.dp).clip(CircleShape).size(40.dp, 40.dp))
         Column(Modifier.weight(1f).align(CenterVertically)) {
             Text(text = user.name, color = MaterialTheme.colors.onBackground)

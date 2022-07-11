@@ -1,6 +1,7 @@
 package com.aliernfrog.ensicord.ui.screen.chatScreen
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -27,7 +28,7 @@ fun usersPanel(chatModel: ChatModel): @Composable (BoxScope.() -> Unit) {
                     Box(modifier = Modifier.alpha(0.2f).fillMaxWidth().height(1.dp).background(MaterialTheme.colors.onBackground))
                 }
                 items(chatModel.users) { user ->
-                    EnsicordUser(user)
+                    EnsicordUser(user, Modifier.clickable{})
                 }
             }
         }
