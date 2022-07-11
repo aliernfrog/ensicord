@@ -32,7 +32,7 @@ fun channelsPanel(chatModel: ChatModel, navController: NavController): @Composab
                     EnsicordChannel(name = channel, chosen = chatModel.chosenChannel == channel)
                 }
             }
-            Column(Modifier.background(MaterialTheme.colors.secondary).clickable{}) {
+            Column(Modifier.background(MaterialTheme.colors.secondary).clickable{ navController.navigate("profile") }) {
                 Box(modifier = Modifier.alpha(0.2f).fillMaxWidth().height(1.dp).background(MaterialTheme.colors.onBackground))
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     EnsicordUser(user = chatModel.userUser, Modifier.weight(1f))

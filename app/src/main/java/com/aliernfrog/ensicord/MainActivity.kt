@@ -16,6 +16,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.aliernfrog.ensicord.ui.screen.ChatScreen
 import com.aliernfrog.ensicord.ui.screen.OptionsScreen
+import com.aliernfrog.ensicord.ui.screen.ProfileScreen
 import com.aliernfrog.ensicord.ui.theme.EnsicordTheme
 import com.aliernfrog.ensicord.utils.EnsiUtil
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -50,7 +51,10 @@ class MainActivity : ComponentActivity() {
         val navController = rememberNavController()
         NavHost(navController = navController, startDestination = "chat") {
             composable(route = "chat") {
-                ChatScreen(navController)
+                ChatScreen(navController, config)
+            }
+            composable(route = "profile") {
+                ProfileScreen(navController, config)
             }
             composable(route = "options") {
                 OptionsScreen(navController, config)
