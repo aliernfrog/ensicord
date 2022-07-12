@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.aliernfrog.ensicord.model.ChatModel
 import com.aliernfrog.ensicord.ui.screen.ChatScreen
 import com.aliernfrog.ensicord.ui.screen.OptionsScreen
 import com.aliernfrog.ensicord.ui.screen.ProfileScreen
@@ -23,14 +24,16 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 class MainActivity : ComponentActivity() {
     private lateinit var config: SharedPreferences
+    private lateinit var chatModel: ChatModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        config = getSharedPreferences("APP_CONFIG", MODE_PRIVATE)
         EnsiUtil.prepare(
             _verbs = listOf("sobbed","adsed","feed","featured","faced","undefined","petted","mousing"),
             _words = listOf("me","you","we","they","alierns","indinibee","bees","momes","frogs","mouse","chicken","furries","frog","Exi's basement","free candies","ensi","van","laptop","marchmilos","mouse")
         )
+        config = getSharedPreferences("APP_CONFIG", MODE_PRIVATE)
+        chatModel = ChatModel(this, config)
         setContent {
             EnsicordTheme(getDarkThemePreference() ?: isSystemInDarkTheme()) {
                 Box(Modifier.background(MaterialTheme.colors.background).fillMaxSize())
@@ -51,7 +54,7 @@ class MainActivity : ComponentActivity() {
         val navController = rememberNavController()
         NavHost(navController = navController, startDestination = "chat") {
             composable(route = "chat") {
-                ChatScreen(navController, config)
+                ChatScreen(chatModel, navController)
             }
             composable(route = "profile") {
                 ProfileScreen(navController, config)

@@ -16,7 +16,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.aliernfrog.ensicord.ui.composable.EnsicordUser
-import com.aliernfrog.ensicord.ui.screen.ChatModel
+import com.aliernfrog.ensicord.model.ChatModel
 
 @Composable
 fun usersPanel(chatModel: ChatModel): @Composable (BoxScope.() -> Unit) {

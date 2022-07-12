@@ -29,7 +29,7 @@ import com.aliernfrog.ensicord.data.Message
 import com.aliernfrog.ensicord.ui.composable.EnsicordBorderlessButton
 import com.aliernfrog.ensicord.ui.composable.EnsicordMessage
 import com.aliernfrog.ensicord.ui.composable.EnsicordTextField
-import com.aliernfrog.ensicord.ui.screen.ChatModel
+import com.aliernfrog.ensicord.model.ChatModel
 import com.aliernfrog.ensicord.util.EnsiUtil
 import com.xinto.overlappingpanels.OverlappingPanelsState
 import kotlinx.coroutines.CoroutineScope
