@@ -1,4 +1,4 @@
-package com.aliernfrog.ensicord.utils
+package com.aliernfrog.ensicord.util
 
 import android.content.Context
 import com.aliernfrog.ensicord.R

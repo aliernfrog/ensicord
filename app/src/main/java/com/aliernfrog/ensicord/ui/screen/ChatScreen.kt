@@ -12,7 +12,7 @@ import com.aliernfrog.ensicord.data.UserStatus
 import com.aliernfrog.ensicord.ui.screen.chatScreen.channelsPanel
 import com.aliernfrog.ensicord.ui.screen.chatScreen.messagesPanel
 import com.aliernfrog.ensicord.ui.screen.chatScreen.usersPanel
-import com.aliernfrog.ensicord.utils.EnsiUtil
+import com.aliernfrog.ensicord.util.EnsiUtil
 import com.xinto.overlappingpanels.OverlappingPanels
 import com.xinto.overlappingpanels.rememberOverlappingPanelsState
 

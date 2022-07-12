@@ -20,7 +20,7 @@ import com.aliernfrog.ensicord.R
 import com.aliernfrog.ensicord.ui.composable.EnsicordBaseScaffold
 import com.aliernfrog.ensicord.ui.composable.EnsicordColumnRounded
 import com.aliernfrog.ensicord.ui.composable.EnsicordTextField
-import com.aliernfrog.ensicord.utils.GeneralUtil
+import com.aliernfrog.ensicord.util.GeneralUtil
 
 @Composable
 fun ProfileScreen(navController: NavController, config: SharedPreferences) {
