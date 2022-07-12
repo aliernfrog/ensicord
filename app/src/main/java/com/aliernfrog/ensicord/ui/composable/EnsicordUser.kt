@@ -26,7 +26,7 @@ fun EnsicordUser(user: User, modifier: Modifier = Modifier) {
         Image(painter = painterResource(id = avatar), contentDescription = "", Modifier.padding(end = 8.dp).clip(CircleShape).size(40.dp, 40.dp))
         Column(Modifier.weight(1f).align(CenterVertically)) {
             Text(text = user.name, color = MaterialTheme.colors.onBackground)
-            if (user.status != null) Text(text = GeneralUtil.getUserStatusText(user.status), color = MaterialTheme.colors.onBackground, fontSize = 14.sp, modifier = Modifier.alpha(0.7f))
+            if (user.status != null && (!user.status.type.isNullOrEmpty() || !user.status.name.isNullOrEmpty())) Text(text = GeneralUtil.getUserStatusText(user.status), color = MaterialTheme.colors.onBackground, fontSize = 14.sp, modifier = Modifier.alpha(0.7f))
         }
     }
 }
