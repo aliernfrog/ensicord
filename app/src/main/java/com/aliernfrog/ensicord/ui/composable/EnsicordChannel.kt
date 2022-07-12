@@ -13,15 +13,16 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.aliernfrog.ensicord.data.Channel
 
 @Composable
-fun EnsicordChannel(name: String, chosen: Boolean = false) {
+fun EnsicordChannel(channel: Channel, chosen: Boolean = false, onClick: () -> Unit) {
     var backgroundColor = Color.Transparent
     if (chosen) backgroundColor = MaterialTheme.colors.secondaryVariant
     Text(
-        text = name,
+        text = channel.name,
         color = MaterialTheme.colors.onBackground,
         fontWeight = if (chosen) FontWeight.Bold else FontWeight.Normal,
-        modifier = Modifier.fillMaxWidth().padding(8.dp).clip(RoundedCornerShape(5.dp)).background(backgroundColor).clickable{}.padding(8.dp)
+        modifier = Modifier.fillMaxWidth().padding(8.dp).clip(RoundedCornerShape(5.dp)).background(backgroundColor).clickable(onClick = onClick).padding(8.dp)
     )
 }

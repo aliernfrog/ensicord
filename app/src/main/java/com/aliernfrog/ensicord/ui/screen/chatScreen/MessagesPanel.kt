@@ -35,8 +35,6 @@ import com.xinto.overlappingpanels.OverlappingPanelsState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-private val messageInput = mutableStateOf("")
-private val messageList = ArrayList<Message>()
 private val recompose = mutableStateOf(true)
 
 private lateinit var scope: CoroutineScope
@@ -66,7 +64,7 @@ private fun TopBar(chatModel: ChatModel, panelsState: OverlappingPanelsState) {
         EnsicordBorderlessButton(painterLight = painterResource(id = R.drawable.menu_black), painterDark = painterResource(id = R.drawable.menu_white), contentDescription = context.getString(R.string.chatChannels)) {
             scope.launch { panelsState.openStartPanel() }
         }
-        Text(text = chatModel.chosenChannel, color = MaterialTheme.colors.onBackground, fontWeight = FontWeight.Bold, fontSize = 20.sp, modifier = Modifier.fillMaxWidth().weight(1f).padding(start = 8.dp))
+        Text(text = chatModel.chosenChannel.name, color = MaterialTheme.colors.onBackground, fontWeight = FontWeight.Bold, fontSize = 20.sp, modifier = Modifier.fillMaxWidth().weight(1f).padding(start = 8.dp))
         EnsicordBorderlessButton(painterLight = painterResource(id = R.drawable.users_black), painterDark = painterResource(id = R.drawable.users_white), contentDescription = context.getString(R.string.chatUsers)) {
             scope.launch { panelsState.openEndPanel() }
         }
@@ -79,15 +77,15 @@ private fun ChatView(modifier: Modifier, chatModel: ChatModel) {
     LazyColumn(modifier, verticalArrangement = Arrangement.Bottom, state = messageListState) {
         item {
             Text(
-                text = context.getString(R.string.chatBeginning).replace("%CHAT%", chatModel.chosenChannel),
+                text = context.getString(R.string.chatBeginning).replace("%CHAT%", chatModel.chosenChannel.name),
                 color = MaterialTheme.colors.onBackground,
                 fontWeight = FontWeight.Bold,
                 fontSize = 30.sp,
                 modifier = Modifier.alpha(0.5f).padding(top = 100.dp, bottom = 60.dp, start = 8.dp, end = 8.dp)
             )
         }
-        items(messageList) { message ->
-            EnsicordMessage(message, checkMention = chatModel.userUser.name, onNameClick = { messageInput.value += "@${message.author.name}" })
+        items(chatModel.chosenChannel.messages) { message ->
+            EnsicordMessage(message, checkMention = chatModel.userUser.name, onNameClick = { chatModel.chosenChannel.messageInput.value += "@${message.author.name}" })
         }
     }
     recompose.value
@@ -113,18 +111,18 @@ private fun ChatInput(chatModel: ChatModel) {
     val context = LocalContext.current
     Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.heightIn(0.dp, 160.dp)) {
         EnsicordTextField(
-            value = messageInput.value,
-            onValueChange = { messageInput.value = it },
+            value = chatModel.chosenChannel.messageInput.value,
+            onValueChange = { chatModel.chosenChannel.messageInput.value = it },
             modifier = Modifier.weight(1f),
-            placeholder = { Text(text = context.getString(R.string.chatSendMessage).replace("%CHAT%", chatModel.chosenChannel)) },
+            placeholder = { Text(text = context.getString(R.string.chatSendMessage).replace("%CHAT%", chatModel.chosenChannel.name)) },
             colors = TextFieldDefaults.textFieldColors(backgroundColor = MaterialTheme.colors.secondaryVariant, textColor = MaterialTheme.colors.onSecondary, focusedIndicatorColor = MaterialTheme.colors.secondaryVariant, unfocusedIndicatorColor = MaterialTheme.colors.secondaryVariant)
         )
-        AnimatedVisibility(visible = messageInput.value.trim() != "") {
+        AnimatedVisibility(visible = chatModel.chosenChannel.messageInput.value.trim() != "") {
             Image(
                 painter = painterResource(id = R.drawable.send),
                 contentDescription = context.getString(R.string.chatSendMessageDescription),
                 modifier = Modifier.padding(top = 8.dp, bottom = 8.dp, end = 8.dp).size(height = 48.dp, width = 48.dp).clip(CircleShape).clickable {
-                    if (messageInput.value.trim() != "") addMessage(Message(chatModel.userUser, messageInput.value), chatModel, clearInput = true)
+                    if (chatModel.chosenChannel.messageInput.value.trim() != "") addMessage(Message(chatModel.userUser, chatModel.chosenChannel.messageInput.value), chatModel, clearInput = true)
                 }
             )
         }
@@ -132,9 +130,9 @@ private fun ChatInput(chatModel: ChatModel) {
 }
 
 private fun addMessage(message: Message, chatModel: ChatModel, clearInput: Boolean = false) {
-    messageList.add(message)
+    chatModel.chosenChannel.messages.add(message)
     recompose.value = !recompose.value
-    if (clearInput) messageInput.value = ""
+    if (clearInput) chatModel.chosenChannel.messageInput.value = ""
     scrollToBottom()
     if (message.author.id == "user") createEnsiResponse(message, chatModel)
 }
@@ -147,7 +145,7 @@ private fun createEnsiResponse(message: Message, chatModel: ChatModel) {
 }
 
 private fun scrollToBottom(force: Boolean = false) {
-    if (isAtBottom() || force) scope.launch { messageListState.animateScrollToItem(messageList.size) }
+    if (isAtBottom() || force) scope.launch { messageListState.animateScrollToItem(messageListState.layoutInfo.totalItemsCount) }
 }
 
 private fun isAtBottom(): Boolean {
