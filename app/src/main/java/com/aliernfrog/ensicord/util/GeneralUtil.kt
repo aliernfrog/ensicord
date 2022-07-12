@@ -31,5 +31,10 @@ class GeneralUtil {
                 append(after)
             }
         }
+
+        fun getUserStatusFromString(type: String?, name: String? = null): UserStatus? {
+            return if (type != null || name != null) UserStatus(type, name)
+            else null
+        }
     }
 }

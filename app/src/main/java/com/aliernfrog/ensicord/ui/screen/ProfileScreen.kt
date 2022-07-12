@@ -17,21 +17,22 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.aliernfrog.ensicord.R
+import com.aliernfrog.ensicord.model.ChatModel
 import com.aliernfrog.ensicord.ui.composable.EnsicordBaseScaffold
 import com.aliernfrog.ensicord.ui.composable.EnsicordColumnRounded
 import com.aliernfrog.ensicord.ui.composable.EnsicordTextField
 import com.aliernfrog.ensicord.util.GeneralUtil
 
 @Composable
-fun ProfileScreen(navController: NavController, config: SharedPreferences) {
+fun ProfileScreen(chatModel: ChatModel, navController: NavController, config: SharedPreferences) {
     val context = LocalContext.current
     EnsicordBaseScaffold(title = context.getString(R.string.profile), navController = navController) {
-        ProfileCustomization(config)
+        ProfileCustomization(chatModel, config)
     }
 }
 
 @Composable
-private fun ProfileCustomization(config: SharedPreferences) {
+private fun ProfileCustomization(chatModel: ChatModel, config: SharedPreferences) {
     val context = LocalContext.current
     val avatar = GeneralUtil.getAvatarId("user")
     var username by remember { mutableStateOf(config.getString("username", "Some frok")!!) }
@@ -49,6 +50,7 @@ private fun ProfileCustomization(config: SharedPreferences) {
             onValueChange = {
                 username = it
                 config.edit().putString("username", it).apply()
+                chatModel.updateUser(newUserName = it)
             }
         )
         EnsicordTextField(
@@ -57,6 +59,7 @@ private fun ProfileCustomization(config: SharedPreferences) {
             onValueChange = {
                 status = it
                 config.edit().putString("userStatus", it).apply()
+                chatModel.updateUser(newUserStatus = it)
             }
         )
     }
