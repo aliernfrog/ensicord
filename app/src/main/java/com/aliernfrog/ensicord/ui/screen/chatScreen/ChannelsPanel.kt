@@ -6,8 +6,10 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -21,16 +23,21 @@ import com.aliernfrog.ensicord.ui.composable.EnsicordChannel
 import com.aliernfrog.ensicord.ui.composable.EnsicordBorderlessButton
 import com.aliernfrog.ensicord.ui.composable.EnsicordUser
 import com.aliernfrog.ensicord.model.ChatModel
+import com.xinto.overlappingpanels.OverlappingPanelsState
+import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun channelsPanel(chatModel: ChatModel, navController: NavController): @Composable (BoxScope.() -> Unit) {
+fun channelsPanel(chatModel: ChatModel, panelsState: OverlappingPanelsState, navController: NavController): @Composable (BoxScope.() -> Unit) {
     val context = LocalContext.current
+    val scope = rememberCoroutineScope()
     return {
         Column(Modifier.clip(RoundedCornerShape(topEnd = 20.dp)).fillMaxSize().background(MaterialTheme.colors.secondary)) {
             LazyColumn(Modifier.weight(1f)) {
                 items(chatModel.channels) { channel ->
                     EnsicordChannel(channel, chosen = chatModel.chosenChannel == channel) {
                         chatModel.chosenChannel = channel
+                        scope.launch { panelsState.closePanels() }
                     }
                 }
             }

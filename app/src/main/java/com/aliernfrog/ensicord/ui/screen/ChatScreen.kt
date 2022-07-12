@@ -16,7 +16,7 @@ fun ChatScreen(chatModel: ChatModel, navController: NavController) {
     val panelsState = rememberOverlappingPanelsState()
     OverlappingPanels(
         panelsState = panelsState,
-        panelStart = channelsPanel(chatModel, navController),
+        panelStart = channelsPanel(chatModel, panelsState, navController),
         panelEnd = usersPanel(chatModel),
         panelCenter = messagesPanel(chatModel, panelsState)
     )
