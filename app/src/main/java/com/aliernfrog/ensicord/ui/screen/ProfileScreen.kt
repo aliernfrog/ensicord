@@ -27,7 +27,6 @@ fun ProfileScreen(navController: NavController, config: SharedPreferences) {
     val context = LocalContext.current
     EnsicordBaseScaffold(title = context.getString(R.string.profile), navController = navController) {
         ProfileCustomization(config)
-        StatusCustomization(config)
     }
 }
 
@@ -36,6 +35,7 @@ private fun ProfileCustomization(config: SharedPreferences) {
     val context = LocalContext.current
     val avatar = GeneralUtil.getAvatarId("user")
     var username by remember { mutableStateOf(config.getString("username", "Some frok")!!) }
+    var status by remember { mutableStateOf(config.getString("userStatus", "")!!) }
     EnsicordColumnRounded {
         Image(
             painter = painterResource(id = avatar),
@@ -51,19 +51,13 @@ private fun ProfileCustomization(config: SharedPreferences) {
                 config.edit().putString("username", it).apply()
             }
         )
+        EnsicordTextField(
+            label = { Text(context.getString(R.string.profileStatus)) },
+            value = status,
+            onValueChange = {
+                status = it
+                config.edit().putString("userStatus", it).apply()
+            }
+        )
     }
-}
-
-@Composable
-private fun StatusCustomization(config: SharedPreferences) {
-    val context = LocalContext.current
-    var status by remember { mutableStateOf(config.getString("userStatus", "")!!) }
-    EnsicordTextField(
-        label = { Text(context.getString(R.string.profileStatus)) },
-        value = status,
-        onValueChange = {
-            status = it
-            config.edit().putString("userStatus", it).apply()
-        }
-    )
 }
