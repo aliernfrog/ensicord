@@ -46,12 +46,10 @@ private fun ThemeSelection(config: SharedPreferences) {
 }
 
 private fun applyTheme(option: String, config: SharedPreferences, context: Context) {
-    val configEditor = config.edit()
     var theme = 0 //system
     if (option == context.getString(R.string.optionsThemeLight)) theme = 1 //light
     if (option == context.getString(R.string.optionsThemeDark)) theme = 2 //dark
-    configEditor.putInt("appTheme", theme)
-    configEditor.apply()
+    config.edit().putInt("appTheme", theme).apply()
     scope.launch {
         when(scaffoldState.snackbarHostState.showSnackbar(context.getString(R.string.optionsThemeChanged), context.getString(R.string.action_restartNow))) {
             SnackbarResult.ActionPerformed -> { restartApp(context) }
