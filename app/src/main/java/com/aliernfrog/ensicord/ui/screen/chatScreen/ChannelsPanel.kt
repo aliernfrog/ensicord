@@ -29,7 +29,9 @@ fun channelsPanel(chatModel: ChatModel, navController: NavController): @Composab
         Column(Modifier.clip(RoundedCornerShape(topEnd = 20.dp)).fillMaxSize().background(MaterialTheme.colors.secondary)) {
             LazyColumn(Modifier.weight(1f)) {
                 items(chatModel.channels) { channel ->
-                    EnsicordChannel(name = channel, chosen = chatModel.chosenChannel == channel)
+                    EnsicordChannel(channel, chosen = chatModel.chosenChannel == channel) {
+                        chatModel.chosenChannel = channel
+                    }
                 }
             }
             Column(Modifier.background(MaterialTheme.colors.secondary).clickable{ navController.navigate("profile") }) {

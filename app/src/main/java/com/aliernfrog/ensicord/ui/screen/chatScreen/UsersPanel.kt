@@ -24,7 +24,7 @@ fun usersPanel(chatModel: ChatModel): @Composable (BoxScope.() -> Unit) {
         Column(Modifier.clip(RoundedCornerShape(topStart = 20.dp)).fillMaxSize().background(MaterialTheme.colors.secondary)) {
             LazyColumn {
                 item {
-                    Text(chatModel.chosenChannel, fontWeight = FontWeight.Bold, fontSize = 25.sp, color = MaterialTheme.colors.onBackground, modifier = Modifier.padding(16.dp))
+                    Text(chatModel.chosenChannel.name, fontWeight = FontWeight.Bold, fontSize = 25.sp, color = MaterialTheme.colors.onBackground, modifier = Modifier.padding(16.dp))
                     Box(modifier = Modifier.alpha(0.2f).fillMaxWidth().height(1.dp).background(MaterialTheme.colors.onBackground))
                 }
                 items(chatModel.users) { user ->
