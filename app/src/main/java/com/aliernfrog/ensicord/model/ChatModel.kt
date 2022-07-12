@@ -23,7 +23,7 @@ class ChatModel(context: Context, config: SharedPreferences): ViewModel() {
     var users = listOf(userUser,ensiUser)
 
     private val generalChannel = Channel("#ensicord-development")
-    private val starboardChannel = Channel("#starboard")
+    private val starboardChannel = Channel("#starboard", readOnly = true)
     var chosenChannel by mutableStateOf(generalChannel)
     val channels = listOf(generalChannel,starboardChannel)
 
