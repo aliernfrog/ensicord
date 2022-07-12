@@ -13,6 +13,7 @@
     <string name="chatScrollToBottom">Scroll to latest messages</string>
     <string name="chatSendMessage">Message %CHAT%</string>
     <string name="chatSendMessageDescription">Send a message</string>
+    <string name="chatReadOnly">This channel is read-only</string>
     <string name="profile">Profile</string>
     <string name="profileAvatar">User avatar</string>
     <string name="profileName">Username</string>

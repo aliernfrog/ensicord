@@ -6,5 +6,6 @@ import androidx.compose.runtime.mutableStateOf
 data class Channel(
     val name: String,
     val messages: ArrayList<Message> = ArrayList(),
-    val messageInput: MutableState<String> = mutableStateOf("")
+    val messageInput: MutableState<String> = mutableStateOf(""),
+    val readOnly: Boolean = false
 )

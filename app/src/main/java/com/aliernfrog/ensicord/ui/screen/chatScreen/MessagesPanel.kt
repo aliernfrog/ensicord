@@ -114,7 +114,11 @@ private fun ChatInput(chatModel: ChatModel) {
             value = chatModel.chosenChannel.messageInput.value,
             onValueChange = { chatModel.chosenChannel.messageInput.value = it },
             modifier = Modifier.weight(1f),
-            placeholder = { Text(text = context.getString(R.string.chatSendMessage).replace("%CHAT%", chatModel.chosenChannel.name)) },
+            enabled = !chatModel.chosenChannel.readOnly,
+            placeholder = {
+                if (chatModel.chosenChannel.readOnly) Text(text = context.getString(R.string.chatReadOnly))
+                else Text(text = context.getString(R.string.chatSendMessage).replace("%CHAT%", chatModel.chosenChannel.name))
+                          },
             colors = TextFieldDefaults.textFieldColors(backgroundColor = MaterialTheme.colors.secondaryVariant, textColor = MaterialTheme.colors.onSecondary, focusedIndicatorColor = MaterialTheme.colors.secondaryVariant, unfocusedIndicatorColor = MaterialTheme.colors.secondaryVariant)
         )
         AnimatedVisibility(visible = chatModel.chosenChannel.messageInput.value.trim() != "") {
