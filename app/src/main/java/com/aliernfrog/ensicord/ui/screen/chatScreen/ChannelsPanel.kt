@@ -36,8 +36,10 @@ fun channelsPanel(chatModel: ChatModel, panelsState: OverlappingPanelsState, nav
             LazyColumn(Modifier.weight(1f)) {
                 items(chatModel.channels) { channel ->
                     EnsicordChannel(channel, chosen = chatModel.chosenChannel == channel) {
-                        chatModel.chosenChannel = channel
-                        scope.launch { panelsState.closePanels() }
+                        if (panelsState.isStartPanelOpen) {
+                            chatModel.chosenChannel = channel
+                            scope.launch { panelsState.closePanels() }
+                        }
                     }
                 }
             }
