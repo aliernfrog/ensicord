@@ -17,7 +17,7 @@ class ChatModel(context: Context, config: SharedPreferences): ViewModel() {
         GeneralUtil.getUserStatusFromString(config.getString("userStatus", null))
     )
     val ensiUser = User("ensi", "Ensi", "ensi", EnsiUtil.getStatus(context), true)
-    val users = listOf(userUser,ensiUser)
+    var users = listOf(userUser,ensiUser)
     val channels = listOf("#ensicord-development")
 
     fun updateUser(newUserName: String? = null, newUserStatus: String? = null) {
@@ -27,5 +27,6 @@ class ChatModel(context: Context, config: SharedPreferences): ViewModel() {
             "user",
             UserStatus(newUserStatus)
         )
+        users = listOf(userUser,ensiUser)
     }
 }
