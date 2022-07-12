@@ -20,7 +20,7 @@ import com.aliernfrog.ensicord.R
 import com.aliernfrog.ensicord.ui.composable.EnsicordChannel
 import com.aliernfrog.ensicord.ui.composable.EnsicordBorderlessButton
 import com.aliernfrog.ensicord.ui.composable.EnsicordUser
-import com.aliernfrog.ensicord.ui.screen.ChatModel
+import com.aliernfrog.ensicord.model.ChatModel
 
 @Composable
 fun channelsPanel(chatModel: ChatModel, navController: NavController): @Composable (BoxScope.() -> Unit) {
