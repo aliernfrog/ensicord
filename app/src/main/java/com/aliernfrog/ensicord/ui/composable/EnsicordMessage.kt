@@ -17,7 +17,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.aliernfrog.ensicord.data.Message
-import com.aliernfrog.ensicord.utils.GeneralUtil
+import com.aliernfrog.ensicord.util.GeneralUtil
 
 @Composable
 fun EnsicordMessage(message: Message, checkMention: String? = null, onNameClick: (() -> Unit)? = null) {

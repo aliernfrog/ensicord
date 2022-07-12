@@ -1,7 +1,6 @@
 package com.aliernfrog.ensicord.ui.composable
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -18,7 +17,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.aliernfrog.ensicord.data.User
-import com.aliernfrog.ensicord.utils.GeneralUtil
+import com.aliernfrog.ensicord.util.GeneralUtil
 
 @Composable
 fun EnsicordUser(user: User, modifier: Modifier = Modifier) {

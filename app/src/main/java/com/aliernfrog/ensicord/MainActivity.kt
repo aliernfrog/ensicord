@@ -18,7 +18,7 @@ import com.aliernfrog.ensicord.ui.screen.ChatScreen
 import com.aliernfrog.ensicord.ui.screen.OptionsScreen
 import com.aliernfrog.ensicord.ui.screen.ProfileScreen
 import com.aliernfrog.ensicord.ui.theme.EnsicordTheme
-import com.aliernfrog.ensicord.utils.EnsiUtil
+import com.aliernfrog.ensicord.util.EnsiUtil
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 class MainActivity : ComponentActivity() {

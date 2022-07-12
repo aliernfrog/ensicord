@@ -1,4 +1,4 @@
-package com.aliernfrog.ensicord.utils
+package com.aliernfrog.ensicord.util
 
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
