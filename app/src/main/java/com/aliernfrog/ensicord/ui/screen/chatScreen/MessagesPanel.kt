@@ -109,6 +109,7 @@ private fun ScrollToBottom() {
 @Composable
 private fun ChatInput(chatModel: ChatModel) {
     val context = LocalContext.current
+    val sendButtonEnabled = chatModel.chosenChannel.messageInput.value.trim() != "" && !chatModel.chosenChannel.readOnly
     Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.heightIn(0.dp, 160.dp)) {
         EnsicordTextField(
             value = chatModel.chosenChannel.messageInput.value,
@@ -121,12 +122,12 @@ private fun ChatInput(chatModel: ChatModel) {
                           },
             colors = TextFieldDefaults.textFieldColors(backgroundColor = MaterialTheme.colors.secondaryVariant, textColor = MaterialTheme.colors.onSecondary, focusedIndicatorColor = MaterialTheme.colors.secondaryVariant, unfocusedIndicatorColor = MaterialTheme.colors.secondaryVariant)
         )
-        AnimatedVisibility(visible = chatModel.chosenChannel.messageInput.value.trim() != "") {
+        AnimatedVisibility(visible = sendButtonEnabled) {
             Image(
                 painter = painterResource(id = R.drawable.send),
                 contentDescription = context.getString(R.string.chatSendMessageDescription),
                 modifier = Modifier.padding(top = 8.dp, bottom = 8.dp, end = 8.dp).size(height = 48.dp, width = 48.dp).clip(CircleShape).clickable {
-                    if (chatModel.chosenChannel.messageInput.value.trim() != "") addMessage(Message(chatModel.userUser, chatModel.chosenChannel.messageInput.value), chatModel, clearInput = true)
+                    if (sendButtonEnabled) addMessage(Message(chatModel.userUser, chatModel.chosenChannel.messageInput.value), chatModel, clearInput = true)
                 }
             )
         }
@@ -134,6 +135,7 @@ private fun ChatInput(chatModel: ChatModel) {
 }
 
 private fun addMessage(message: Message, chatModel: ChatModel, clearInput: Boolean = false) {
+    if (chatModel.chosenChannel.readOnly && clearInput) return
     chatModel.chosenChannel.messages.add(message)
     recompose.value = !recompose.value
     if (clearInput) chatModel.chosenChannel.messageInput.value = ""
