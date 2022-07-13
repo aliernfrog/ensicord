@@ -33,7 +33,7 @@ class ChatModel(context: Context, config: SharedPreferences): ViewModel() {
             "user",
             newUserName ?: userUser.name,
             "user",
-            UserStatus(newUserStatus)
+            if (newUserStatus != null) UserStatus(newUserStatus) else userUser.status
         )
         users = listOf(userUser,ensiUser)
     }
