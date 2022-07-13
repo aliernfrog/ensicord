@@ -1,5 +1,6 @@
 package com.aliernfrog.ensicord.ui.screen.chatScreen
 
+import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -127,7 +128,10 @@ private fun ChatInput(chatModel: ChatModel) {
                 painter = painterResource(id = R.drawable.send),
                 contentDescription = context.getString(R.string.chatSendMessageDescription),
                 modifier = Modifier.padding(top = 8.dp, bottom = 8.dp, end = 8.dp).size(height = 48.dp, width = 48.dp).clip(CircleShape).clickable {
-                    if (sendButtonEnabled) addMessage(Message(chatModel.userUser, chatModel.chosenChannel.messageInput.value), chatModel, clearInput = true)
+                    if (sendButtonEnabled) {
+                        if (chatModel.chosenChannel.messageInput.value.length <= 4000) addMessage(Message(chatModel.userUser, chatModel.chosenChannel.messageInput.value), chatModel, clearInput = true)
+                        else Toast.makeText(context, context.getString(R.string.chatMessageTooLong), Toast.LENGTH_SHORT).show()
+                    }
                 }
             )
         }
