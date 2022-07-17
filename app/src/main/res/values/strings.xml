@@ -19,6 +19,7 @@
     <string name="profileAvatar">User avatar</string>
     <string name="profileName">Username</string>
     <string name="profileStatus">Status</string>
+    <string name="addons">Add-ons</string>
     <string name="options">Options</string>
     <string name="optionsTheme">Theme</string>
     <string name="optionsThemeSystem">Follow system</string>
