@@ -14,7 +14,9 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.aliernfrog.ensicord.model.AddonsModel
 import com.aliernfrog.ensicord.model.ChatModel
+import com.aliernfrog.ensicord.ui.screen.AddonsScreen
 import com.aliernfrog.ensicord.ui.screen.ChatScreen
 import com.aliernfrog.ensicord.ui.screen.OptionsScreen
 import com.aliernfrog.ensicord.ui.screen.ProfileScreen
@@ -25,6 +27,7 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 class MainActivity : ComponentActivity() {
     private lateinit var config: SharedPreferences
     private lateinit var chatModel: ChatModel
+    private lateinit var addonsModel: AddonsModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +37,7 @@ class MainActivity : ComponentActivity() {
         )
         config = getSharedPreferences("APP_CONFIG", MODE_PRIVATE)
         chatModel = ChatModel(this, config)
+        addonsModel = AddonsModel()
         setContent {
             EnsicordTheme(getDarkThemePreference() ?: isSystemInDarkTheme()) {
                 Box(Modifier.background(MaterialTheme.colors.background).fillMaxSize())
@@ -59,8 +63,11 @@ class MainActivity : ComponentActivity() {
             composable(route = "profile") {
                 ProfileScreen(chatModel, navController, config)
             }
+            composable(route = "addons") {
+                AddonsScreen(navController, addonsModel)
+            }
             composable(route = "options") {
-                OptionsScreen(navController, config)
+                OptionsScreen(navController, addonsModel, config)
             }
         }
     }

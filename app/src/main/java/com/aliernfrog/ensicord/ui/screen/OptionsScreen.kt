@@ -11,10 +11,13 @@ import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
 import com.aliernfrog.ensicord.MainActivity
 import com.aliernfrog.ensicord.R
+import com.aliernfrog.ensicord.model.AddonsModel
 import com.aliernfrog.ensicord.ui.composable.EnsicordBaseScaffold
+import com.aliernfrog.ensicord.ui.composable.EnsicordButton
 import com.aliernfrog.ensicord.ui.composable.EnsicordColumnRounded
 import com.aliernfrog.ensicord.ui.composable.EnsicordRadioButtons
 import kotlinx.coroutines.CoroutineScope
@@ -24,12 +27,13 @@ private lateinit var scope: CoroutineScope
 private lateinit var scaffoldState: ScaffoldState
 
 @Composable
-fun OptionsScreen(navController: NavController, config: SharedPreferences) {
+fun OptionsScreen(navController: NavController, addonsModel: AddonsModel, config: SharedPreferences) {
     val context = LocalContext.current
     scope = rememberCoroutineScope()
     scaffoldState = rememberScaffoldState()
     EnsicordBaseScaffold(title = context.getString(R.string.options), state = scaffoldState, navController = navController) {
         ThemeSelection(config)
+        Addons(navController, addonsModel)
     }
 }
 
@@ -42,6 +46,15 @@ private fun ThemeSelection(config: SharedPreferences) {
         EnsicordRadioButtons(options = options, selectedIndex = chosen, columnColor = MaterialTheme.colors.secondaryVariant, onSelect = { option ->
             applyTheme(option, config, context)
         })
+    }
+}
+
+@Composable
+private fun Addons(navController: NavController, addonsModel: AddonsModel) {
+    val context = LocalContext.current
+    EnsicordButton(title = context.getString(R.string.addons), painter = painterResource(id = R.drawable.download)) {
+        addonsModel.fetchAddons()
+        navController.navigate("addons")
     }
 }
 
