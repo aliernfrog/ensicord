@@ -50,7 +50,6 @@ fun channelsPanel(chatModel: ChatModel, panelsState: OverlappingPanelsState, nav
                     EnsicordBorderlessButton(painterLight = painterResource(id = R.drawable.gear_black), painterDark = painterResource(id = R.drawable.gear_white), contentDescription = context.getString(R.string.options)) {
                         navController.navigate("options")
                     }
-                    Spacer(Modifier.width(8.dp))
                 }
             }
         }
