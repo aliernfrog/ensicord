@@ -2,6 +2,7 @@
     <string name="app_name">Ensicord</string>
     <string name="action_back">Go back</string>
     <string name="action_restartNow">Restart now</string>
+    <string name="warning_somethingWentWrong">Something went wrong</string>
     <string name="status_playing">Playing %n</string>
     <string name="status_streaming">Streaming %n</string>
     <string name="status_watching">Watching %n</string>
