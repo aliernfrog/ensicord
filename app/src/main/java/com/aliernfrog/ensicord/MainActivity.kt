@@ -73,9 +73,9 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun getDarkThemePreference(): Boolean? {
-        val theme = config.getInt("appTheme", ThemeConstants.SYSTEM)
-        if (theme == ThemeConstants.LIGHT) return false
-        if (theme == ThemeConstants.DARK) return true
+        val theme = config.getInt("appTheme", Theme.SYSTEM)
+        if (theme == Theme.LIGHT) return false
+        if (theme == Theme.DARK) return true
         return null
     }
 }
