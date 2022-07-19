@@ -7,8 +7,8 @@ import androidx.compose.ui.unit.sp
 import com.aliernfrog.ensicord.data.Addon
 
 @Composable
-fun EnsicordAddon(addon: Addon) {
-    EnsicordColumnRounded {
+fun EnsicordAddon(addon: Addon, onClick: () -> Unit) {
+    EnsicordColumnRounded(onClick = onClick) {
         Text(addon.name, fontWeight = FontWeight.Bold, fontSize = 30.sp)
         Text(addon.description)
     }

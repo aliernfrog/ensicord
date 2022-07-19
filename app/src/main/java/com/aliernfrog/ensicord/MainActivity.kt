@@ -64,7 +64,7 @@ class MainActivity : ComponentActivity() {
                 ProfileScreen(chatModel, navController, config)
             }
             composable(route = "addons") {
-                AddonsScreen(navController, addonsModel)
+                AddonsScreen(navController, addonsModel, config)
             }
             composable(route = "options") {
                 OptionsScreen(navController, addonsModel, config)
