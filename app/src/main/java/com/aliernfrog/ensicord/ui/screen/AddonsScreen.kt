@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.aliernfrog.ensicord.AddonsConstants
+import com.aliernfrog.ensicord.AddonFetchingState
 import com.aliernfrog.ensicord.R
 import com.aliernfrog.ensicord.model.AddonsModel
 import com.aliernfrog.ensicord.ui.composable.EnsicordAddon
@@ -22,12 +22,12 @@ fun AddonsScreen(navController: NavController, addonsModel: AddonsModel) {
     val context = LocalContext.current
     EnsicordBaseScaffold(title = context.getString(R.string.addons), navController = navController) {
         when (addonsModel.state) {
-            AddonsConstants.ADDONS_DONE -> {
+            AddonFetchingState.ADDONS_DONE -> {
                 addonsModel.addons.forEach { addon ->
                     EnsicordAddon(addon)
                 }
             }
-            AddonsConstants.ADDONS_ERROR -> ErrorColumn(addonsModel.error)
+            AddonFetchingState.ADDONS_ERROR -> ErrorColumn(addonsModel.error)
             else -> CircularProgressIndicator(Modifier.align(CenterHorizontally).padding(top = 10.dp))
         }
     }

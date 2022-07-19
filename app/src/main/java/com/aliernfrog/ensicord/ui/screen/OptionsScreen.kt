@@ -15,7 +15,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
 import com.aliernfrog.ensicord.MainActivity
 import com.aliernfrog.ensicord.R
-import com.aliernfrog.ensicord.ThemeConstants
+import com.aliernfrog.ensicord.Theme
 import com.aliernfrog.ensicord.model.AddonsModel
 import com.aliernfrog.ensicord.ui.composable.EnsicordBaseScaffold
 import com.aliernfrog.ensicord.ui.composable.EnsicordButton
@@ -60,9 +60,9 @@ private fun Addons(navController: NavController, addonsModel: AddonsModel) {
 }
 
 private fun applyTheme(option: String, config: SharedPreferences, context: Context) {
-    var theme = ThemeConstants.SYSTEM
-    if (option == context.getString(R.string.optionsThemeLight)) theme = ThemeConstants.LIGHT
-    if (option == context.getString(R.string.optionsThemeDark)) theme = ThemeConstants.DARK
+    var theme = Theme.SYSTEM
+    if (option == context.getString(R.string.optionsThemeLight)) theme = Theme.LIGHT
+    if (option == context.getString(R.string.optionsThemeDark)) theme = Theme.DARK
     config.edit().putInt("appTheme", theme).apply()
     scope.launch {
         when(scaffoldState.snackbarHostState.showSnackbar(context.getString(R.string.optionsThemeChanged), context.getString(R.string.action_restartNow))) {
