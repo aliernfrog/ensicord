@@ -16,6 +16,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.aliernfrog.ensicord.ConfigKey
 import com.aliernfrog.ensicord.R
 import com.aliernfrog.ensicord.model.ChatModel
 import com.aliernfrog.ensicord.ui.composable.EnsicordBaseScaffold
@@ -35,8 +36,8 @@ fun ProfileScreen(chatModel: ChatModel, navController: NavController, config: Sh
 private fun ProfileCustomization(chatModel: ChatModel, config: SharedPreferences) {
     val context = LocalContext.current
     val avatar = GeneralUtil.getAvatarId("user")
-    var username by remember { mutableStateOf(config.getString("username", "Some frok")!!) }
-    var status by remember { mutableStateOf(config.getString("userStatus", "")!!) }
+    var username by remember { mutableStateOf(config.getString(ConfigKey.KEY_USER_NAME, ConfigKey.DEFAULT_USER_NAME)!!) }
+    var status by remember { mutableStateOf(config.getString(ConfigKey.KEY_USER_STATUS, "")!!) }
     EnsicordColumnRounded {
         Image(
             painter = painterResource(id = avatar),
