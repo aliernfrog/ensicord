@@ -24,7 +24,8 @@ class ChatModel(context: Context, config: SharedPreferences): ViewModel() {
         config.getString(ConfigKey.KEY_ENSI_NAME, ConfigKey.DEFAULT_ENSI_NAME)!!,
         "ensi",
         EnsiUtil.getStatus(context),
-        true)
+        true
+    )
     var users = listOf(userUser,ensiUser)
 
     private val generalChannel = Channel("#general")
