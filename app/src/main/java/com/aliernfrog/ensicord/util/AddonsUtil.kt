@@ -26,6 +26,7 @@ class AddonsUtil {
         fun applyAddon(addon: Addon, config: SharedPreferences, onApply: () -> Unit) {
             val configEdit = config.edit()
             if (addon.setAppTheme != null) configEdit.putInt(ConfigKey.KEY_APP_THEME, addon.setAppTheme)
+            if (addon.setEnsiUserName != null) configEdit.putString(ConfigKey.KEY_ENSI_NAME, addon.setEnsiUserName)
             configEdit.apply()
             onApply()
         }
@@ -34,7 +35,8 @@ class AddonsUtil {
             return Addon(
                 name = jsonObject.getString("name"),
                 description = jsonObject.getString("description"),
-                setAppTheme = stringToAppTheme(getStringOrNull(jsonObject, "setAppTheme"))
+                setAppTheme = stringToAppTheme(getStringOrNull(jsonObject, "setAppTheme")),
+                setEnsiUserName = getStringOrNull(jsonObject, "setEnsiUserName")
             )
         }
 
