@@ -1,6 +1,7 @@
 package com.aliernfrog.ensicord.util
 
 import android.content.SharedPreferences
+import com.aliernfrog.ensicord.ConfigKey
 import com.aliernfrog.ensicord.Theme
 import com.aliernfrog.ensicord.data.Addon
 import org.json.JSONArray
@@ -24,7 +25,7 @@ class AddonsUtil {
 
         fun applyAddon(addon: Addon, config: SharedPreferences, onApply: () -> Unit) {
             val configEdit = config.edit()
-            if (addon.setAppTheme != null) configEdit.putInt("appTheme", addon.setAppTheme)
+            if (addon.setAppTheme != null) configEdit.putInt(ConfigKey.KEY_APP_THEME, addon.setAppTheme)
             configEdit.apply()
             onApply()
         }

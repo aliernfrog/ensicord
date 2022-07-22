@@ -35,7 +35,7 @@ class MainActivity : ComponentActivity() {
             _verbs = listOf("sobbed","adsed","feed","featured","faced","undefined","petted","mousing"),
             _words = listOf("me","you","we","they","alierns","indinibee","bees","momes","frogs","mouse","chicken","furries","frog","Exi's basement","free candies","ensi","van","laptop","marchmilos","mouse")
         )
-        config = getSharedPreferences("APP_CONFIG", MODE_PRIVATE)
+        config = getSharedPreferences(ConfigKey.PREF_NAME, MODE_PRIVATE)
         chatModel = ChatModel(this, config)
         addonsModel = AddonsModel()
         setContent {
@@ -73,7 +73,7 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun getDarkThemePreference(): Boolean? {
-        val theme = config.getInt("appTheme", Theme.SYSTEM)
+        val theme = config.getInt(ConfigKey.KEY_APP_THEME, Theme.SYSTEM)
         if (theme == Theme.LIGHT) return false
         if (theme == Theme.DARK) return true
         return null

@@ -13,6 +13,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
+import com.aliernfrog.ensicord.ConfigKey
 import com.aliernfrog.ensicord.MainActivity
 import com.aliernfrog.ensicord.R
 import com.aliernfrog.ensicord.Theme
@@ -42,7 +43,7 @@ fun OptionsScreen(navController: NavController, addonsModel: AddonsModel, config
 private fun ThemeSelection(config: SharedPreferences) {
     val context = LocalContext.current
     val options = listOf(context.getString(R.string.optionsThemeSystem),context.getString(R.string.optionsThemeLight),context.getString(R.string.optionsThemeDark))
-    val chosen = config.getInt("appTheme", 0)
+    val chosen = config.getInt(ConfigKey.KEY_APP_THEME, 0)
     EnsicordColumnRounded(color = MaterialTheme.colors.secondary, title = context.getString(R.string.optionsTheme)) {
         EnsicordRadioButtons(options = options, selectedIndex = chosen, columnColor = MaterialTheme.colors.secondaryVariant, onSelect = { option ->
             applyTheme(option, config, context)
@@ -63,7 +64,7 @@ private fun applyTheme(option: String, config: SharedPreferences, context: Conte
     var theme = Theme.SYSTEM
     if (option == context.getString(R.string.optionsThemeLight)) theme = Theme.LIGHT
     if (option == context.getString(R.string.optionsThemeDark)) theme = Theme.DARK
-    config.edit().putInt("appTheme", theme).apply()
+    config.edit().putInt(ConfigKey.KEY_APP_THEME, theme).apply()
     scope.launch {
         when(scaffoldState.snackbarHostState.showSnackbar(context.getString(R.string.optionsThemeChanged), context.getString(R.string.action_restartNow))) {
             SnackbarResult.ActionPerformed -> { restartApp(context) }
