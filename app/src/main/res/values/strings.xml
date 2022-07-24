@@ -2,6 +2,8 @@
     <string name="app_name">Ensicord</string>
     <string name="action_back">Go back</string>
     <string name="action_restartNow">Restart now</string>
+    <string name="action_add">Add</string>
+    <string name="action_remove">Remove</string>
     <string name="info_appliedAddon">Applied add-on</string>
     <string name="warning_somethingWentWrong">Something went wrong</string>
     <string name="status_playing">Playing %n</string>
@@ -22,6 +24,9 @@
     <string name="profileName">Username</string>
     <string name="profileStatus">Status</string>
     <string name="addons">Add-ons</string>
+    <string name="addonsRepos">Add-on repositories</string>
+    <string name="addonsReposUrl">URL</string>
+    <string name="addonsReposPlaceholder">Link to the JSON file</string>
     <string name="options">Options</string>
     <string name="optionsTheme">Theme</string>
     <string name="optionsThemeSystem">Follow system</string>

@@ -32,7 +32,7 @@ fun OptionsScreen(navController: NavController, addonsModel: AddonsModel, config
     scaffoldState = rememberScaffoldState()
     EnsicordBaseScaffold(title = context.getString(R.string.options), state = scaffoldState, navController = navController) {
         ThemeSelection(config)
-        Addons(navController, addonsModel)
+        Addons(navController, addonsModel, config)
     }
 }
 
@@ -49,10 +49,10 @@ private fun ThemeSelection(config: SharedPreferences) {
 }
 
 @Composable
-private fun Addons(navController: NavController, addonsModel: AddonsModel) {
+private fun Addons(navController: NavController, addonsModel: AddonsModel, config: SharedPreferences) {
     val context = LocalContext.current
     EnsicordButton(title = context.getString(R.string.addons), painter = painterResource(id = R.drawable.download)) {
-        addonsModel.fetchAddons()
+        addonsModel.fetchAddons(config.getStringSet(ConfigKey.KEY_ADDON_REPOS, setOf(ConfigKey.DEFAULT_ADDON_REPO))!!.toSet())
         navController.navigate(NavDestinations.ADDONS)
     }
 }

@@ -11,14 +11,14 @@ import java.net.URL
 
 class AddonsUtil {
     companion object {
-        private const val addonsUrl = "https://aliernfrog.github.io/ensicord-addons/addons.json"
-
-        fun getAddons(): ArrayList<Addon> {
-            val content = URL(addonsUrl).readText()
-            val jsonArray = JSONArray(content)
+        fun getAddons(repos: Set<String>): ArrayList<Addon> {
             val addonList = ArrayList<Addon>()
-            for (i in 0 until jsonArray.length()) {
-                addonList.add(jsonToAddon(jsonArray.getJSONObject(i)))
+            repos.forEach { url ->
+                val content = URL(url).readText()
+                val jsonArray = JSONArray(content)
+                for (i in 0 until jsonArray.length()) {
+                    addonList.add(jsonToAddon(jsonArray.getJSONObject(i), url))
+                }
             }
             return addonList
         }
@@ -31,16 +31,17 @@ class AddonsUtil {
             onApply()
         }
 
-        private fun jsonToAddon(jsonObject: JSONObject): Addon {
+        private fun jsonToAddon(jsonObject: JSONObject, fromRepo: String): Addon {
             return try {
                 Addon(
                     name = jsonObject.getString("name"),
                     description = jsonObject.getString("description"),
+                    repo = fromRepo,
                     setAppTheme = stringToAppTheme(getStringOrNull(jsonObject, "setAppTheme")),
                     setEnsiUserName = getStringOrNull(jsonObject, "setEnsiUserName")
                 )
             } catch (e: Exception) {
-                Addon(name = "", description = e.toString(), error = true)
+                Addon(name = "", description = e.toString(), repo = fromRepo, error = true)
             }
         }
 

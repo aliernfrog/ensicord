@@ -16,10 +16,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.aliernfrog.ensicord.model.AddonsModel
 import com.aliernfrog.ensicord.model.ChatModel
-import com.aliernfrog.ensicord.ui.screen.AddonsScreen
-import com.aliernfrog.ensicord.ui.screen.ChatScreen
-import com.aliernfrog.ensicord.ui.screen.OptionsScreen
-import com.aliernfrog.ensicord.ui.screen.ProfileScreen
+import com.aliernfrog.ensicord.ui.screen.*
 import com.aliernfrog.ensicord.ui.theme.EnsicordTheme
 import com.aliernfrog.ensicord.util.EnsiUtil
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -65,6 +62,9 @@ class MainActivity : ComponentActivity() {
             }
             composable(route = NavDestinations.ADDONS) {
                 AddonsScreen(navController, addonsModel, config)
+            }
+            composable(route = NavDestinations.ADDONS_REPOS) {
+                AddonsReposScreen(navController, config)
             }
             composable(route = NavDestinations.OPTIONS) {
                 OptionsScreen(navController, addonsModel, config)
