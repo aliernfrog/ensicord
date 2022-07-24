@@ -18,6 +18,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.aliernfrog.ensicord.NavDestinations
 import com.aliernfrog.ensicord.R
 import com.aliernfrog.ensicord.ui.composable.EnsicordChannel
 import com.aliernfrog.ensicord.ui.composable.EnsicordBorderlessButton
@@ -43,12 +44,12 @@ fun channelsPanel(chatModel: ChatModel, panelsState: OverlappingPanelsState, nav
                     }
                 }
             }
-            Column(Modifier.background(MaterialTheme.colors.secondary).clickable{ navController.navigate("profile") }) {
+            Column(Modifier.background(MaterialTheme.colors.secondary).clickable{ navController.navigate(NavDestinations.PROFILE) }) {
                 Box(modifier = Modifier.alpha(0.2f).fillMaxWidth().height(1.dp).background(MaterialTheme.colors.onBackground))
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     EnsicordUser(user = chatModel.userUser, Modifier.weight(1f))
                     EnsicordBorderlessButton(painterLight = painterResource(id = R.drawable.gear_black), painterDark = painterResource(id = R.drawable.gear_white), contentDescription = context.getString(R.string.options)) {
-                        navController.navigate("options")
+                        navController.navigate(NavDestinations.OPTIONS)
                     }
                 }
             }

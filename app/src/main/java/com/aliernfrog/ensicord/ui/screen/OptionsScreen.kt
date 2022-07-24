@@ -13,10 +13,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
-import com.aliernfrog.ensicord.ConfigKey
-import com.aliernfrog.ensicord.MainActivity
-import com.aliernfrog.ensicord.R
-import com.aliernfrog.ensicord.Theme
+import com.aliernfrog.ensicord.*
 import com.aliernfrog.ensicord.model.AddonsModel
 import com.aliernfrog.ensicord.ui.composable.EnsicordBaseScaffold
 import com.aliernfrog.ensicord.ui.composable.EnsicordButton
@@ -56,7 +53,7 @@ private fun Addons(navController: NavController, addonsModel: AddonsModel) {
     val context = LocalContext.current
     EnsicordButton(title = context.getString(R.string.addons), painter = painterResource(id = R.drawable.download)) {
         addonsModel.fetchAddons()
-        navController.navigate("addons")
+        navController.navigate(NavDestinations.ADDONS)
     }
 }
 
