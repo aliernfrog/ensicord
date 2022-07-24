@@ -16,6 +16,13 @@ object ConfigKey {
     const val DEFAULT_ENSI_NAME = "Ensi"
 }
 
+object NavDestinations {
+    const val CHAT = "chat"
+    const val PROFILE = "profile"
+    const val ADDONS = "addons"
+    const val OPTIONS = "options"
+}
+
 object Theme {
     const val SYSTEM = 0
     const val LIGHT = 1

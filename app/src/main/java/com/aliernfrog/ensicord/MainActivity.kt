@@ -56,17 +56,17 @@ class MainActivity : ComponentActivity() {
     @Composable
     private fun Navigation() {
         val navController = rememberNavController()
-        NavHost(navController = navController, startDestination = "chat") {
-            composable(route = "chat") {
+        NavHost(navController = navController, startDestination = NavDestinations.CHAT) {
+            composable(route = NavDestinations.CHAT) {
                 ChatScreen(chatModel, navController)
             }
-            composable(route = "profile") {
+            composable(route = NavDestinations.PROFILE) {
                 ProfileScreen(chatModel, navController, config)
             }
-            composable(route = "addons") {
+            composable(route = NavDestinations.ADDONS) {
                 AddonsScreen(navController, addonsModel, config)
             }
-            composable(route = "options") {
+            composable(route = NavDestinations.OPTIONS) {
                 OptionsScreen(navController, addonsModel, config)
             }
         }
