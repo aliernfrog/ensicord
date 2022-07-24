@@ -17,10 +17,10 @@ class AddonsModel: ViewModel() {
     var state by mutableStateOf(AddonFetchingState.ADDONS_LOADING)
     var error by mutableStateOf("")
 
-    fun fetchAddons() {
+    fun fetchAddons(repos: Set<String>) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                addons = AddonsUtil.getAddons()
+                addons = AddonsUtil.getAddons(repos)
                 state = AddonFetchingState.ADDONS_DONE
             } catch(e: Exception) {
                 error = e.toString()

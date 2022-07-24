@@ -13,10 +13,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.aliernfrog.ensicord.AddonFetchingState
+import com.aliernfrog.ensicord.NavDestinations
 import com.aliernfrog.ensicord.R
 import com.aliernfrog.ensicord.model.AddonsModel
 import com.aliernfrog.ensicord.ui.composable.EnsicordAddon
 import com.aliernfrog.ensicord.ui.composable.EnsicordBaseScaffold
+import com.aliernfrog.ensicord.ui.composable.EnsicordButton
 import com.aliernfrog.ensicord.ui.composable.EnsicordColumnRounded
 import com.aliernfrog.ensicord.util.AddonsUtil
 
@@ -35,6 +37,7 @@ fun AddonsScreen(navController: NavController, addonsModel: AddonsModel, config:
             AddonFetchingState.ADDONS_ERROR -> ErrorColumn(addonsModel.error)
             else -> CircularProgressIndicator(Modifier.align(CenterHorizontally).padding(top = 10.dp))
         }
+        ManageRepos(navController)
     }
 }
 
@@ -43,5 +46,13 @@ private fun ErrorColumn(error: String) {
     val context = LocalContext.current
     EnsicordColumnRounded(title = context.getString(R.string.warning_somethingWentWrong), color = MaterialTheme.colors.error) {
         Text(text = error, color = MaterialTheme.colors.onError, modifier = Modifier.padding(horizontal = 8.dp))
+    }
+}
+
+@Composable
+private fun ManageRepos(navController: NavController) {
+    val context = LocalContext.current
+    EnsicordButton(title = context.getString(R.string.addonsRepos)) {
+        navController.navigate(NavDestinations.ADDONS_REPOS)
     }
 }

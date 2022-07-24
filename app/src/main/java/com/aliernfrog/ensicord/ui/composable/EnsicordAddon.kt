@@ -29,5 +29,11 @@ fun EnsicordAddon(addon: Addon, onClick: () -> Unit) {
             color = if (!addon.error) MaterialTheme.colors.onSecondary else MaterialTheme.colors.onError,
             modifier = Modifier.padding(horizontal = 8.dp)
         )
+        Text(
+            text = addon.repo,
+            fontSize = 10.sp,
+            color = if (!addon.error) MaterialTheme.colors.onSecondary else MaterialTheme.colors.onError,
+            modifier = Modifier.padding(horizontal = 8.dp)
+        )
     }
 }
