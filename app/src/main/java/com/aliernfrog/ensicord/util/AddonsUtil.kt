@@ -32,12 +32,16 @@ class AddonsUtil {
         }
 
         private fun jsonToAddon(jsonObject: JSONObject): Addon {
-            return Addon(
-                name = jsonObject.getString("name"),
-                description = jsonObject.getString("description"),
-                setAppTheme = stringToAppTheme(getStringOrNull(jsonObject, "setAppTheme")),
-                setEnsiUserName = getStringOrNull(jsonObject, "setEnsiUserName")
-            )
+            return try {
+                Addon(
+                    name = jsonObject.getString("name"),
+                    description = jsonObject.getString("description"),
+                    setAppTheme = stringToAppTheme(getStringOrNull(jsonObject, "setAppTheme")),
+                    setEnsiUserName = getStringOrNull(jsonObject, "setEnsiUserName")
+                )
+            } catch (e: Exception) {
+                Addon(name = "", description = e.toString(), error = true)
+            }
         }
 
         private fun getStringOrNull(jsonObject: JSONObject, key: String): String? {
