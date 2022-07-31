@@ -1,21 +1,29 @@
 package com.aliernfrog.ensicord.util
 
+import android.os.Environment
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
+import coil.compose.rememberAsyncImagePainter
 import com.aliernfrog.ensicord.R
 import com.aliernfrog.ensicord.data.UserStatus
 
 class GeneralUtil {
     companion object {
-        fun getAvatarId(avatar: String): Int {
+        @Composable
+        fun getAvatarPainter(avatar: String): Painter {
+            val isCustomAvatar = avatar.startsWith(Environment.getExternalStorageDirectory().toString())
+            if (isCustomAvatar) return rememberAsyncImagePainter(avatar)
             return when(avatar) {
-                "ensi" -> R.drawable.ensi
-                "system" -> R.drawable.system
-                "user" -> R.drawable.user
-                else -> R.drawable.user
+                "ensi" -> painterResource(R.drawable.ensi)
+                "system" -> painterResource(R.drawable.ensi)
+                "user" -> painterResource(R.drawable.user)
+                else -> painterResource(R.drawable.user)
             }
         }
 
