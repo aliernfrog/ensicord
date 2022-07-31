@@ -1,5 +1,6 @@
 package com.aliernfrog.ensicord.ui.composable
 
+import android.os.Environment
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -16,16 +17,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import coil.compose.rememberAsyncImagePainter
 import com.aliernfrog.ensicord.data.Message
 import com.aliernfrog.ensicord.util.GeneralUtil
 
 @Composable
 fun EnsicordMessage(message: Message, checkMention: String? = null, onNameClick: (() -> Unit)? = null) {
     val avatar = GeneralUtil.getAvatarId(message.author.avatar)
+    val isCustomAvatar = message.author.avatar.startsWith(Environment.getExternalStorageDirectory().toString())
     var modifier = Modifier.clickable{}
     if (checkMention != null && message.content.contains("@$checkMention")) modifier = modifier.background(Color(0x2BFFF700))
     Row(modifier.padding(8.dp)) {
-        Image(painter = painterResource(id = avatar), contentDescription = "", Modifier.padding(end = 8.dp).clip(CircleShape).size(44.dp, 44.dp))
+        Image(painter = if (isCustomAvatar) rememberAsyncImagePainter(message.author.avatar) else painterResource(id = avatar), contentDescription = "", Modifier.padding(end = 8.dp).clip(CircleShape).size(44.dp, 44.dp))
         Column(Modifier.weight(1f)) {
             Text(
                 text = message.author.name,
