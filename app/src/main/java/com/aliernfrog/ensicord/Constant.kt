@@ -3,7 +3,6 @@ package com.aliernfrog.ensicord
 object AddonFetchingState {
     const val ADDONS_LOADING = 0
     const val ADDONS_DONE = 1
-    const val ADDONS_ERROR = 2
 }
 
 object ConfigKey {

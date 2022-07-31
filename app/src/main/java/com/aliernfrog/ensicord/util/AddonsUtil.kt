@@ -14,10 +14,14 @@ class AddonsUtil {
         fun getAddons(repos: Set<String>): ArrayList<Addon> {
             val addonList = ArrayList<Addon>()
             repos.forEach { url ->
-                val content = URL(url).readText()
-                val jsonArray = JSONArray(content)
-                for (i in 0 until jsonArray.length()) {
-                    addonList.add(jsonToAddon(jsonArray.getJSONObject(i), url))
+                try {
+                    val content = URL(url).readText()
+                    val jsonArray = JSONArray(content)
+                    for (i in 0 until jsonArray.length()) {
+                        addonList.add(jsonToAddon(jsonArray.getJSONObject(i), url))
+                    }
+                } catch (e: Exception) {
+                    addonList.add(Addon(name = "", description = e.toString(), repo = url, error = true))
                 }
             }
             return addonList

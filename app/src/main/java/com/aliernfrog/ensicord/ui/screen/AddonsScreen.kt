@@ -4,8 +4,6 @@ import android.content.SharedPreferences
 import android.widget.Toast
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
@@ -19,7 +17,6 @@ import com.aliernfrog.ensicord.model.AddonsModel
 import com.aliernfrog.ensicord.ui.composable.EnsicordAddon
 import com.aliernfrog.ensicord.ui.composable.EnsicordBaseScaffold
 import com.aliernfrog.ensicord.ui.composable.EnsicordButton
-import com.aliernfrog.ensicord.ui.composable.EnsicordColumnRounded
 import com.aliernfrog.ensicord.util.AddonsUtil
 
 @Composable
@@ -34,18 +31,9 @@ fun AddonsScreen(navController: NavController, addonsModel: AddonsModel, config:
                     }
                 }
             }
-            AddonFetchingState.ADDONS_ERROR -> ErrorColumn(addonsModel.error)
             else -> CircularProgressIndicator(Modifier.align(CenterHorizontally).padding(top = 10.dp))
         }
         ManageRepos(navController)
-    }
-}
-
-@Composable
-private fun ErrorColumn(error: String) {
-    val context = LocalContext.current
-    EnsicordColumnRounded(title = context.getString(R.string.warning_somethingWentWrong), color = MaterialTheme.colors.error) {
-        Text(text = error, color = MaterialTheme.colors.onError, modifier = Modifier.padding(horizontal = 8.dp))
     }
 }
 
