@@ -19,10 +19,8 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import coil.compose.rememberAsyncImagePainter
 import com.aliernfrog.ensicord.ConfigKey
 import com.aliernfrog.ensicord.Path
 import com.aliernfrog.ensicord.R
@@ -73,13 +71,12 @@ private fun ProfileCustomization(chatModel: ChatModel, config: SharedPreferences
 @Composable
 private fun AvatarCustomization(modifier: Modifier) {
     val context = LocalContext.current
-    val avatar = GeneralUtil.getAvatarId("user")
-    val avatarFile = File("${Environment.getExternalStorageDirectory()}${Path.PATH_AVATAR}")
+    val avatar = GeneralUtil.getAvatarPainter("user")
     val launcher = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (it.data?.data != null) setAvatar(context, it.data!!.data!!)
     }
     Image(
-        painter = if (avatarFile.exists()) rememberAsyncImagePainter(avatarFile.absolutePath) else painterResource(avatar),
+        painter = avatar,
         contentDescription = context.getString(R.string.profileAvatar),
         modifier = modifier.clip(CircleShape).size(250.dp, 250.dp).clickable{
             val intent = Intent(Intent.ACTION_GET_CONTENT).setType("image/*").putExtra(Intent.EXTRA_LOCAL_ONLY, true)
