@@ -45,7 +45,7 @@ private fun ProfileCustomization(chatModel: ChatModel, config: SharedPreferences
     var username by remember { mutableStateOf(config.getString(ConfigKey.KEY_USER_NAME, ConfigKey.DEFAULT_USER_NAME)!!) }
     var status by remember { mutableStateOf(config.getString(ConfigKey.KEY_USER_STATUS, "")!!) }
     EnsicordColumnRounded {
-        AvatarCustomization(Modifier.align(CenterHorizontally))
+        AvatarCustomization(chatModel, Modifier.align(CenterHorizontally))
         Spacer(Modifier.height(20.dp))
         EnsicordTextField(
             label = { Text(context.getString(R.string.profileName)) },
@@ -69,9 +69,9 @@ private fun ProfileCustomization(chatModel: ChatModel, config: SharedPreferences
 }
 
 @Composable
-private fun AvatarCustomization(modifier: Modifier) {
+private fun AvatarCustomization(chatModel: ChatModel, modifier: Modifier) {
     val context = LocalContext.current
-    val avatar = GeneralUtil.getAvatarPainter("user")
+    val avatar = GeneralUtil.getAvatarPainter(chatModel.userUser.avatar)
     val launcher = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (it.data?.data != null) setAvatar(context, it.data!!.data!!)
     }
