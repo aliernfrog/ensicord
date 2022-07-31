@@ -5,6 +5,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -33,7 +34,7 @@ fun EnsicordAddon(addon: Addon, onClick: () -> Unit) {
             text = addon.repo,
             fontSize = 10.sp,
             color = if (!addon.error) MaterialTheme.colors.onSecondary else MaterialTheme.colors.onError,
-            modifier = Modifier.padding(horizontal = 8.dp)
+            modifier = Modifier.padding(horizontal = 8.dp).alpha(0.5f)
         )
     }
 }
