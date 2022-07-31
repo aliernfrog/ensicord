@@ -17,11 +17,10 @@ import com.aliernfrog.ensicord.util.GeneralUtil
 import java.io.File
 
 class ChatModel(context: Context, config: SharedPreferences): ViewModel() {
-    private val userAvatarFile = File("${Environment.getExternalStorageDirectory()}${Path.PATH_AVATAR}")
     var userUser = User(
         "user",
         config.getString(ConfigKey.KEY_USER_NAME, ConfigKey.DEFAULT_USER_NAME)!!,
-        if (userAvatarFile.exists()) userAvatarFile.absolutePath else "user",
+        getUserAvatar(),
         GeneralUtil.getUserStatusFromString(config.getString(ConfigKey.KEY_USER_STATUS, null))
     )
     val ensiUser = User("ensi",
@@ -42,9 +41,14 @@ class ChatModel(context: Context, config: SharedPreferences): ViewModel() {
         userUser = User(
             "user",
             newUserName ?: userUser.name,
-            "user",
+            getUserAvatar(),
             if (newUserStatus != null) UserStatus(newUserStatus) else userUser.status
         )
         users = listOf(userUser,ensiUser)
+    }
+
+    private fun getUserAvatar(): String {
+        val userAvatarFile = File("${Environment.getExternalStorageDirectory()}${Path.PATH_AVATAR}")
+        return if (userAvatarFile.exists()) userAvatarFile.absolutePath else "user"
     }
 }
