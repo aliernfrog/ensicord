@@ -52,7 +52,7 @@ private fun ProfileCustomization(chatModel: ChatModel, config: SharedPreferences
             value = username,
             onValueChange = {
                 username = it
-                config.edit().putString("username", it).apply()
+                config.edit().putString(ConfigKey.KEY_USER_NAME, it).apply()
                 chatModel.updateUser(newUserName = it)
             }
         )
