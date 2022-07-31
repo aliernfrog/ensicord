@@ -25,6 +25,7 @@
     <string name="profileStatus">Status</string>
     <string name="addons">Add-ons</string>
     <string name="addonsRepos">Add-on repositories</string>
+    <string name="addonsReposAdd">Add a repository</string>
     <string name="addonsReposUrl">URL</string>
     <string name="addonsReposPlaceholder">Link to the JSON file</string>
     <string name="options">Options</string>
