@@ -2,6 +2,7 @@ package com.aliernfrog.ensicord
 
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.os.Environment
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
@@ -20,6 +21,7 @@ import com.aliernfrog.ensicord.ui.screen.*
 import com.aliernfrog.ensicord.ui.theme.EnsicordTheme
 import com.aliernfrog.ensicord.util.EnsiUtil
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import java.io.File
 
 class MainActivity : ComponentActivity() {
     private lateinit var config: SharedPreferences
@@ -35,6 +37,7 @@ class MainActivity : ComponentActivity() {
         config = getSharedPreferences(ConfigKey.PREF_NAME, MODE_PRIVATE)
         chatModel = ChatModel(this, config)
         addonsModel = AddonsModel()
+        checkDataDir()
         setContent {
             EnsicordTheme(getDarkThemePreference() ?: isSystemInDarkTheme()) {
                 Box(Modifier.background(MaterialTheme.colors.background).fillMaxSize())
@@ -77,5 +80,10 @@ class MainActivity : ComponentActivity() {
         if (theme == Theme.LIGHT) return false
         if (theme == Theme.DARK) return true
         return null
+    }
+
+    private fun checkDataDir() {
+        val file = File("${Environment.getExternalStorageDirectory()}${Path.PATH_DATA}")
+        if (!file.isDirectory) file.mkdirs()
     }
 }

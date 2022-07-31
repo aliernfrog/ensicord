@@ -25,6 +25,11 @@ object NavDestinations {
     const val OPTIONS = "options"
 }
 
+object Path {
+    const val PATH_DATA = "/Android/data/com.aliernfrog.ensicord/files"
+    const val PATH_AVATAR = "$PATH_DATA/avatar.png"
+}
+
 object Theme {
     const val SYSTEM = 0
     const val LIGHT = 1
