@@ -1,7 +1,6 @@
 package com.aliernfrog.ensicord.ui.screen
 
 import android.content.SharedPreferences
-import android.widget.Toast
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
@@ -17,17 +16,18 @@ import com.aliernfrog.ensicord.model.AddonsModel
 import com.aliernfrog.ensicord.ui.composable.EnsicordAddon
 import com.aliernfrog.ensicord.ui.composable.EnsicordBaseScaffold
 import com.aliernfrog.ensicord.ui.composable.EnsicordButton
+import com.aliernfrog.ensicord.ui.composable.TopToastManager
 import com.aliernfrog.ensicord.util.AddonsUtil
 
 @Composable
-fun AddonsScreen(navController: NavController, addonsModel: AddonsModel, config: SharedPreferences) {
+fun AddonsScreen(topToastManager: TopToastManager, navController: NavController, addonsModel: AddonsModel, config: SharedPreferences) {
     val context = LocalContext.current
     EnsicordBaseScaffold(title = context.getString(R.string.addons), navController = navController) {
         when (addonsModel.state) {
             AddonFetchingState.ADDONS_DONE -> {
                 addonsModel.addons.forEach { addon ->
                     EnsicordAddon(addon) {
-                        AddonsUtil.applyAddon(addon, config) { Toast.makeText(context, context.getString(R.string.info_appliedAddon), Toast.LENGTH_SHORT).show() }
+                        AddonsUtil.applyAddon(addon, config) { topToastManager.showToast(context.getString(R.string.info_appliedAddon)) }
                     }
                 }
             }

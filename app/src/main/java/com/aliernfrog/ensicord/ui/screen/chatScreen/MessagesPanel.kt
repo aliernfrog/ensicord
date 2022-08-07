@@ -1,6 +1,5 @@
 package com.aliernfrog.ensicord.ui.screen.chatScreen
 
-import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -31,6 +30,7 @@ import com.aliernfrog.ensicord.ui.composable.EnsicordBorderlessButton
 import com.aliernfrog.ensicord.ui.composable.EnsicordMessage
 import com.aliernfrog.ensicord.ui.composable.EnsicordTextField
 import com.aliernfrog.ensicord.model.ChatModel
+import com.aliernfrog.ensicord.ui.composable.TopToastManager
 import com.aliernfrog.ensicord.util.EnsiUtil
 import com.xinto.overlappingpanels.OverlappingPanelsState
 import kotlinx.coroutines.CoroutineScope
@@ -40,12 +40,14 @@ private val recompose = mutableStateOf(true)
 
 private lateinit var scope: CoroutineScope
 private lateinit var messageListState: LazyListState
+private lateinit var topToastManager: TopToastManager
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun messagesPanel(chatModel: ChatModel, panelsState: OverlappingPanelsState): @Composable (BoxScope.() -> Unit) {
+fun messagesPanel(chatModel: ChatModel, _topToastManager: TopToastManager, panelsState: OverlappingPanelsState): @Composable (BoxScope.() -> Unit) {
     scope = rememberCoroutineScope()
     messageListState = rememberLazyListState()
+    topToastManager = _topToastManager
     return {
         Column(Modifier.background(MaterialTheme.colors.background)) {
             TopBar(chatModel, panelsState)
@@ -130,7 +132,7 @@ private fun ChatInput(chatModel: ChatModel) {
                 modifier = Modifier.padding(top = 8.dp, bottom = 8.dp, end = 8.dp).size(height = 48.dp, width = 48.dp).clip(CircleShape).clickable {
                     if (sendButtonEnabled) {
                         if (chatModel.chosenChannel.messageInput.value.length <= 4000) addMessage(Message(chatModel.userUser, chatModel.chosenChannel.messageInput.value), chatModel, clearInput = true)
-                        else Toast.makeText(context, context.getString(R.string.chatMessageTooLong), Toast.LENGTH_SHORT).show()
+                        else topToastManager.showToast(context.getString(R.string.chatMessageTooLong))
                     }
                 }
             )

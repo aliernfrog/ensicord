@@ -5,18 +5,16 @@ import android.os.Bundle
 import android.os.Environment
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.aliernfrog.ensicord.model.AddonsModel
 import com.aliernfrog.ensicord.model.ChatModel
+import com.aliernfrog.ensicord.ui.composable.TopToastBase
+import com.aliernfrog.ensicord.ui.composable.TopToastManager
 import com.aliernfrog.ensicord.ui.screen.*
 import com.aliernfrog.ensicord.ui.theme.EnsicordTheme
 import com.aliernfrog.ensicord.util.EnsiUtil
@@ -27,6 +25,7 @@ class MainActivity : ComponentActivity() {
     private lateinit var config: SharedPreferences
     private lateinit var chatModel: ChatModel
     private lateinit var addonsModel: AddonsModel
+    private lateinit var topToastManager: TopToastManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,12 +36,12 @@ class MainActivity : ComponentActivity() {
         config = getSharedPreferences(ConfigKey.PREF_NAME, MODE_PRIVATE)
         chatModel = ChatModel(this, config)
         addonsModel = AddonsModel()
+        topToastManager = TopToastManager()
         checkDataDir()
         setContent {
             EnsicordTheme(getDarkThemePreference() ?: isSystemInDarkTheme()) {
-                Box(Modifier.background(MaterialTheme.colors.background).fillMaxSize())
+                TopToastBase(backgroundColor = MaterialTheme.colors.background, manager = topToastManager, content = { Navigation() })
                 SystemBars()
-                Navigation()
             }
         }
     }
@@ -58,13 +57,13 @@ class MainActivity : ComponentActivity() {
         val navController = rememberNavController()
         NavHost(navController = navController, startDestination = NavDestinations.CHAT) {
             composable(route = NavDestinations.CHAT) {
-                ChatScreen(chatModel, navController)
+                ChatScreen(chatModel, topToastManager, navController)
             }
             composable(route = NavDestinations.PROFILE) {
                 ProfileScreen(chatModel, navController, config)
             }
             composable(route = NavDestinations.ADDONS) {
-                AddonsScreen(navController, addonsModel, config)
+                AddonsScreen(topToastManager, navController, addonsModel, config)
             }
             composable(route = NavDestinations.ADDONS_REPOS) {
                 AddonsReposScreen(navController, config)
