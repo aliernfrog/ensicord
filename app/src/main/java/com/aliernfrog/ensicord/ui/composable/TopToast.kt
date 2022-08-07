@@ -3,6 +3,7 @@ package com.aliernfrog.ensicord.ui.composable
 import android.os.Handler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
@@ -44,9 +45,9 @@ fun TopToastBase(
 
 @Composable
 fun TopToast(text: String) {
-    Column(Modifier.fillMaxWidth().padding(top = 24.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-        Row(Modifier.clip(RoundedCornerShape(50.dp)).background(MaterialTheme.colors.background)) {
-            Text(text, fontSize = 20.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colors.onBackground, modifier = Modifier.padding(16.dp))
+    Column(Modifier.fillMaxWidth().padding(top = 24.dp).padding(horizontal = 24.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+        Row(Modifier.clip(RoundedCornerShape(50.dp)).background(MaterialTheme.colors.background).border(3.dp, MaterialTheme.colors.secondary, RoundedCornerShape(50.dp))) {
+            Text(text, fontSize = 18.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colors.onBackground, modifier = Modifier.padding(16.dp))
         }
     }
 }
