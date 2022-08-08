@@ -18,7 +18,7 @@
     <string name="chatSendMessage">Message %CHAT%</string>
     <string name="chatSendMessageDescription">Send a message</string>
     <string name="chatReadOnly">This channel is read-only</string>
-    <string name="chatMessageTooLong">Your message can be max 4000 characters</string>
+    <string name="chatMessageTooLong">Your message can contain max %MAX% characters</string>
     <string name="profile">Profile</string>
     <string name="profileAvatar">User avatar</string>
     <string name="profileName">Username</string>

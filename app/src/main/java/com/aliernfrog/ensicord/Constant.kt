@@ -5,6 +5,10 @@ object AddonFetchingState {
     const val ADDONS_DONE = 1
 }
 
+object ChatConstants {
+    const val MESSAGE_CHAR_LIMIT = 4000
+}
+
 object ConfigKey {
     const val PREF_NAME = "APP_CONFIG"
     const val KEY_APP_THEME = "appTheme"
