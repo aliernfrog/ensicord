@@ -13,11 +13,11 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.aliernfrog.ensicord.model.AddonsModel
 import com.aliernfrog.ensicord.model.ChatModel
-import com.aliernfrog.ensicord.ui.composable.TopToastBase
-import com.aliernfrog.ensicord.ui.composable.TopToastManager
 import com.aliernfrog.ensicord.ui.screen.*
 import com.aliernfrog.ensicord.ui.theme.EnsicordTheme
 import com.aliernfrog.ensicord.util.EnsiUtil
+import com.aliernfrog.toptoast.TopToastBase
+import com.aliernfrog.toptoast.TopToastManager
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import java.io.File
 

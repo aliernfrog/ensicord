@@ -4,10 +4,10 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 import com.aliernfrog.ensicord.model.ChatModel
-import com.aliernfrog.ensicord.ui.composable.TopToastManager
 import com.aliernfrog.ensicord.ui.screen.chatScreen.channelsPanel
 import com.aliernfrog.ensicord.ui.screen.chatScreen.messagesPanel
 import com.aliernfrog.ensicord.ui.screen.chatScreen.usersPanel
+import com.aliernfrog.toptoast.TopToastManager
 import com.xinto.overlappingpanels.OverlappingPanels
 import com.xinto.overlappingpanels.rememberOverlappingPanelsState
 

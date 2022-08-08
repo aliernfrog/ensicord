@@ -31,8 +31,8 @@ import com.aliernfrog.ensicord.ui.composable.EnsicordBorderlessButton
 import com.aliernfrog.ensicord.ui.composable.EnsicordMessage
 import com.aliernfrog.ensicord.ui.composable.EnsicordTextField
 import com.aliernfrog.ensicord.model.ChatModel
-import com.aliernfrog.ensicord.ui.composable.TopToastManager
 import com.aliernfrog.ensicord.util.EnsiUtil
+import com.aliernfrog.toptoast.TopToastManager
 import com.xinto.overlappingpanels.OverlappingPanelsState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch

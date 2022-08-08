@@ -12,6 +12,7 @@ import androidx.navigation.NavController
 import com.aliernfrog.ensicord.*
 import com.aliernfrog.ensicord.model.AddonsModel
 import com.aliernfrog.ensicord.ui.composable.*
+import com.aliernfrog.toptoast.TopToastManager
 
 @Composable
 fun OptionsScreen(topToastManager: TopToastManager, navController: NavController, addonsModel: AddonsModel, config: SharedPreferences) {

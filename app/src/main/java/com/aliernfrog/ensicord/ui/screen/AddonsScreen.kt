@@ -18,8 +18,8 @@ import com.aliernfrog.ensicord.model.AddonsModel
 import com.aliernfrog.ensicord.ui.composable.EnsicordAddon
 import com.aliernfrog.ensicord.ui.composable.EnsicordBaseScaffold
 import com.aliernfrog.ensicord.ui.composable.EnsicordButton
-import com.aliernfrog.ensicord.ui.composable.TopToastManager
 import com.aliernfrog.ensicord.util.AddonsUtil
+import com.aliernfrog.toptoast.TopToastManager
 
 @Composable
 fun AddonsScreen(topToastManager: TopToastManager, navController: NavController, addonsModel: AddonsModel, config: SharedPreferences) {
