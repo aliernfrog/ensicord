@@ -5,45 +5,35 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.ScaffoldState
-import androidx.compose.material.SnackbarResult
-import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
 import com.aliernfrog.ensicord.*
 import com.aliernfrog.ensicord.model.AddonsModel
-import com.aliernfrog.ensicord.ui.composable.EnsicordBaseScaffold
-import com.aliernfrog.ensicord.ui.composable.EnsicordButton
-import com.aliernfrog.ensicord.ui.composable.EnsicordColumnRounded
-import com.aliernfrog.ensicord.ui.composable.EnsicordRadioButtons
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
-
-private lateinit var scope: CoroutineScope
-private lateinit var scaffoldState: ScaffoldState
+import com.aliernfrog.ensicord.ui.composable.*
 
 @Composable
-fun OptionsScreen(navController: NavController, addonsModel: AddonsModel, config: SharedPreferences) {
+fun OptionsScreen(topToastManager: TopToastManager, navController: NavController, addonsModel: AddonsModel, config: SharedPreferences) {
     val context = LocalContext.current
-    scope = rememberCoroutineScope()
-    scaffoldState = rememberScaffoldState()
-    EnsicordBaseScaffold(title = context.getString(R.string.options), state = scaffoldState, navController = navController) {
-        ThemeSelection(config)
+    EnsicordBaseScaffold(title = context.getString(R.string.options), navController = navController) {
+        ThemeSelection(topToastManager, config)
         Addons(navController, addonsModel, config)
     }
 }
 
 @Composable
-private fun ThemeSelection(config: SharedPreferences) {
+private fun ThemeSelection(topToastManager: TopToastManager, config: SharedPreferences) {
     val context = LocalContext.current
+    val checkmark = painterResource(id = R.drawable.check_white)
+    val primaryColor = MaterialTheme.colors.primary
     val options = listOf(context.getString(R.string.optionsThemeSystem),context.getString(R.string.optionsThemeLight),context.getString(R.string.optionsThemeDark))
     val chosen = config.getInt(ConfigKey.KEY_APP_THEME, 0)
     EnsicordColumnRounded(color = MaterialTheme.colors.secondary, title = context.getString(R.string.optionsTheme)) {
         EnsicordRadioButtons(options = options, selectedIndex = chosen, columnColor = MaterialTheme.colors.secondaryVariant, onSelect = { option ->
-            applyTheme(option, config, context)
+            applyTheme(option, config, context) {
+                topToastManager.showToast(context.getString(R.string.optionsThemeChanged), checkmark, primaryColor) { restartApp(context) }
+            }
         })
     }
 }
@@ -57,17 +47,12 @@ private fun Addons(navController: NavController, addonsModel: AddonsModel, confi
     }
 }
 
-private fun applyTheme(option: String, config: SharedPreferences, context: Context) {
+private fun applyTheme(option: String, config: SharedPreferences, context: Context, onApply: () -> Unit) {
     var theme = Theme.SYSTEM
     if (option == context.getString(R.string.optionsThemeLight)) theme = Theme.LIGHT
     if (option == context.getString(R.string.optionsThemeDark)) theme = Theme.DARK
     config.edit().putInt(ConfigKey.KEY_APP_THEME, theme).apply()
-    scope.launch {
-        when(scaffoldState.snackbarHostState.showSnackbar(context.getString(R.string.optionsThemeChanged), context.getString(R.string.action_restartNow))) {
-            SnackbarResult.ActionPerformed -> { restartApp(context) }
-            SnackbarResult.Dismissed -> {  }
-        }
-    }
+    onApply()
 }
 
 private fun restartApp(context: Context) {

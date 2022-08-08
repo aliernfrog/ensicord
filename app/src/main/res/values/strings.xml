@@ -33,5 +33,5 @@
     <string name="optionsThemeSystem">Follow system</string>
     <string name="optionsThemeLight">Light</string>
     <string name="optionsThemeDark">Dark</string>
-    <string name="optionsThemeChanged">Theme will be applied after app restart</string>
+    <string name="optionsThemeChanged">Theme will be applied after app restart, click to restart now</string>
 </resources>

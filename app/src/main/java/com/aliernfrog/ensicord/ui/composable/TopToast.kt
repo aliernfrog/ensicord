@@ -5,6 +5,7 @@ import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -28,16 +29,18 @@ class TopToastManager {
     var text = mutableStateOf("")
     var icon: Painter? = null
     var iconBackgroundColor: Color = Color.Transparent
+    var onClick: (() -> Unit)? = null
 
     private val timer = Timer()
     private var task: TimerTask? = null
 
-    fun showToast(textToShow: String, iconToShow: Painter? = null, iconBackground: Color = Color.Transparent, stayMs: Long = 3000) {
+    fun showToast(textToShow: String, iconToShow: Painter? = null, iconBackground: Color = Color.Transparent, stayMs: Long = 3000, onToastClick: (() -> Unit)? = null) {
         task?.cancel()
         timer.purge()
         text.value = textToShow
         icon = iconToShow
         iconBackgroundColor = iconBackground
+        onClick = onToastClick
         isShowing.value = true
         task = timer.schedule(stayMs) { isShowing.value = false }
     }
@@ -59,8 +62,10 @@ fun TopToastBase(
 
 @Composable
 fun TopToast(manager: TopToastManager) {
+    var modifier = Modifier.clip(RoundedCornerShape(50.dp)).background(MaterialTheme.colors.background)
+    if (manager.onClick != null) modifier = modifier.clickable { manager.onClick?.invoke() }
     Column(Modifier.fillMaxWidth().padding(top = 24.dp).padding(horizontal = 24.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-        Row(Modifier.clip(RoundedCornerShape(50.dp)).background(MaterialTheme.colors.background).border(1.dp, MaterialTheme.colors.secondary, RoundedCornerShape(50.dp)).padding(16.dp).animateContentSize()) {
+        Row(modifier.border(1.dp, MaterialTheme.colors.secondary, RoundedCornerShape(50.dp)).padding(16.dp).animateContentSize()) {
             if (manager.icon != null) Image(
                 painter = manager.icon!!,
                 contentDescription = manager.text.value,

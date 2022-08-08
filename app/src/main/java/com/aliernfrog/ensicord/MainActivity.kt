@@ -69,7 +69,7 @@ class MainActivity : ComponentActivity() {
                 AddonsReposScreen(navController, config)
             }
             composable(route = NavDestinations.OPTIONS) {
-                OptionsScreen(navController, addonsModel, config)
+                OptionsScreen(topToastManager, navController, addonsModel, config)
             }
         }
     }
