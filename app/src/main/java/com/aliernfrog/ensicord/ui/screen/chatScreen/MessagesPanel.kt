@@ -134,7 +134,7 @@ private fun ChatInput(chatModel: ChatModel) {
                 contentDescription = context.getString(R.string.chatSendMessageDescription),
                 modifier = Modifier.padding(top = 8.dp, bottom = 8.dp, end = 8.dp).size(height = 48.dp, width = 48.dp).clip(CircleShape).clickable {
                     if (sendButtonEnabled) {
-                        if (chatModel.chosenChannel.messageInput.value.length <= 4000) addMessage(Message(chatModel.userUser, chatModel.chosenChannel.messageInput.value), chatModel, clearInput = true)
+                        if (chatModel.chosenChannel.messageInput.value.length <= ChatConstants.MESSAGE_CHAR_LIMIT) addMessage(Message(chatModel.userUser, chatModel.chosenChannel.messageInput.value), chatModel, clearInput = true)
                         else topToastManager.showToast(context.getString(R.string.chatMessageTooLong).replace("%MAX%", ChatConstants.MESSAGE_CHAR_LIMIT.toString()), exclamation, errorColor)
                     }
                 }
