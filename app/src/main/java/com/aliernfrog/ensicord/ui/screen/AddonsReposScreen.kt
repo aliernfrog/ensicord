@@ -1,6 +1,7 @@
 package com.aliernfrog.ensicord.ui.screen
 
 import android.content.SharedPreferences
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
@@ -36,13 +37,15 @@ private fun AddRepo(repos: Set<String>, config: SharedPreferences, onUpdate: (Se
             placeholder = { Text(context.getString(R.string.addonsReposPlaceholder)) },
             singleLine = true
         )
-        EnsicordButton(
-            title = context.getString(R.string.action_add),
-            painter = painterResource(id = R.drawable.check),
-            backgroundColor = MaterialTheme.colors.primary,
-            contentColor = MaterialTheme.colors.onPrimary
-        ) {
-            onUpdate(addRepo(text, repos, config))
+        AnimatedVisibility(visible = text.isNotBlank()) {
+            EnsicordButton(
+                title = context.getString(R.string.action_add),
+                painter = painterResource(id = R.drawable.check),
+                backgroundColor = MaterialTheme.colors.primary,
+                contentColor = MaterialTheme.colors.onPrimary
+            ) {
+                if (text.isNotBlank()) onUpdate(addRepo(text, repos, config))
+            }
         }
     }
 }
