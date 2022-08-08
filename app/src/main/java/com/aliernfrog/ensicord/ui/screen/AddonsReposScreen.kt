@@ -5,6 +5,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
 import com.aliernfrog.ensicord.ConfigKey
 import com.aliernfrog.ensicord.R
@@ -37,6 +38,7 @@ private fun AddRepo(repos: Set<String>, config: SharedPreferences, onUpdate: (Se
         )
         EnsicordButton(
             title = context.getString(R.string.action_add),
+            painter = painterResource(id = R.drawable.check),
             backgroundColor = MaterialTheme.colors.primary,
             contentColor = MaterialTheme.colors.onPrimary
         ) {

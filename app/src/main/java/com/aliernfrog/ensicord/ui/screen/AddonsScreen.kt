@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.aliernfrog.ensicord.AddonFetchingState
@@ -40,7 +41,7 @@ fun AddonsScreen(topToastManager: TopToastManager, navController: NavController,
 @Composable
 private fun ManageRepos(navController: NavController) {
     val context = LocalContext.current
-    EnsicordButton(title = context.getString(R.string.addonsRepos)) {
+    EnsicordButton(title = context.getString(R.string.addonsRepos), painter = painterResource(id = R.drawable.folder)) {
         navController.navigate(NavDestinations.ADDONS_REPOS)
     }
 }
