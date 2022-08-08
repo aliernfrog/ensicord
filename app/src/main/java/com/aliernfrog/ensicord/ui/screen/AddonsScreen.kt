@@ -3,6 +3,7 @@ package com.aliernfrog.ensicord.ui.screen
 import android.content.SharedPreferences
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
@@ -23,12 +24,14 @@ import com.aliernfrog.ensicord.util.AddonsUtil
 @Composable
 fun AddonsScreen(topToastManager: TopToastManager, navController: NavController, addonsModel: AddonsModel, config: SharedPreferences) {
     val context = LocalContext.current
+    val primaryColor = MaterialTheme.colors.primary
+    val checkmark = painterResource(id = R.drawable.check_white)
     EnsicordBaseScaffold(title = context.getString(R.string.addons), navController = navController) {
         when (addonsModel.state) {
             AddonFetchingState.ADDONS_DONE -> {
                 addonsModel.addons.forEach { addon ->
                     EnsicordAddon(addon) {
-                        AddonsUtil.applyAddon(addon, config) { topToastManager.showToast(context.getString(R.string.info_appliedAddon)) }
+                        AddonsUtil.applyAddon(addon, config) { topToastManager.showToast(context.getString(R.string.info_appliedAddon), checkmark, primaryColor) }
                     }
                 }
             }

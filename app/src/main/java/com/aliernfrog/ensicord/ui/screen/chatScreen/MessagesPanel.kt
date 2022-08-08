@@ -112,6 +112,8 @@ private fun ScrollToBottom() {
 @Composable
 private fun ChatInput(chatModel: ChatModel) {
     val context = LocalContext.current
+    val errorColor = MaterialTheme.colors.error
+    val exclamation = painterResource(id = R.drawable.exclamation_white)
     val sendButtonEnabled = chatModel.chosenChannel.messageInput.value.trim() != "" && !chatModel.chosenChannel.readOnly
     Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.heightIn(0.dp, 160.dp)) {
         EnsicordTextField(
@@ -132,7 +134,7 @@ private fun ChatInput(chatModel: ChatModel) {
                 modifier = Modifier.padding(top = 8.dp, bottom = 8.dp, end = 8.dp).size(height = 48.dp, width = 48.dp).clip(CircleShape).clickable {
                     if (sendButtonEnabled) {
                         if (chatModel.chosenChannel.messageInput.value.length <= 4000) addMessage(Message(chatModel.userUser, chatModel.chosenChannel.messageInput.value), chatModel, clearInput = true)
-                        else topToastManager.showToast(context.getString(R.string.chatMessageTooLong))
+                        else topToastManager.showToast(context.getString(R.string.chatMessageTooLong), exclamation, errorColor)
                     }
                 }
             )
