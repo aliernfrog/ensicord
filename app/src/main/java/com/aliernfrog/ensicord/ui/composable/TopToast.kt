@@ -60,7 +60,7 @@ fun TopToastBase(
 @Composable
 fun TopToast(manager: TopToastManager) {
     Column(Modifier.fillMaxWidth().padding(top = 24.dp).padding(horizontal = 24.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-        Row(Modifier.clip(RoundedCornerShape(50.dp)).background(MaterialTheme.colors.background).border(3.dp, MaterialTheme.colors.secondary, RoundedCornerShape(50.dp)).padding(16.dp).animateContentSize()) {
+        Row(Modifier.clip(RoundedCornerShape(50.dp)).background(MaterialTheme.colors.background).border(1.dp, MaterialTheme.colors.secondary, RoundedCornerShape(50.dp)).padding(16.dp).animateContentSize()) {
             if (manager.icon != null) Image(
                 painter = manager.icon!!,
                 contentDescription = manager.text.value,
