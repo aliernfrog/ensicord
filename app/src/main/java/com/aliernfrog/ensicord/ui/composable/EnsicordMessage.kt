@@ -19,12 +19,14 @@ import com.aliernfrog.ensicord.data.Message
 import com.aliernfrog.ensicord.util.GeneralUtil
 
 @Composable
-fun EnsicordMessage(message: Message, checkMention: String? = null, onNameClick: (() -> Unit)? = null) {
+fun EnsicordMessage(message: Message, checkMention: String? = null, onAvatarClick: (() -> Unit)? = null, onNameClick: (() -> Unit)? = null) {
     val avatar = GeneralUtil.getAvatarPainter(message.author.avatar)
     var modifier = Modifier.clickable{}
     if (checkMention != null && message.content.contains("@$checkMention")) modifier = modifier.background(Color(0x2BFFF700))
     Row(modifier.padding(8.dp)) {
-        Image(painter = avatar, contentDescription = "", Modifier.padding(end = 8.dp).clip(CircleShape).size(44.dp, 44.dp))
+        Image(painter = avatar, contentDescription = "", Modifier.padding(end = 8.dp).clip(CircleShape).size(44.dp, 44.dp).clickable {
+            if (onAvatarClick != null) onAvatarClick()
+        })
         Column(Modifier.weight(1f)) {
             Text(
                 text = message.author.name,

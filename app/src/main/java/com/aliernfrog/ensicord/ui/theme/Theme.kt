@@ -1,6 +1,7 @@
 package com.aliernfrog.ensicord.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material.Colors
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
@@ -36,6 +37,12 @@ private val DarkColorPalette = darkColors(
     onSurface = Color.White,
     onError = Color.White
 )
+
+val Colors.sheetScrim: Color
+    get() = if (isLight) SheetScrimLight else SheetScrimDark
+
+val Colors.sheetHandleBar: Color
+    get() = if (isLight) ButtonLight else ButtonLight
 
 @Composable
 fun EnsicordTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {

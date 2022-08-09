@@ -27,10 +27,12 @@ import androidx.compose.ui.unit.sp
 import com.aliernfrog.ensicord.ChatConstants
 import com.aliernfrog.ensicord.R
 import com.aliernfrog.ensicord.data.Message
+import com.aliernfrog.ensicord.data.User
 import com.aliernfrog.ensicord.ui.composable.EnsicordBorderlessButton
 import com.aliernfrog.ensicord.ui.composable.EnsicordMessage
 import com.aliernfrog.ensicord.ui.composable.EnsicordTextField
 import com.aliernfrog.ensicord.model.ChatModel
+import com.aliernfrog.ensicord.ui.sheet.UserSheet
 import com.aliernfrog.ensicord.util.EnsiUtil
 import com.aliernfrog.toptoast.TopToastManager
 import com.xinto.overlappingpanels.OverlappingPanelsState
@@ -38,16 +40,18 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 private val recompose = mutableStateOf(true)
-
 private lateinit var scope: CoroutineScope
-private lateinit var messageListState: LazyListState
 private lateinit var topToastManager: TopToastManager
+private lateinit var messageListState: LazyListState
+@OptIn(ExperimentalMaterialApi::class) private lateinit var userSheetState: ModalBottomSheetState
+private lateinit var userSheetUser: User
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun messagesPanel(chatModel: ChatModel, _topToastManager: TopToastManager, panelsState: OverlappingPanelsState): @Composable (BoxScope.() -> Unit) {
     scope = rememberCoroutineScope()
     messageListState = rememberLazyListState()
+    userSheetState = rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
     topToastManager = _topToastManager
     return {
         Column(Modifier.background(MaterialTheme.colors.background)) {
@@ -57,6 +61,8 @@ fun messagesPanel(chatModel: ChatModel, _topToastManager: TopToastManager, panel
             ChatInput(chatModel)
             Spacer(Modifier.height(5.dp))
         }
+        UserSheet(user = if (::userSheetUser.isInitialized) userSheetUser else null, sheetState = userSheetState) { topToastManager.showToast(userSheetUser.name) }
+        recompose.value
     }
 }
 
@@ -89,7 +95,12 @@ private fun ChatView(modifier: Modifier, chatModel: ChatModel) {
             )
         }
         items(chatModel.chosenChannel.messages) { message ->
-            EnsicordMessage(message, checkMention = chatModel.userUser.name, onNameClick = { chatModel.chosenChannel.messageInput.value += "@${message.author.name}" })
+            EnsicordMessage(
+                message = message,
+                checkMention = chatModel.userUser.name,
+                onAvatarClick = { showUserSheet(message.author) },
+                onNameClick = { chatModel.chosenChannel.messageInput.value += "@${message.author.name}" }
+            )
         }
     }
     recompose.value
@@ -157,6 +168,13 @@ private fun createEnsiResponse(message: Message, chatModel: ChatModel) {
     val response = if (args.contains("tell") && (args.contains("story") || args.contains("stories"))) EnsiUtil.getResponse(type = "LEGIT", sentenceCount = (5..50).random(), starting = true, punctuations = true)
     else EnsiUtil.getResponse(type = listOf("RAW","RAW","RAW","RAW","RAW","LEGIT","ALLCAPS").random(), lowCharChance = true)
     addMessage(Message(chatModel.ensiUser, response), chatModel)
+}
+
+@OptIn(ExperimentalMaterialApi::class)
+private fun showUserSheet(user: User) {
+    userSheetUser = user
+    recompose.value = !recompose.value
+    scope.launch { userSheetState.show() }
 }
 
 private fun scrollToBottom(force: Boolean = false) {
