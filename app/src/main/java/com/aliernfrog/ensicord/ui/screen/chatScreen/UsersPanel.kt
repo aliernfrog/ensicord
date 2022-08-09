@@ -15,11 +15,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.aliernfrog.ensicord.data.User
 import com.aliernfrog.ensicord.ui.composable.EnsicordUser
 import com.aliernfrog.ensicord.model.ChatModel
 
 @Composable
-fun usersPanel(chatModel: ChatModel): @Composable (BoxScope.() -> Unit) {
+fun usersPanel(chatModel: ChatModel, onUserSheetRequest: (User) -> Unit): @Composable (BoxScope.() -> Unit) {
     return {
         Column(Modifier.clip(RoundedCornerShape(topStart = 20.dp)).fillMaxSize().background(MaterialTheme.colors.secondary)) {
             LazyColumn {
@@ -28,7 +29,7 @@ fun usersPanel(chatModel: ChatModel): @Composable (BoxScope.() -> Unit) {
                     Box(modifier = Modifier.alpha(0.2f).fillMaxWidth().height(1.dp).background(MaterialTheme.colors.onBackground))
                 }
                 items(chatModel.users) { user ->
-                    EnsicordUser(user, Modifier.clickable{})
+                    EnsicordUser(user, Modifier.clickable{ onUserSheetRequest(user) })
                 }
             }
         }
