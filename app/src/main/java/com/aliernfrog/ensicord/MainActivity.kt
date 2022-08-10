@@ -60,7 +60,7 @@ class MainActivity : ComponentActivity() {
                 ChatScreen(chatModel, topToastManager, navController)
             }
             composable(route = NavDestinations.PROFILE) {
-                ProfileScreen(chatModel, navController, config)
+                ProfileScreen(chatModel, topToastManager, navController, config)
             }
             composable(route = NavDestinations.ADDONS) {
                 AddonsScreen(topToastManager, navController, addonsModel, config)

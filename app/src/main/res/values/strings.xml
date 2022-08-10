@@ -21,6 +21,7 @@
     <string name="chatMessageTooLong">Your message can contain max %MAX% characters</string>
     <string name="profile">Profile</string>
     <string name="profileAvatar">User avatar</string>
+    <string name="profileAvatarUpdated">Updated avatar</string>
     <string name="profileName">Username</string>
     <string name="profileStatus">Status</string>
     <string name="addons">Add-ons</string>
