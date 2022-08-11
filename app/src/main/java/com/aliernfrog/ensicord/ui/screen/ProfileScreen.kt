@@ -13,14 +13,12 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.aliernfrog.ensicord.ConfigKey
@@ -32,6 +30,7 @@ import com.aliernfrog.ensicord.ui.composable.EnsicordBaseScaffold
 import com.aliernfrog.ensicord.ui.composable.EnsicordColumnRounded
 import com.aliernfrog.ensicord.ui.composable.EnsicordTextField
 import com.aliernfrog.ensicord.util.GeneralUtil
+import com.aliernfrog.toptoast.TopToastColorType
 import com.aliernfrog.toptoast.TopToastManager
 import java.io.File
 
@@ -75,13 +74,11 @@ private fun ProfileCustomization(chatModel: ChatModel, topToastManager: TopToast
 @Composable
 private fun AvatarCustomization(chatModel: ChatModel, topToastManager: TopToastManager, navController: NavController, modifier: Modifier) {
     val context = LocalContext.current
-    val checkmark = painterResource(id = R.drawable.check_white)
-    val primaryColor = MaterialTheme.colors.primary
     val avatar = GeneralUtil.getAvatarPainter(chatModel.userUser.avatar)
     val launcher = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (it.data?.data != null) setAvatar(context, it.data!!.data!!) {
             chatModel.updateUser()
-            topToastManager.showToast(context.getString(R.string.profileAvatarUpdated), checkmark, primaryColor)
+            topToastManager.showToast(context.getString(R.string.profileAvatarUpdated), iconDrawableId = R.drawable.check_white, iconBackgroundColorType = TopToastColorType.PRIMARY)
             navController.popBackStack()
             navController.navigate(NavDestinations.PROFILE)
         }

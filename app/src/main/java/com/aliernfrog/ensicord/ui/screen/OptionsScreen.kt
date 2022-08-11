@@ -12,6 +12,7 @@ import androidx.navigation.NavController
 import com.aliernfrog.ensicord.*
 import com.aliernfrog.ensicord.model.AddonsModel
 import com.aliernfrog.ensicord.ui.composable.*
+import com.aliernfrog.toptoast.TopToastColorType
 import com.aliernfrog.toptoast.TopToastManager
 
 @Composable
@@ -26,14 +27,12 @@ fun OptionsScreen(topToastManager: TopToastManager, navController: NavController
 @Composable
 private fun ThemeSelection(topToastManager: TopToastManager, config: SharedPreferences) {
     val context = LocalContext.current
-    val checkmark = painterResource(id = R.drawable.check_white)
-    val primaryColor = MaterialTheme.colors.primary
     val options = listOf(context.getString(R.string.optionsThemeSystem),context.getString(R.string.optionsThemeLight),context.getString(R.string.optionsThemeDark))
     val chosen = config.getInt(ConfigKey.KEY_APP_THEME, 0)
     EnsicordColumnRounded(color = MaterialTheme.colors.secondary, title = context.getString(R.string.optionsTheme)) {
         EnsicordRadioButtons(options = options, selectedIndex = chosen, columnColor = MaterialTheme.colors.secondaryVariant, onSelect = { option ->
             applyTheme(option, config, context) {
-                topToastManager.showToast(context.getString(R.string.optionsThemeChanged), checkmark, primaryColor) { restartApp(context) }
+                topToastManager.showToast(context.getString(R.string.optionsThemeChanged), iconDrawableId = R.drawable.check_white, iconBackgroundColorType = TopToastColorType.PRIMARY) { restartApp(context) }
             }
         })
     }
