@@ -46,14 +46,14 @@ private lateinit var messageListState: LazyListState
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun messagesPanel(chatModel: ChatModel, _topToastManager: TopToastManager, panelsState: OverlappingPanelsState, onUserSheetRequest: (User) -> Unit): @Composable (BoxScope.() -> Unit) {
+fun messagesPanel(chatModel: ChatModel, _topToastManager: TopToastManager, panelsState: OverlappingPanelsState, onUserSheetRequest: (User) -> Unit, onMessageSheetRequest: (Message) -> Unit): @Composable (BoxScope.() -> Unit) {
     scope = rememberCoroutineScope()
     messageListState = rememberLazyListState()
     topToastManager = _topToastManager
     return {
         Column(Modifier.background(MaterialTheme.colors.background)) {
             TopBar(chatModel, panelsState)
-            ChatView(Modifier.fillMaxSize().weight(1f), chatModel, onUserSheetRequest)
+            ChatView(Modifier.fillMaxSize().weight(1f), chatModel, onUserSheetRequest, onMessageSheetRequest)
             ScrollToBottom()
             ChatInput(chatModel)
             Spacer(Modifier.height(5.dp))
@@ -77,7 +77,7 @@ private fun TopBar(chatModel: ChatModel, panelsState: OverlappingPanelsState) {
 }
 
 @Composable
-private fun ChatView(modifier: Modifier, chatModel: ChatModel, onUserSheetRequest: (User) -> Unit) {
+private fun ChatView(modifier: Modifier, chatModel: ChatModel, onUserSheetRequest: (User) -> Unit, onMessageSheetRequest: (Message) -> Unit) {
     val context = LocalContext.current
     LazyColumn(modifier, verticalArrangement = Arrangement.Bottom, state = messageListState) {
         item {
@@ -94,7 +94,8 @@ private fun ChatView(modifier: Modifier, chatModel: ChatModel, onUserSheetReques
                 message = message,
                 checkMention = chatModel.userUser.name,
                 onAvatarClick = { onUserSheetRequest(message.author) },
-                onNameClick = { chatModel.chosenChannel.messageInput.value += "@${message.author.name}" }
+                onNameClick = { chatModel.chosenChannel.messageInput.value += "@${message.author.name}" },
+                onLongClick = { onMessageSheetRequest(message) }
             )
         }
     }

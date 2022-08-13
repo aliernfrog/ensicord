@@ -4,6 +4,7 @@
     <string name="action_add">Add</string>
     <string name="action_remove">Remove</string>
     <string name="info_appliedAddon">Applied add-on</string>
+    <string name="info_copied">Copied to clipboard</string>
     <string name="warning_somethingWentWrong">Something went wrong</string>
     <string name="status_playing">Playing %n</string>
     <string name="status_streaming">Streaming %n</string>
@@ -18,6 +19,7 @@
     <string name="chatSendMessageDescription">Send a message</string>
     <string name="chatReadOnly">This channel is read-only</string>
     <string name="chatMessageTooLong">Your message can contain max %MAX% characters</string>
+    <string name="messageCopy">Copy message content</string>
     <string name="profile">Profile</string>
     <string name="profileAvatar">User avatar</string>
     <string name="profileAvatarUpdated">Updated avatar</string>
