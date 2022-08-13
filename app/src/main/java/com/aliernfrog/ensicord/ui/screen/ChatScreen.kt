@@ -7,6 +7,9 @@ import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.navigation.NavController
 import com.aliernfrog.ensicord.data.Message
 import com.aliernfrog.ensicord.data.User
@@ -29,10 +32,13 @@ private lateinit var messageSheetMessage: Message
 @OptIn(ExperimentalMaterialApi::class) private lateinit var userSheetState: ModalBottomSheetState
 @OptIn(ExperimentalMaterialApi::class) private lateinit var messageSheetState: ModalBottomSheetState
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalComposeUiApi::class) private var keyboardController: SoftwareKeyboardController? = null
+
+@OptIn(ExperimentalMaterialApi::class, ExperimentalComposeUiApi::class)
 @Composable
 fun ChatScreen(chatModel: ChatModel, topToastManager: TopToastManager, navController: NavController) {
     val panelsState = rememberOverlappingPanelsState()
+    keyboardController = LocalSoftwareKeyboardController.current
     scope = rememberCoroutineScope()
     userSheetState = rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
     messageSheetState = rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
@@ -59,13 +65,19 @@ fun ChatScreen(chatModel: ChatModel, topToastManager: TopToastManager, navContro
 @OptIn(ExperimentalMaterialApi::class)
 private fun showUserSheet(user: User) {
     userSheetUser = user
-    recompose.value = !recompose.value
+    beforeSheetShow()
     scope.launch { userSheetState.show() }
 }
 
 @OptIn(ExperimentalMaterialApi::class)
 private fun showMessageSheet(message: Message) {
     messageSheetMessage = message
-    recompose.value = !recompose.value
+    beforeSheetShow()
     scope.launch { messageSheetState.show() }
+}
+
+@OptIn(ExperimentalComposeUiApi::class)
+private fun beforeSheetShow() {
+    recompose.value = !recompose.value
+    keyboardController?.hide()
 }
