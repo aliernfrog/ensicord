@@ -38,11 +38,14 @@ private val DarkColorPalette = darkColors(
     onError = Color.White
 )
 
+val Colors.sheetBackground: Color
+get() = if (isLight) SheetBackgroundLight else SheetBackgroundDark
+
 val Colors.sheetScrim: Color
-    get() = if (isLight) SheetScrimLight else SheetScrimDark
+get() = if (isLight) SheetScrimLight else SheetScrimDark
 
 val Colors.sheetHandleBar: Color
-    get() = if (isLight) ButtonLight else ButtonLight
+get() = if (isLight) ButtonLight else ButtonLight
 
 @Composable
 fun EnsicordTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
