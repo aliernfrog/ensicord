@@ -39,7 +39,7 @@ fun MessageSheet(message: Message?, sheetState: ModalBottomSheetState, topToastM
             }
             EnsicordButton(title = context.getString(R.string.messageCopy)) {
                 clipboardManager.setText(AnnotatedString(message.content))
-                topToastManager.showToast(context.getString(R.string.info_copied), iconDrawableId = R.drawable.check_white, iconBackgroundColorType = TopToastColorType.PRIMARY)
+                topToastManager.showToast(context.getString(R.string.info_copied), iconDrawableId = R.drawable.copy_white, iconBackgroundColorType = TopToastColorType.PRIMARY)
                 scope.launch { sheetState.hide() }
             }
         }
