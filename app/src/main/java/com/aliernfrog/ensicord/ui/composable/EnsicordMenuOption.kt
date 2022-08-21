@@ -24,7 +24,8 @@ import androidx.compose.ui.unit.dp
 fun EnsicordMenuOption(text: String, iconPainter: Painter, iconBackgroundColor: Color = Color.Black, backgroundColor: Color = MaterialTheme.colors.secondary, onClick: () -> Unit) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.fillMaxWidth().padding(8.dp).clip(RoundedCornerShape(20.dp)).background(backgroundColor).clickable { onClick() }) {
+        modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp).clip(RoundedCornerShape(20.dp)).background(backgroundColor).clickable { onClick() }
+    ) {
         Image(iconPainter, text, Modifier.padding(end = 8.dp).width(40.dp).clip(CircleShape).background(iconBackgroundColor).padding(8.dp))
         Text(text, fontWeight = FontWeight.Bold, color = MaterialTheme.colors.onBackground)
     }

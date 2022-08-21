@@ -1,9 +1,12 @@
 package com.aliernfrog.ensicord.ui.sheet
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -32,7 +35,7 @@ fun MessageSheet(message: Message?, sheetState: ModalBottomSheetState, topToastM
         val clipboardManager = LocalClipboardManager.current
         val scope = rememberCoroutineScope()
         EnsicordModalBottomSheet(sheetState = sheetState) {
-            Column(Modifier.heightIn(0.dp, 200.dp).clip(RoundedCornerShape(20.dp))) {
+            Column(Modifier.heightIn(0.dp, 200.dp).padding(vertical = 8.dp).clip(RoundedCornerShape(20.dp)).background(MaterialTheme.colors.secondary)) {
                 EnsicordMessage(message = message, onAvatarClick = {
                     onUserSheetRequest(message.author)
                     scope.launch { sheetState.hide() }
