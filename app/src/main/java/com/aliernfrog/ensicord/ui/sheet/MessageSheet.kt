@@ -11,12 +11,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import com.aliernfrog.ensicord.R
 import com.aliernfrog.ensicord.data.Message
 import com.aliernfrog.ensicord.data.User
-import com.aliernfrog.ensicord.ui.composable.EnsicordButton
+import com.aliernfrog.ensicord.ui.composable.EnsicordMenuOption
 import com.aliernfrog.ensicord.ui.composable.EnsicordMessage
 import com.aliernfrog.ensicord.ui.composable.EnsicordModalBottomSheet
 import com.aliernfrog.toptoast.TopToastColorType
@@ -37,7 +38,7 @@ fun MessageSheet(message: Message?, sheetState: ModalBottomSheetState, topToastM
                     scope.launch { sheetState.hide() }
                 })
             }
-            EnsicordButton(title = context.getString(R.string.messageCopy)) {
+            EnsicordMenuOption(text = context.getString(R.string.messageCopy), painterResource(R.drawable.copy_white)) {
                 clipboardManager.setText(AnnotatedString(message.content))
                 topToastManager.showToast(context.getString(R.string.info_copied), iconDrawableId = R.drawable.copy_white, iconBackgroundColorType = TopToastColorType.PRIMARY)
                 scope.launch { sheetState.hide() }
