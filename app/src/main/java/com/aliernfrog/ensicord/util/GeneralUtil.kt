@@ -1,20 +1,36 @@
 package com.aliernfrog.ensicord.util
 
 import android.os.Environment
+import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.aliernfrog.ensicord.R
 import com.aliernfrog.ensicord.data.UserStatus
 
 class GeneralUtil {
     companion object {
+        @Composable
+        fun getStatusBarHeight(): Dp {
+            return WindowInsets.statusBars.asPaddingValues().calculateTopPadding()
+        }
+
+        @Composable
+        fun getNavigationBarHeight(): Dp {
+            val navigationHeight = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
+            val keyboardVisible = WindowInsets.ime.getBottom(LocalDensity.current).dp >= navigationHeight
+            return if (keyboardVisible) 0.dp else navigationHeight
+        }
+
         @Composable
         fun getAvatarPainter(avatar: String): Painter {
             val isCustomAvatar = avatar.startsWith(Environment.getExternalStorageDirectory().toString())

@@ -1,5 +1,6 @@
 package com.aliernfrog.ensicord.ui.screen.chatScreen
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -24,6 +25,7 @@ import com.aliernfrog.ensicord.ui.composable.EnsicordChannel
 import com.aliernfrog.ensicord.ui.composable.EnsicordBorderlessButton
 import com.aliernfrog.ensicord.ui.composable.EnsicordUser
 import com.aliernfrog.ensicord.model.ChatModel
+import com.aliernfrog.ensicord.util.GeneralUtil
 import com.xinto.overlappingpanels.OverlappingPanelsState
 import kotlinx.coroutines.launch
 
@@ -33,7 +35,7 @@ fun channelsPanel(chatModel: ChatModel, panelsState: OverlappingPanelsState, nav
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     return {
-        Column(Modifier.clip(RoundedCornerShape(topEnd = 20.dp)).fillMaxSize().background(MaterialTheme.colors.secondary)) {
+        Column(Modifier.padding(top = GeneralUtil.getStatusBarHeight()).clip(RoundedCornerShape(topEnd = 20.dp)).fillMaxSize().background(MaterialTheme.colors.secondary)) {
             LazyColumn(Modifier.weight(1f)) {
                 items(chatModel.channels) { channel ->
                     EnsicordChannel(channel, chosen = chatModel.chosenChannel == channel) {
@@ -53,6 +55,7 @@ fun channelsPanel(chatModel: ChatModel, panelsState: OverlappingPanelsState, nav
                     }
                     Spacer(Modifier.width(4.dp))
                 }
+                Spacer(Modifier.animateContentSize().height(GeneralUtil.getNavigationBarHeight()))
             }
         }
     }

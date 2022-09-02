@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.sp
 import com.aliernfrog.ensicord.ui.theme.sheetBackground
 import com.aliernfrog.ensicord.ui.theme.sheetHandleBar
 import com.aliernfrog.ensicord.ui.theme.sheetScrim
+import com.aliernfrog.ensicord.util.GeneralUtil
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -30,6 +31,7 @@ fun EnsicordModalBottomSheet(title: String? = null, sheetState: ModalBottomSheet
         content = {},
         sheetContent = {
             Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+                Spacer(Modifier.height(GeneralUtil.getStatusBarHeight()+50.dp))
                 Box(modifier = Modifier
                     .padding(top = 8.dp, bottom = 8.dp)
                     .background(MaterialTheme.colors.sheetHandleBar, shape = RoundedCornerShape(20.dp))

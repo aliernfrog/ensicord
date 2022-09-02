@@ -1,6 +1,7 @@
 package com.aliernfrog.ensicord.ui.screen.chatScreen
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -33,6 +34,7 @@ import com.aliernfrog.ensicord.ui.composable.EnsicordMessage
 import com.aliernfrog.ensicord.ui.composable.EnsicordTextField
 import com.aliernfrog.ensicord.model.ChatModel
 import com.aliernfrog.ensicord.util.EnsiUtil
+import com.aliernfrog.ensicord.util.GeneralUtil
 import com.aliernfrog.toptoast.TopToastColorType
 import com.aliernfrog.toptoast.TopToastManager
 import com.xinto.overlappingpanels.OverlappingPanelsState
@@ -56,7 +58,7 @@ fun messagesPanel(chatModel: ChatModel, _topToastManager: TopToastManager, panel
             ChatView(Modifier.fillMaxSize().weight(1f), chatModel, onUserSheetRequest, onMessageSheetRequest)
             ScrollToBottom()
             ChatInput(chatModel)
-            Spacer(Modifier.height(5.dp))
+            Spacer(Modifier.animateContentSize().height(5.dp+GeneralUtil.getNavigationBarHeight()))
         }
     }
 }
@@ -65,7 +67,7 @@ fun messagesPanel(chatModel: ChatModel, _topToastManager: TopToastManager, panel
 @Composable
 private fun TopBar(chatModel: ChatModel, panelsState: OverlappingPanelsState) {
     val context = LocalContext.current
-    Row(Modifier.fillMaxWidth().background(MaterialTheme.colors.secondary).padding(horizontal = 8.dp, vertical = 16.dp), verticalAlignment = Alignment.CenterVertically) {
+    Row(Modifier.fillMaxWidth().background(MaterialTheme.colors.secondary).padding(top = GeneralUtil.getStatusBarHeight()).padding(horizontal = 8.dp, vertical = 16.dp), verticalAlignment = Alignment.CenterVertically) {
         EnsicordBorderlessButton(painterLight = painterResource(id = R.drawable.menu_black), painterDark = painterResource(id = R.drawable.menu_white), contentDescription = context.getString(R.string.chatChannels)) {
             scope.launch { panelsState.openStartPanel() }
         }

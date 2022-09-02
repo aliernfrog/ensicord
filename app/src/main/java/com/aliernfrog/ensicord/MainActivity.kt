@@ -6,8 +6,11 @@ import android.os.Environment
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.core.view.WindowCompat
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -18,7 +21,6 @@ import com.aliernfrog.ensicord.ui.theme.EnsicordTheme
 import com.aliernfrog.ensicord.util.EnsiUtil
 import com.aliernfrog.toptoast.TopToastBase
 import com.aliernfrog.toptoast.TopToastManager
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import java.io.File
 
 class MainActivity : ComponentActivity() {
@@ -29,6 +31,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
         EnsiUtil.prepare(
             _verbs = listOf("sobbed","adsed","feed","featured","faced","undefined","petted","mousing"),
             _words = listOf("me","you","we","they","alierns","indinibee","bees","momes","frogs","mouse","chicken","furries","frog","Exi's basement","free candies","ensi","van","laptop","marchmilos","mouse")
@@ -41,21 +44,14 @@ class MainActivity : ComponentActivity() {
         setContent {
             EnsicordTheme(getDarkThemePreference() ?: isSystemInDarkTheme()) {
                 TopToastBase(backgroundColor = MaterialTheme.colors.background, manager = topToastManager, content = { Navigation() })
-                SystemBars()
             }
         }
     }
 
     @Composable
-    private fun SystemBars() {
-        val systemUiController = rememberSystemUiController()
-        systemUiController.setSystemBarsColor(MaterialTheme.colors.background)
-    }
-
-    @Composable
     private fun Navigation() {
         val navController = rememberNavController()
-        NavHost(navController = navController, startDestination = NavDestinations.CHAT) {
+        NavHost(navController = navController, startDestination = NavDestinations.CHAT, Modifier.imePadding()) {
             composable(route = NavDestinations.CHAT) {
                 ChatScreen(chatModel, topToastManager, navController)
             }

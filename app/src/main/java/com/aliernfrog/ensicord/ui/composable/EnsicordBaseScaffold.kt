@@ -19,6 +19,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.aliernfrog.ensicord.R
+import com.aliernfrog.ensicord.util.GeneralUtil
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
@@ -26,7 +27,7 @@ fun EnsicordBaseScaffold(title: String, navController: NavController, state: Sca
     Scaffold(
         scaffoldState = state,
         topBar = {
-            TopAppBar(backgroundColor = MaterialTheme.colors.secondary, contentPadding = PaddingValues(horizontal = 24.dp)) {
+            TopAppBar(backgroundColor = MaterialTheme.colors.secondary, contentPadding = PaddingValues(top = GeneralUtil.getStatusBarHeight(), start = 24.dp, end = 24.dp)) {
                 if (navController.previousBackStackEntry != null) {
                     Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = LocalContext.current.getString(R.string.action_back), Modifier.padding(end = 24.dp).clickable(
                         interactionSource = remember { MutableInteractionSource() },
@@ -43,7 +44,7 @@ fun EnsicordBaseScaffold(title: String, navController: NavController, state: Sca
     ) {
         Column(Modifier.fillMaxWidth().verticalScroll(rememberScrollState()).padding(horizontal = 24.dp).animateContentSize()) {
             content()
-            Spacer(Modifier.height(60.dp))
+            Spacer(Modifier.animateContentSize().height(60.dp+GeneralUtil.getNavigationBarHeight()))
         }
     }
 }

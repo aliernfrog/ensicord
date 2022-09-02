@@ -1,5 +1,6 @@
 package com.aliernfrog.ensicord.ui.screen.chatScreen
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -18,6 +19,7 @@ import androidx.compose.ui.unit.sp
 import com.aliernfrog.ensicord.data.User
 import com.aliernfrog.ensicord.ui.composable.EnsicordUser
 import com.aliernfrog.ensicord.model.ChatModel
+import com.aliernfrog.ensicord.util.GeneralUtil
 
 @Composable
 fun usersPanel(chatModel: ChatModel, onUserSheetRequest: (User) -> Unit): @Composable (BoxScope.() -> Unit) {
@@ -30,6 +32,9 @@ fun usersPanel(chatModel: ChatModel, onUserSheetRequest: (User) -> Unit): @Compo
                 }
                 items(chatModel.users) { user ->
                     EnsicordUser(user, Modifier.clickable{ onUserSheetRequest(user) })
+                }
+                item {
+                    Spacer(Modifier.animateContentSize().height(GeneralUtil.getNavigationBarHeight()))
                 }
             }
         }
