@@ -46,6 +46,7 @@ fun EnsicordModalBottomSheet(title: String? = null, sheetState: ModalBottomSheet
                     .background(MaterialTheme.colors.sheetBackground).padding(horizontal = 24.dp)) {
                     if (title != null) Text(text = title, fontSize = 30.sp, modifier = Modifier.padding(top = 16.dp, bottom = 8.dp).align(Alignment.CenterHorizontally))
                     sheetContent()
+                    Spacer(modifier = Modifier.height(GeneralUtil.getNavigationBarHeight()))
                 }
             }
         }
