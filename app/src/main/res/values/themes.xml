@@ -3,6 +3,7 @@
 
     <style name="Theme.Ensicord" parent="android:Theme.Material.NoActionBar">
         <item name="android:statusBarColor">@color/transparent</item>
+        <item name="android:navigationBarColor">@color/transparent</item>
         <item name="android:windowBackground">@drawable/splash</item>
     </style>
 </resources>
