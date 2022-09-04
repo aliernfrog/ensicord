@@ -31,7 +31,7 @@ fun EnsicordModalBottomSheet(title: String? = null, sheetState: ModalBottomSheet
         content = {},
         sheetContent = {
             Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-                Spacer(Modifier.height(GeneralUtil.getStatusBarHeight()+50.dp))
+                Spacer(Modifier.height(GeneralUtil.getStatusBarHeight()+60.dp))
                 Box(modifier = Modifier
                     .padding(top = 8.dp, bottom = 8.dp)
                     .background(MaterialTheme.colors.sheetHandleBar, shape = RoundedCornerShape(20.dp))
