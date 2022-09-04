@@ -5,6 +5,7 @@ import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -27,8 +28,8 @@ import kotlinx.coroutines.launch
 
 private var recompose = mutableStateOf(true)
 private lateinit var scope: CoroutineScope
-private lateinit var userSheetUser: User
-private lateinit var messageSheetMessage: Message
+private var userSheetUser: User? = null
+private var messageSheetMessage: Message? = null
 @OptIn(ExperimentalMaterialApi::class) private lateinit var userSheetState: ModalBottomSheetState
 @OptIn(ExperimentalMaterialApi::class) private lateinit var messageSheetState: ModalBottomSheetState
 
@@ -49,16 +50,28 @@ fun ChatScreen(chatModel: ChatModel, topToastManager: TopToastManager, navContro
         panelCenter = messagesPanel(chatModel, topToastManager, panelsState, onUserSheetRequest = { showUserSheet(it) }, onMessageSheetRequest = { showMessageSheet(it) })
     )
     MessageSheet(
-        message = if (::messageSheetMessage.isInitialized) messageSheetMessage else null,
+        message = messageSheetMessage,
         sheetState = messageSheetState,
         topToastManager = topToastManager,
         onUserSheetRequest = { showUserSheet(it) }
     )
     UserSheet(
-        user = if (::userSheetUser.isInitialized) userSheetUser else null,
+        user = userSheetUser,
         sheetState = userSheetState,
-        onNameClick = { topToastManager.showToast(userSheetUser.name) }
+        onNameClick = { topToastManager.showToast(userSheetUser!!.name) }
     )
+    LaunchedEffect(messageSheetState.currentValue) {
+        if (messageSheetState.currentValue == ModalBottomSheetValue.Hidden) {
+            messageSheetMessage = null
+            recompose.value = !recompose.value
+        }
+    }
+    LaunchedEffect(userSheetState.currentValue) {
+        if (userSheetState.currentValue == ModalBottomSheetValue.Hidden) {
+            userSheetUser = null
+            recompose.value = !recompose.value
+        }
+    }
     recompose.value
 }
 
