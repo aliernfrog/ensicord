@@ -21,6 +21,7 @@ import com.aliernfrog.ensicord.ui.theme.EnsicordTheme
 import com.aliernfrog.ensicord.util.EnsiUtil
 import com.aliernfrog.toptoast.TopToastBase
 import com.aliernfrog.toptoast.TopToastManager
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import java.io.File
 
 class MainActivity : ComponentActivity() {
@@ -42,10 +43,18 @@ class MainActivity : ComponentActivity() {
         topToastManager = TopToastManager()
         checkDataDir()
         setContent {
-            EnsicordTheme(getDarkThemePreference() ?: isSystemInDarkTheme()) {
+            val darkTheme = getDarkThemePreference() ?: isSystemInDarkTheme()
+            EnsicordTheme(darkTheme) {
                 TopToastBase(backgroundColor = MaterialTheme.colors.background, manager = topToastManager, content = { Navigation() })
+                SystemBars(darkTheme)
             }
         }
+    }
+
+    @Composable
+    private fun SystemBars(darkTheme: Boolean) {
+        val controller = rememberSystemUiController()
+        controller.statusBarDarkContentEnabled = !darkTheme
     }
 
     @Composable
