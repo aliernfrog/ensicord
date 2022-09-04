@@ -24,7 +24,7 @@ import com.aliernfrog.ensicord.util.GeneralUtil
 @Composable
 fun usersPanel(chatModel: ChatModel, onUserSheetRequest: (User) -> Unit): @Composable (BoxScope.() -> Unit) {
     return {
-        Column(Modifier.clip(RoundedCornerShape(topStart = 20.dp)).fillMaxSize().background(MaterialTheme.colors.secondary)) {
+        Column(Modifier.padding(top = GeneralUtil.getStatusBarHeight()).clip(RoundedCornerShape(topStart = 20.dp)).fillMaxSize().background(MaterialTheme.colors.secondary)) {
             LazyColumn {
                 item {
                     Text(chatModel.chosenChannel.name, fontWeight = FontWeight.Bold, fontSize = 25.sp, color = MaterialTheme.colors.onBackground, modifier = Modifier.padding(16.dp))
