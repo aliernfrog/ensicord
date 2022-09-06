@@ -4,6 +4,7 @@ import androidx.compose.animation.*
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
@@ -13,8 +14,10 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -114,7 +117,11 @@ private fun ScrollToBottom() {
         Icon(
             imageVector = Icons.Filled.KeyboardArrowDown,
             contentDescription = context.getString(R.string.chatScrollToBottom),
-            Modifier.padding(16.dp).size(40.dp).clip(CircleShape).background(Color.White).clickable { scrollToBottom(true) }
+            Modifier.padding(16.dp).size(40.dp).clip(CircleShape).background(Color.White).clickable(
+                interactionSource = remember { MutableInteractionSource() },
+                indication = rememberRipple(color = Color.Black),
+                onClick = { scrollToBottom(true) }
+            )
         )
     }
 }
