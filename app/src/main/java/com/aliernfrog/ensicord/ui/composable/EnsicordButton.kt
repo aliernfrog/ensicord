@@ -26,7 +26,7 @@ fun EnsicordButton(
     painter: Painter? = null,
     backgroundColor: Color = MaterialTheme.colors.secondary,
     contentColor: Color = MaterialTheme.colors.onBackground,
-    painterBackgroundColor: Color? = null,
+    painterBackgroundColor: Color? = Color.Black,
     enabled: Boolean = true,
     onClick: () -> Unit
 ) {
@@ -38,7 +38,7 @@ fun EnsicordButton(
         contentPadding = PaddingValues(all = 8.dp)
     ) {
         if (painter != null) {
-            var modifier = Modifier.padding(end = 8.dp).width(40.dp)
+            var modifier = Modifier.padding(end = 8.dp).size(40.dp)
             if (painterBackgroundColor != null) modifier = modifier.clip(CircleShape).background(painterBackgroundColor).padding(8.dp)
             Image(painter, title, modifier)
         }

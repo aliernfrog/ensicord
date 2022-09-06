@@ -29,7 +29,7 @@ fun AddonsScreen(topToastManager: TopToastManager, navController: NavController,
             AddonFetchingState.ADDONS_DONE -> {
                 addonsModel.addons.forEach { addon ->
                     EnsicordAddon(addon) {
-                        AddonsUtil.applyAddon(addon, config) { topToastManager.showToast(context.getString(R.string.info_appliedAddon), iconDrawableId = R.drawable.check_white, iconBackgroundColorType = TopToastColorType.PRIMARY) }
+                        AddonsUtil.applyAddon(addon, config) { topToastManager.showToast(context.getString(R.string.info_appliedAddon), iconDrawableId = R.drawable.check, iconBackgroundColorType = TopToastColorType.PRIMARY) }
                     }
                 }
             }

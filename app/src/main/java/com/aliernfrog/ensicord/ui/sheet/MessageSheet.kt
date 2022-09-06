@@ -12,7 +12,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -42,12 +41,12 @@ fun MessageSheet(message: Message?, sheetState: ModalBottomSheetState, topToastM
                     scope.launch { sheetState.hide() }
                 })
             }
-            EnsicordButton(title = context.getString(R.string.messageCopy), painter = painterResource(R.drawable.copy_white), painterBackgroundColor = Color.Black) {
+            EnsicordButton(title = context.getString(R.string.messageCopy), painter = painterResource(R.drawable.copy)) {
                 clipboardManager.setText(AnnotatedString(message.content))
-                topToastManager.showToast(context.getString(R.string.info_copied), iconDrawableId = R.drawable.copy_white, iconBackgroundColorType = TopToastColorType.PRIMARY)
+                topToastManager.showToast(context.getString(R.string.info_copied), iconDrawableId = R.drawable.copy, iconBackgroundColorType = TopToastColorType.PRIMARY)
                 scope.launch { sheetState.hide() }
             }
-            EnsicordButton(title = context.getString(R.string.messageDelete), painter = painterResource(R.drawable.trash), backgroundColor = MaterialTheme.colors.error, contentColor = MaterialTheme.colors.onError, painterBackgroundColor = Color.Black) {
+            EnsicordButton(title = context.getString(R.string.messageDelete), painter = painterResource(R.drawable.trash), backgroundColor = MaterialTheme.colors.error, contentColor = MaterialTheme.colors.onError) {
                 onMessageDeleteRequest(message)
                 scope.launch { sheetState.hide() }
             }
