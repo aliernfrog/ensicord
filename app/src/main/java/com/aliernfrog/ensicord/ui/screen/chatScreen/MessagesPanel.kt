@@ -158,12 +158,11 @@ private fun ChatInput(chatModel: ChatModel) {
 }
 
 private fun addMessage(message: Message, chatModel: ChatModel, clearInput: Boolean = false) {
-    if (chatModel.chosenChannel.readOnly && clearInput) return
-    chatModel.chosenChannel.messages.add(message)
-    recompose.value = !recompose.value
-    if (clearInput) chatModel.chosenChannel.messageInput.value = ""
-    scrollToBottom()
-    if (message.author.id == "user") createEnsiResponse(message, chatModel)
+    chatModel.sendMessage(message, clearInput) {
+        recompose.value = !recompose.value
+        scrollToBottom()
+        if (message.author.id == "user") createEnsiResponse(message, chatModel)
+    }
 }
 
 private fun createEnsiResponse(message: Message, chatModel: ChatModel) {
