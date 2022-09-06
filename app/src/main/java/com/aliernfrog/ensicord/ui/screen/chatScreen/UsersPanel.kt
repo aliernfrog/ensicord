@@ -17,8 +17,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.aliernfrog.ensicord.data.User
-import com.aliernfrog.ensicord.ui.composable.EnsicordUser
 import com.aliernfrog.ensicord.model.ChatModel
+import com.aliernfrog.ensicord.ui.composable.EnsicordUser
 import com.aliernfrog.ensicord.util.GeneralUtil
 
 @Composable

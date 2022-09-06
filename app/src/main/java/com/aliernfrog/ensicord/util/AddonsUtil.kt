@@ -6,7 +6,6 @@ import com.aliernfrog.ensicord.Theme
 import com.aliernfrog.ensicord.data.Addon
 import org.json.JSONArray
 import org.json.JSONObject
-import java.lang.Exception
 import java.net.URL
 
 class AddonsUtil {

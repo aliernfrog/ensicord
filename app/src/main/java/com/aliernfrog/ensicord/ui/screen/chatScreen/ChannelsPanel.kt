@@ -21,10 +21,10 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.aliernfrog.ensicord.NavDestinations
 import com.aliernfrog.ensicord.R
-import com.aliernfrog.ensicord.ui.composable.EnsicordChannel
-import com.aliernfrog.ensicord.ui.composable.EnsicordBorderlessButton
-import com.aliernfrog.ensicord.ui.composable.EnsicordUser
 import com.aliernfrog.ensicord.model.ChatModel
+import com.aliernfrog.ensicord.ui.composable.EnsicordBorderlessButton
+import com.aliernfrog.ensicord.ui.composable.EnsicordChannel
+import com.aliernfrog.ensicord.ui.composable.EnsicordUser
 import com.aliernfrog.ensicord.util.GeneralUtil
 import com.xinto.overlappingpanels.OverlappingPanelsState
 import kotlinx.coroutines.launch

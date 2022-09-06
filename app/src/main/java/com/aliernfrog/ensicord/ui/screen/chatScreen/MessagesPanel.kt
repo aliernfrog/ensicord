@@ -30,10 +30,10 @@ import com.aliernfrog.ensicord.ChatConstants
 import com.aliernfrog.ensicord.R
 import com.aliernfrog.ensicord.data.Message
 import com.aliernfrog.ensicord.data.User
+import com.aliernfrog.ensicord.model.ChatModel
 import com.aliernfrog.ensicord.ui.composable.EnsicordBorderlessButton
 import com.aliernfrog.ensicord.ui.composable.EnsicordMessage
 import com.aliernfrog.ensicord.ui.composable.EnsicordTextField
-import com.aliernfrog.ensicord.model.ChatModel
 import com.aliernfrog.ensicord.util.EnsiUtil
 import com.aliernfrog.ensicord.util.GeneralUtil
 import com.aliernfrog.toptoast.TopToastColorType

@@ -11,7 +11,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
 import com.aliernfrog.ensicord.*
 import com.aliernfrog.ensicord.model.AddonsModel
-import com.aliernfrog.ensicord.ui.composable.*
+import com.aliernfrog.ensicord.ui.composable.EnsicordBaseScaffold
+import com.aliernfrog.ensicord.ui.composable.EnsicordButton
+import com.aliernfrog.ensicord.ui.composable.EnsicordColumnRounded
+import com.aliernfrog.ensicord.ui.composable.EnsicordRadioButtons
 import com.aliernfrog.toptoast.TopToastColorType
 import com.aliernfrog.toptoast.TopToastManager
 
