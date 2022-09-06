@@ -1,7 +1,6 @@
 package com.aliernfrog.ensicord.ui.screen.chatScreen
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.*
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -11,8 +10,9 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
@@ -20,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -56,7 +57,6 @@ fun messagesPanel(chatModel: ChatModel, _topToastManager: TopToastManager, panel
         Column(Modifier.background(MaterialTheme.colors.background)) {
             TopBar(chatModel, panelsState)
             ChatView(Modifier.fillMaxSize().weight(1f), chatModel, onUserSheetRequest, onMessageSheetRequest)
-            ScrollToBottom()
             ChatInput(chatModel)
             Spacer(Modifier.animateContentSize().height(5.dp+GeneralUtil.getNavigationBarHeight()))
         }
@@ -81,25 +81,28 @@ private fun TopBar(chatModel: ChatModel, panelsState: OverlappingPanelsState) {
 @Composable
 private fun ChatView(modifier: Modifier, chatModel: ChatModel, onUserSheetRequest: (User) -> Unit, onMessageSheetRequest: (Message) -> Unit) {
     val context = LocalContext.current
-    LazyColumn(modifier, verticalArrangement = Arrangement.Bottom, state = messageListState) {
-        item {
-            Text(
-                text = context.getString(R.string.chatBeginning).replace("%CHAT%", chatModel.chosenChannel.name),
-                color = MaterialTheme.colors.onBackground,
-                fontWeight = FontWeight.Bold,
-                fontSize = 30.sp,
-                modifier = Modifier.alpha(0.5f).padding(top = 100.dp, bottom = 60.dp, start = 8.dp, end = 8.dp)
-            )
+    Box(modifier, contentAlignment = Alignment.BottomEnd) {
+        LazyColumn(verticalArrangement = Arrangement.Bottom, state = messageListState) {
+            item {
+                Text(
+                    text = context.getString(R.string.chatBeginning).replace("%CHAT%", chatModel.chosenChannel.name),
+                    color = MaterialTheme.colors.onBackground,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 30.sp,
+                    modifier = Modifier.alpha(0.5f).padding(top = 100.dp, bottom = 60.dp, start = 8.dp, end = 8.dp)
+                )
+            }
+            items(chatModel.chosenChannel.messages) { message ->
+                EnsicordMessage(
+                    message = message,
+                    checkMention = chatModel.userUser.name,
+                    onAvatarClick = { onUserSheetRequest(message.author) },
+                    onNameClick = { chatModel.chosenChannel.messageInput.value += "@${message.author.name}" },
+                    onLongClick = { onMessageSheetRequest(message) }
+                )
+            }
         }
-        items(chatModel.chosenChannel.messages) { message ->
-            EnsicordMessage(
-                message = message,
-                checkMention = chatModel.userUser.name,
-                onAvatarClick = { onUserSheetRequest(message.author) },
-                onNameClick = { chatModel.chosenChannel.messageInput.value += "@${message.author.name}" },
-                onLongClick = { onMessageSheetRequest(message) }
-            )
-        }
+        ScrollToBottom()
     }
     recompose.value
 }
@@ -107,14 +110,11 @@ private fun ChatView(modifier: Modifier, chatModel: ChatModel, onUserSheetReques
 @Composable
 private fun ScrollToBottom() {
     val context = LocalContext.current
-    AnimatedVisibility(visible = !isAtBottom()) {
-        Text(
-            text = context.getString(R.string.chatScrollToBottom),
-            color = MaterialTheme.colors.onPrimary,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp).clip(RoundedCornerShape(20.dp)).background(MaterialTheme.colors.primary).clickable {
-                scrollToBottom(true)
-            }.padding(all = 8.dp)
+    AnimatedVisibility(visible = !isAtBottom(), enter = slideInVertically() + fadeIn(), exit = slideOutVertically() + fadeOut()) {
+        Icon(
+            imageVector = Icons.Filled.KeyboardArrowDown,
+            contentDescription = context.getString(R.string.chatScrollToBottom),
+            Modifier.padding(16.dp).size(40.dp).clip(CircleShape).background(Color.White).clickable { scrollToBottom(true) }
         )
     }
 }
