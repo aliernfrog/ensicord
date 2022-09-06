@@ -167,7 +167,7 @@ private fun createEnsiResponse(message: Message, chatModel: ChatModel) {
 }
 
 private fun scrollToBottom(force: Boolean = false) {
-    if (isAtBottom() || force) scope.launch { messageListState.animateScrollToItem(messageListState.layoutInfo.totalItemsCount) }
+    if (isAtBottom() || force) scope.launch { messageListState.animateScrollToItem(messageListState.layoutInfo.totalItemsCount+1) }
 }
 
 private fun isAtBottom(): Boolean {
