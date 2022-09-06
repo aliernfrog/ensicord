@@ -30,7 +30,7 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun MessageSheet(message: Message?, sheetState: ModalBottomSheetState, topToastManager: TopToastManager, onUserSheetRequest: (User) -> Unit) {
+fun MessageSheet(message: Message?, sheetState: ModalBottomSheetState, topToastManager: TopToastManager, onUserSheetRequest: (User) -> Unit, onMessageDeleteRequest: (Message) -> Unit) {
     if (message != null) {
         val context = LocalContext.current
         val clipboardManager = LocalClipboardManager.current
@@ -45,6 +45,10 @@ fun MessageSheet(message: Message?, sheetState: ModalBottomSheetState, topToastM
             EnsicordButton(title = context.getString(R.string.messageCopy), painter = painterResource(R.drawable.copy_white), painterBackgroundColor = Color.Black) {
                 clipboardManager.setText(AnnotatedString(message.content))
                 topToastManager.showToast(context.getString(R.string.info_copied), iconDrawableId = R.drawable.copy_white, iconBackgroundColorType = TopToastColorType.PRIMARY)
+                scope.launch { sheetState.hide() }
+            }
+            EnsicordButton(title = context.getString(R.string.messageDelete), painter = painterResource(R.drawable.trash), backgroundColor = MaterialTheme.colors.error, contentColor = MaterialTheme.colors.onError, painterBackgroundColor = Color.Black) {
+                onMessageDeleteRequest(message)
                 scope.launch { sheetState.hide() }
             }
         }

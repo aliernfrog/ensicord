@@ -17,6 +17,8 @@ import com.aliernfrog.ensicord.util.GeneralUtil
 import java.io.File
 
 class ChatModel(context: Context, config: SharedPreferences): ViewModel() {
+    private var lastId = 0
+
     var userUser = User(
         "user",
         config.getString(ConfigKey.KEY_USER_NAME, ConfigKey.DEFAULT_USER_NAME)!!,
@@ -36,6 +38,11 @@ class ChatModel(context: Context, config: SharedPreferences): ViewModel() {
     private val starboardChannel = Channel("#starboard", readOnly = true)
     var chosenChannel by mutableStateOf(generalChannel)
     val channels = listOf(generalChannel,devChannel,starboardChannel)
+
+    fun getNextId(): Int {
+        lastId++
+        return lastId
+    }
 
     fun updateUser(newUserName: String? = null, newUserStatus: String? = null) {
         userUser = User(

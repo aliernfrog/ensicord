@@ -18,8 +18,10 @@
     <string name="chatSendMessage">Message %CHAT%</string>
     <string name="chatSendMessageDescription">Send a message</string>
     <string name="chatReadOnly">This channel is read-only</string>
+    <string name="chatDeletedMessage">Message deleted</string>
     <string name="chatMessageTooLong">Your message can contain max %MAX% characters</string>
     <string name="messageCopy">Copy message content</string>
+    <string name="messageDelete">Delete message</string>
     <string name="profile">Profile</string>
     <string name="profileAvatar">User avatar</string>
     <string name="profileAvatarUpdated">Updated avatar</string>

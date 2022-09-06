@@ -141,7 +141,7 @@ private fun ChatInput(chatModel: ChatModel) {
                 contentDescription = context.getString(R.string.chatSendMessageDescription),
                 modifier = Modifier.padding(top = 8.dp, bottom = 8.dp, end = 8.dp).size(height = 48.dp, width = 48.dp).clip(CircleShape).clickable {
                     if (sendButtonEnabled) {
-                        if (chatModel.chosenChannel.messageInput.value.length <= ChatConstants.MESSAGE_CHAR_LIMIT) addMessage(Message(chatModel.userUser, chatModel.chosenChannel.messageInput.value), chatModel, clearInput = true)
+                        if (chatModel.chosenChannel.messageInput.value.length <= ChatConstants.MESSAGE_CHAR_LIMIT) addMessage(Message(chatModel.getNextId(), chatModel.userUser, chatModel.chosenChannel.messageInput.value), chatModel, clearInput = true)
                         else topToastManager.showToast(context.getString(R.string.chatMessageTooLong).replace("%MAX%", ChatConstants.MESSAGE_CHAR_LIMIT.toString()), iconDrawableId = R.drawable.exclamation_white, iconBackgroundColorType = TopToastColorType.ERROR)
                     }
                 }
@@ -163,7 +163,7 @@ private fun createEnsiResponse(message: Message, chatModel: ChatModel) {
     val args = message.content.lowercase().split(" ")
     val response = if (args.contains("tell") && (args.contains("story") || args.contains("stories"))) EnsiUtil.getResponse(type = "LEGIT", sentenceCount = (5..50).random(), starting = true, punctuations = true)
     else EnsiUtil.getResponse(type = listOf("RAW","RAW","RAW","RAW","RAW","LEGIT","ALLCAPS").random(), lowCharChance = true)
-    addMessage(Message(chatModel.ensiUser, response), chatModel)
+    addMessage(Message(chatModel.getNextId(), chatModel.ensiUser, response), chatModel)
 }
 
 private fun scrollToBottom(force: Boolean = false) {

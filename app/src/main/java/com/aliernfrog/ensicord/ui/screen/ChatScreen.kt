@@ -9,9 +9,11 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.navigation.NavController
+import com.aliernfrog.ensicord.R
 import com.aliernfrog.ensicord.data.Message
 import com.aliernfrog.ensicord.data.User
 import com.aliernfrog.ensicord.model.ChatModel
@@ -20,6 +22,7 @@ import com.aliernfrog.ensicord.ui.screen.chatScreen.messagesPanel
 import com.aliernfrog.ensicord.ui.screen.chatScreen.usersPanel
 import com.aliernfrog.ensicord.ui.sheet.MessageSheet
 import com.aliernfrog.ensicord.ui.sheet.UserSheet
+import com.aliernfrog.toptoast.TopToastColorType
 import com.aliernfrog.toptoast.TopToastManager
 import com.xinto.overlappingpanels.OverlappingPanels
 import com.xinto.overlappingpanels.rememberOverlappingPanelsState
@@ -38,6 +41,7 @@ private var messageSheetMessage: Message? = null
 @OptIn(ExperimentalMaterialApi::class, ExperimentalComposeUiApi::class)
 @Composable
 fun ChatScreen(chatModel: ChatModel, topToastManager: TopToastManager, navController: NavController) {
+    val context = LocalContext.current
     val panelsState = rememberOverlappingPanelsState()
     keyboardController = LocalSoftwareKeyboardController.current
     scope = rememberCoroutineScope()
@@ -53,7 +57,11 @@ fun ChatScreen(chatModel: ChatModel, topToastManager: TopToastManager, navContro
         message = messageSheetMessage,
         sheetState = messageSheetState,
         topToastManager = topToastManager,
-        onUserSheetRequest = { showUserSheet(it) }
+        onUserSheetRequest = { showUserSheet(it) },
+        onMessageDeleteRequest = { message ->
+            chatModel.chosenChannel.messages.remove(message)
+            topToastManager.showToast(context.getString(R.string.chatDeletedMessage), iconDrawableId = R.drawable.trash, iconBackgroundColorType = TopToastColorType.PRIMARY)
+        }
     )
     UserSheet(
         user = userSheetUser,
