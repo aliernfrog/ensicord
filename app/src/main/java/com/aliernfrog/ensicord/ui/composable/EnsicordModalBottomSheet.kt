@@ -42,7 +42,7 @@ fun EnsicordModalBottomSheet(title: String? = null, sheetState: ModalBottomSheet
                     .padding(top = 8.dp, bottom = 8.dp)
                     .background(MaterialTheme.colors.sheetHandleBar, shape = RoundedCornerShape(20.dp))
                     .width(50.dp)
-                    .height(5.dp)
+                    .height(4.dp)
                     .align(Alignment.CenterHorizontally)
                 )
                 Column(Modifier
