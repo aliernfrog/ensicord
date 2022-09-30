@@ -1,5 +1,6 @@
 package com.aliernfrog.ensicord.ui.screen
 
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.ModalBottomSheetValue
@@ -9,6 +10,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.SoftwareKeyboardController
@@ -48,6 +50,7 @@ fun ChatScreen(chatModel: ChatModel, topToastManager: TopToastManager, navContro
     userSheetState = rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
     messageSheetState = rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
     OverlappingPanels(
+        modifier = Modifier.imePadding(),
         panelsState = panelsState,
         panelStart = channelsPanel(chatModel, panelsState, navController),
         panelEnd = usersPanel(chatModel, onUserSheetRequest = { showUserSheet(it) }),

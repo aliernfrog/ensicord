@@ -6,10 +6,8 @@ import android.os.Environment
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.imePadding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -60,7 +58,7 @@ class MainActivity : ComponentActivity() {
     @Composable
     private fun Navigation() {
         val navController = rememberNavController()
-        NavHost(navController = navController, startDestination = NavDestinations.CHAT, Modifier.imePadding()) {
+        NavHost(navController = navController, startDestination = NavDestinations.CHAT) {
             composable(route = NavDestinations.CHAT) {
                 ChatScreen(chatModel, topToastManager, navController)
             }
