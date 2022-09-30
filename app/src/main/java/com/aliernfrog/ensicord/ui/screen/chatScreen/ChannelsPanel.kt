@@ -55,8 +55,8 @@ fun channelsPanel(chatModel: ChatModel, panelsState: OverlappingPanelsState, nav
                     }
                     Spacer(Modifier.width(4.dp))
                 }
-                Spacer(Modifier.animateContentSize().height(GeneralUtil.getNavigationBarHeight()))
             }
+            Spacer(Modifier.animateContentSize().height(GeneralUtil.getNavigationBarHeight()))
         }
     }
 }
