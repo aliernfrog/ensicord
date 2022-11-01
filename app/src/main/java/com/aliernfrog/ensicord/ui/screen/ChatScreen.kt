@@ -18,7 +18,7 @@ import androidx.navigation.NavController
 import com.aliernfrog.ensicord.R
 import com.aliernfrog.ensicord.data.Message
 import com.aliernfrog.ensicord.data.User
-import com.aliernfrog.ensicord.model.ChatModel
+import com.aliernfrog.ensicord.state.ChatState
 import com.aliernfrog.ensicord.ui.screen.chatScreen.channelsPanel
 import com.aliernfrog.ensicord.ui.screen.chatScreen.messagesPanel
 import com.aliernfrog.ensicord.ui.screen.chatScreen.usersPanel
@@ -42,7 +42,7 @@ private var messageSheetMessage: Message? = null
 
 @OptIn(ExperimentalMaterialApi::class, ExperimentalComposeUiApi::class)
 @Composable
-fun ChatScreen(chatModel: ChatModel, topToastManager: TopToastManager, navController: NavController) {
+fun ChatScreen(chatState: ChatState, topToastManager: TopToastManager, navController: NavController) {
     val context = LocalContext.current
     val panelsState = rememberOverlappingPanelsState()
     keyboardController = LocalSoftwareKeyboardController.current
@@ -52,9 +52,9 @@ fun ChatScreen(chatModel: ChatModel, topToastManager: TopToastManager, navContro
     OverlappingPanels(
         modifier = Modifier.imePadding(),
         panelsState = panelsState,
-        panelStart = channelsPanel(chatModel, panelsState, navController),
-        panelEnd = usersPanel(chatModel, onUserSheetRequest = { showUserSheet(it) }),
-        panelCenter = messagesPanel(chatModel, topToastManager, panelsState, onUserSheetRequest = { showUserSheet(it) }, onMessageSheetRequest = { showMessageSheet(it) })
+        panelStart = channelsPanel(chatState, panelsState, navController),
+        panelEnd = usersPanel(chatState, onUserSheetRequest = { showUserSheet(it) }),
+        panelCenter = messagesPanel(chatState, topToastManager, panelsState, onUserSheetRequest = { showUserSheet(it) }, onMessageSheetRequest = { showMessageSheet(it) })
     )
     MessageSheet(
         message = messageSheetMessage,
@@ -62,7 +62,7 @@ fun ChatScreen(chatModel: ChatModel, topToastManager: TopToastManager, navContro
         topToastManager = topToastManager,
         onUserSheetRequest = { showUserSheet(it) },
         onMessageDeleteRequest = { message ->
-            chatModel.deleteMessage(message) { topToastManager.showToast(context.getString(R.string.chatDeletedMessage), iconDrawableId = R.drawable.trash, iconTintColorType = TopToastColorType.PRIMARY) }
+            chatState.deleteMessage(message) { topToastManager.showToast(context.getString(R.string.chatDeletedMessage), iconDrawableId = R.drawable.trash, iconTintColorType = TopToastColorType.PRIMARY) }
         }
     )
     UserSheet(

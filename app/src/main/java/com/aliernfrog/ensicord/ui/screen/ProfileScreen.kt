@@ -25,7 +25,7 @@ import com.aliernfrog.ensicord.ConfigKey
 import com.aliernfrog.ensicord.NavDestinations
 import com.aliernfrog.ensicord.Path
 import com.aliernfrog.ensicord.R
-import com.aliernfrog.ensicord.model.ChatModel
+import com.aliernfrog.ensicord.state.ChatState
 import com.aliernfrog.ensicord.ui.composable.EnsicordBaseScaffold
 import com.aliernfrog.ensicord.ui.composable.EnsicordColumnRounded
 import com.aliernfrog.ensicord.ui.composable.EnsicordTextField
@@ -35,7 +35,7 @@ import com.aliernfrog.toptoast.TopToastManager
 import java.io.File
 
 @Composable
-fun ProfileScreen(chatModel: ChatModel, topToastManager: TopToastManager, navController: NavController, config: SharedPreferences) {
+fun ProfileScreen(chatModel: ChatState, topToastManager: TopToastManager, navController: NavController, config: SharedPreferences) {
     val context = LocalContext.current
     EnsicordBaseScaffold(title = context.getString(R.string.profile), navController = navController) {
         ProfileCustomization(chatModel, topToastManager, navController, config)
@@ -43,7 +43,7 @@ fun ProfileScreen(chatModel: ChatModel, topToastManager: TopToastManager, navCon
 }
 
 @Composable
-private fun ProfileCustomization(chatModel: ChatModel, topToastManager: TopToastManager, navController: NavController, config: SharedPreferences) {
+private fun ProfileCustomization(chatModel: ChatState, topToastManager: TopToastManager, navController: NavController, config: SharedPreferences) {
     val context = LocalContext.current
     var username by remember { mutableStateOf(config.getString(ConfigKey.KEY_USER_NAME, ConfigKey.DEFAULT_USER_NAME)!!) }
     var status by remember { mutableStateOf(config.getString(ConfigKey.KEY_USER_STATUS, "")!!) }
@@ -72,7 +72,7 @@ private fun ProfileCustomization(chatModel: ChatModel, topToastManager: TopToast
 }
 
 @Composable
-private fun AvatarCustomization(chatModel: ChatModel, topToastManager: TopToastManager, navController: NavController, modifier: Modifier) {
+private fun AvatarCustomization(chatModel: ChatState, topToastManager: TopToastManager, navController: NavController, modifier: Modifier) {
     val context = LocalContext.current
     val avatar = GeneralUtil.getAvatarPainter(chatModel.userUser.avatar)
     val launcher = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {

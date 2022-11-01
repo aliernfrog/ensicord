@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.aliernfrog.ensicord.NavDestinations
 import com.aliernfrog.ensicord.R
-import com.aliernfrog.ensicord.model.ChatModel
+import com.aliernfrog.ensicord.state.ChatState
 import com.aliernfrog.ensicord.ui.composable.EnsicordBorderlessButton
 import com.aliernfrog.ensicord.ui.composable.EnsicordChannel
 import com.aliernfrog.ensicord.ui.composable.EnsicordUser
@@ -31,16 +31,16 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun channelsPanel(chatModel: ChatModel, panelsState: OverlappingPanelsState, navController: NavController): @Composable (BoxScope.() -> Unit) {
+fun channelsPanel(chatState: ChatState, panelsState: OverlappingPanelsState, navController: NavController): @Composable (BoxScope.() -> Unit) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     return {
         Column(Modifier.padding(top = GeneralUtil.getStatusBarHeight()).clip(RoundedCornerShape(topEnd = 20.dp)).fillMaxSize().background(MaterialTheme.colors.secondary)) {
             LazyColumn(Modifier.weight(1f)) {
-                items(chatModel.channels) { channel ->
-                    EnsicordChannel(channel, chosen = chatModel.chosenChannel == channel) {
+                items(chatState.channels) { channel ->
+                    EnsicordChannel(channel, chosen = chatState.chosenChannel == channel) {
                         if (panelsState.isStartPanelOpen) {
-                            chatModel.chosenChannel = channel
+                            chatState.chosenChannel = channel
                             scope.launch { panelsState.closePanels() }
                         }
                     }
@@ -49,7 +49,7 @@ fun channelsPanel(chatModel: ChatModel, panelsState: OverlappingPanelsState, nav
             Column(Modifier.background(MaterialTheme.colors.secondary).clickable{ navController.navigate(NavDestinations.PROFILE) }) {
                 Box(modifier = Modifier.alpha(0.2f).fillMaxWidth().height(1.dp).background(MaterialTheme.colors.onBackground))
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    EnsicordUser(user = chatModel.userUser, Modifier.weight(1f))
+                    EnsicordUser(user = chatState.userUser, Modifier.weight(1f))
                     EnsicordBorderlessButton(painter = painterResource(id = R.drawable.gear), contentDescription = context.getString(R.string.options)) {
                         navController.navigate(NavDestinations.OPTIONS)
                     }

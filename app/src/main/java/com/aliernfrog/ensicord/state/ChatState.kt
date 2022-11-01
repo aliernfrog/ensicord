@@ -1,4 +1,4 @@
-package com.aliernfrog.ensicord.model
+package com.aliernfrog.ensicord.state
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -6,21 +6,17 @@ import android.os.Environment
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.ViewModel
 import com.aliernfrog.ensicord.ConfigKey
 import com.aliernfrog.ensicord.Path
-import com.aliernfrog.ensicord.R
 import com.aliernfrog.ensicord.data.Channel
 import com.aliernfrog.ensicord.data.Message
 import com.aliernfrog.ensicord.data.User
 import com.aliernfrog.ensicord.data.UserStatus
 import com.aliernfrog.ensicord.util.EnsiUtil
 import com.aliernfrog.ensicord.util.GeneralUtil
-import com.aliernfrog.toptoast.TopToastColorType
-import com.aliernfrog.toptoast.TopToastManager
 import java.io.File
 
-class ChatModel(context: Context, config: SharedPreferences): ViewModel() {
+class ChatState(context: Context, config: SharedPreferences) {
     private var lastId = 0
 
     var userUser = User(

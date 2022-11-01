@@ -12,8 +12,8 @@ import androidx.core.view.WindowCompat
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.aliernfrog.ensicord.model.ChatModel
 import com.aliernfrog.ensicord.state.AddonsState
+import com.aliernfrog.ensicord.state.ChatState
 import com.aliernfrog.ensicord.ui.screen.*
 import com.aliernfrog.ensicord.ui.theme.EnsicordTheme
 import com.aliernfrog.ensicord.util.EnsiUtil
@@ -24,7 +24,7 @@ import java.io.File
 
 class MainActivity : ComponentActivity() {
     private lateinit var config: SharedPreferences
-    private lateinit var chatModel: ChatModel
+    private lateinit var chatState: ChatState
     private lateinit var addonsState: AddonsState
     private lateinit var topToastManager: TopToastManager
 
@@ -36,7 +36,7 @@ class MainActivity : ComponentActivity() {
             _words = listOf("me","you","we","they","alierns","indinibee","bees","momes","frogs","mouse","chicken","furries","frog","Exi's basement","free candies","ensi","van","laptop","marchmilos","mouse")
         )
         config = getSharedPreferences(ConfigKey.PREF_NAME, MODE_PRIVATE)
-        chatModel = ChatModel(this, config)
+        chatState = ChatState(this, config)
         addonsState = AddonsState()
         topToastManager = TopToastManager()
         checkDataDir()
@@ -60,10 +60,10 @@ class MainActivity : ComponentActivity() {
         val navController = rememberNavController()
         NavHost(navController = navController, startDestination = NavDestinations.CHAT) {
             composable(route = NavDestinations.CHAT) {
-                ChatScreen(chatModel, topToastManager, navController)
+                ChatScreen(chatState, topToastManager, navController)
             }
             composable(route = NavDestinations.PROFILE) {
-                ProfileScreen(chatModel, topToastManager, navController, config)
+                ProfileScreen(chatState, topToastManager, navController, config)
             }
             composable(route = NavDestinations.ADDONS) {
                 AddonsScreen(topToastManager, navController, addonsState, config)

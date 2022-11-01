@@ -33,7 +33,7 @@ import com.aliernfrog.ensicord.ChatConstants
 import com.aliernfrog.ensicord.R
 import com.aliernfrog.ensicord.data.Message
 import com.aliernfrog.ensicord.data.User
-import com.aliernfrog.ensicord.model.ChatModel
+import com.aliernfrog.ensicord.state.ChatState
 import com.aliernfrog.ensicord.ui.composable.EnsicordBorderlessButton
 import com.aliernfrog.ensicord.ui.composable.EnsicordMessage
 import com.aliernfrog.ensicord.ui.composable.EnsicordTextField
@@ -52,15 +52,15 @@ private lateinit var messageListState: LazyListState
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun messagesPanel(chatModel: ChatModel, _topToastManager: TopToastManager, panelsState: OverlappingPanelsState, onUserSheetRequest: (User) -> Unit, onMessageSheetRequest: (Message) -> Unit): @Composable (BoxScope.() -> Unit) {
+fun messagesPanel(chatState: ChatState, _topToastManager: TopToastManager, panelsState: OverlappingPanelsState, onUserSheetRequest: (User) -> Unit, onMessageSheetRequest: (Message) -> Unit): @Composable (BoxScope.() -> Unit) {
     scope = rememberCoroutineScope()
     messageListState = rememberLazyListState()
     topToastManager = _topToastManager
     return {
         Column(Modifier.background(MaterialTheme.colors.background)) {
-            TopBar(chatModel, panelsState)
-            ChatView(Modifier.fillMaxSize().weight(1f), chatModel, onUserSheetRequest, onMessageSheetRequest)
-            ChatInput(chatModel)
+            TopBar(chatState, panelsState)
+            ChatView(Modifier.fillMaxSize().weight(1f), chatState, onUserSheetRequest, onMessageSheetRequest)
+            ChatInput(chatState)
             Spacer(Modifier.animateContentSize().height(5.dp+GeneralUtil.getNavigationBarHeight()))
         }
     }
@@ -68,13 +68,13 @@ fun messagesPanel(chatModel: ChatModel, _topToastManager: TopToastManager, panel
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-private fun TopBar(chatModel: ChatModel, panelsState: OverlappingPanelsState) {
+private fun TopBar(chatState: ChatState, panelsState: OverlappingPanelsState) {
     val context = LocalContext.current
     Row(Modifier.fillMaxWidth().background(MaterialTheme.colors.secondary).padding(top = GeneralUtil.getStatusBarHeight()).padding(horizontal = 8.dp, vertical = 16.dp), verticalAlignment = Alignment.CenterVertically) {
         EnsicordBorderlessButton(painter = painterResource(id = R.drawable.menu), contentDescription = context.getString(R.string.chatChannels)) {
             scope.launch { panelsState.openStartPanel() }
         }
-        Text(text = chatModel.chosenChannel.name, color = MaterialTheme.colors.onBackground, fontWeight = FontWeight.Bold, fontSize = 20.sp, modifier = Modifier.fillMaxWidth().weight(1f).padding(start = 8.dp))
+        Text(text = chatState.chosenChannel.name, color = MaterialTheme.colors.onBackground, fontWeight = FontWeight.Bold, fontSize = 20.sp, modifier = Modifier.fillMaxWidth().weight(1f).padding(start = 8.dp))
         EnsicordBorderlessButton(painter = painterResource(id = R.drawable.users), contentDescription = context.getString(R.string.chatUsers)) {
             scope.launch { panelsState.openEndPanel() }
         }
@@ -82,25 +82,25 @@ private fun TopBar(chatModel: ChatModel, panelsState: OverlappingPanelsState) {
 }
 
 @Composable
-private fun ChatView(modifier: Modifier, chatModel: ChatModel, onUserSheetRequest: (User) -> Unit, onMessageSheetRequest: (Message) -> Unit) {
+private fun ChatView(modifier: Modifier, chatState: ChatState, onUserSheetRequest: (User) -> Unit, onMessageSheetRequest: (Message) -> Unit) {
     val context = LocalContext.current
     Box(modifier, contentAlignment = Alignment.BottomEnd) {
         LazyColumn(verticalArrangement = Arrangement.Bottom, state = messageListState) {
             item {
                 Text(
-                    text = context.getString(R.string.chatBeginning).replace("%CHAT%", chatModel.chosenChannel.name),
+                    text = context.getString(R.string.chatBeginning).replace("%CHAT%", chatState.chosenChannel.name),
                     color = MaterialTheme.colors.onBackground,
                     fontWeight = FontWeight.Bold,
                     fontSize = 30.sp,
                     modifier = Modifier.alpha(0.5f).padding(top = 100.dp, bottom = 60.dp, start = 8.dp, end = 8.dp)
                 )
             }
-            items(chatModel.chosenChannel.messages) { message ->
+            items(chatState.chosenChannel.messages) { message ->
                 EnsicordMessage(
                     message = message,
-                    checkMention = chatModel.userUser.name,
+                    checkMention = chatState.userUser.name,
                     onAvatarClick = { onUserSheetRequest(message.author) },
-                    onNameClick = { chatModel.chosenChannel.messageInput.value += "@${message.author.name}" },
+                    onNameClick = { chatState.chosenChannel.messageInput.value += "@${message.author.name}" },
                     onLongClick = { onMessageSheetRequest(message) }
                 )
             }
@@ -127,18 +127,18 @@ private fun ScrollToBottom() {
 }
 
 @Composable
-private fun ChatInput(chatModel: ChatModel) {
+private fun ChatInput(chatState: ChatState) {
     val context = LocalContext.current
-    val sendButtonEnabled = chatModel.chosenChannel.messageInput.value.trim() != "" && !chatModel.chosenChannel.readOnly
+    val sendButtonEnabled = chatState.chosenChannel.messageInput.value.trim() != "" && !chatState.chosenChannel.readOnly
     Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.heightIn(0.dp, 160.dp)) {
         EnsicordTextField(
-            value = chatModel.chosenChannel.messageInput.value,
-            onValueChange = { chatModel.chosenChannel.messageInput.value = it },
+            value = chatState.chosenChannel.messageInput.value,
+            onValueChange = { chatState.chosenChannel.messageInput.value = it },
             modifier = Modifier.weight(1f),
-            enabled = !chatModel.chosenChannel.readOnly,
+            enabled = !chatState.chosenChannel.readOnly,
             placeholder = {
-                if (chatModel.chosenChannel.readOnly) Text(text = context.getString(R.string.chatReadOnly))
-                else Text(text = context.getString(R.string.chatSendMessage).replace("%CHAT%", chatModel.chosenChannel.name))
+                if (chatState.chosenChannel.readOnly) Text(text = context.getString(R.string.chatReadOnly))
+                else Text(text = context.getString(R.string.chatSendMessage).replace("%CHAT%", chatState.chosenChannel.name))
                           },
             colors = TextFieldDefaults.textFieldColors(backgroundColor = MaterialTheme.colors.secondaryVariant, textColor = MaterialTheme.colors.onSecondary, focusedIndicatorColor = MaterialTheme.colors.secondaryVariant, unfocusedIndicatorColor = MaterialTheme.colors.secondaryVariant)
         )
@@ -148,7 +148,7 @@ private fun ChatInput(chatModel: ChatModel) {
                 contentDescription = context.getString(R.string.chatSendMessageDescription),
                 modifier = Modifier.padding(top = 8.dp, bottom = 8.dp, end = 8.dp).size(height = 48.dp, width = 48.dp).clip(CircleShape).clickable {
                     if (sendButtonEnabled) {
-                        if (chatModel.chosenChannel.messageInput.value.length <= ChatConstants.MESSAGE_CHAR_LIMIT) addMessage(Message(chatModel.getNextId(), chatModel.userUser, chatModel.chosenChannel.messageInput.value), chatModel, clearInput = true)
+                        if (chatState.chosenChannel.messageInput.value.length <= ChatConstants.MESSAGE_CHAR_LIMIT) addMessage(Message(chatState.getNextId(), chatState.userUser, chatState.chosenChannel.messageInput.value), chatState, clearInput = true)
                         else topToastManager.showToast(context.getString(R.string.chatMessageTooLong).replace("%MAX%", ChatConstants.MESSAGE_CHAR_LIMIT.toString()), iconDrawableId = R.drawable.exclamation, iconTintColorType = TopToastColorType.ERROR)
                     }
                 }
@@ -157,7 +157,7 @@ private fun ChatInput(chatModel: ChatModel) {
     }
 }
 
-private fun addMessage(message: Message, chatModel: ChatModel, clearInput: Boolean = false) {
+private fun addMessage(message: Message, chatModel: ChatState, clearInput: Boolean = false) {
     chatModel.sendMessage(message, clearInput) {
         recompose.value = !recompose.value
         scrollToBottom()
@@ -165,7 +165,7 @@ private fun addMessage(message: Message, chatModel: ChatModel, clearInput: Boole
     }
 }
 
-private fun createEnsiResponse(message: Message, chatModel: ChatModel) {
+private fun createEnsiResponse(message: Message, chatModel: ChatState) {
     val args = message.content.lowercase().split(" ")
     val response = if (args.contains("tell") && (args.contains("story") || args.contains("stories"))) EnsiUtil.getResponse(type = "LEGIT", sentenceCount = (5..50).random(), starting = true, punctuations = true)
     else EnsiUtil.getResponse(type = listOf("RAW","RAW","RAW","RAW","RAW","LEGIT","ALLCAPS").random(), lowCharChance = true)
