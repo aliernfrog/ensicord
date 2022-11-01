@@ -50,7 +50,7 @@ fun channelsPanel(chatModel: ChatModel, panelsState: OverlappingPanelsState, nav
                 Box(modifier = Modifier.alpha(0.2f).fillMaxWidth().height(1.dp).background(MaterialTheme.colors.onBackground))
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     EnsicordUser(user = chatModel.userUser, Modifier.weight(1f))
-                    EnsicordBorderlessButton(painterLight = painterResource(id = R.drawable.gear_black), painterDark = painterResource(id = R.drawable.gear_white), contentDescription = context.getString(R.string.options)) {
+                    EnsicordBorderlessButton(painter = painterResource(id = R.drawable.gear), contentDescription = context.getString(R.string.options)) {
                         navController.navigate(NavDestinations.OPTIONS)
                     }
                     Spacer(Modifier.width(4.dp))

@@ -71,11 +71,11 @@ fun messagesPanel(chatModel: ChatModel, _topToastManager: TopToastManager, panel
 private fun TopBar(chatModel: ChatModel, panelsState: OverlappingPanelsState) {
     val context = LocalContext.current
     Row(Modifier.fillMaxWidth().background(MaterialTheme.colors.secondary).padding(top = GeneralUtil.getStatusBarHeight()).padding(horizontal = 8.dp, vertical = 16.dp), verticalAlignment = Alignment.CenterVertically) {
-        EnsicordBorderlessButton(painterLight = painterResource(id = R.drawable.menu_black), painterDark = painterResource(id = R.drawable.menu_white), contentDescription = context.getString(R.string.chatChannels)) {
+        EnsicordBorderlessButton(painter = painterResource(id = R.drawable.menu), contentDescription = context.getString(R.string.chatChannels)) {
             scope.launch { panelsState.openStartPanel() }
         }
         Text(text = chatModel.chosenChannel.name, color = MaterialTheme.colors.onBackground, fontWeight = FontWeight.Bold, fontSize = 20.sp, modifier = Modifier.fillMaxWidth().weight(1f).padding(start = 8.dp))
-        EnsicordBorderlessButton(painterLight = painterResource(id = R.drawable.users_black), painterDark = painterResource(id = R.drawable.users_white), contentDescription = context.getString(R.string.chatUsers)) {
+        EnsicordBorderlessButton(painter = painterResource(id = R.drawable.users), contentDescription = context.getString(R.string.chatUsers)) {
             scope.launch { panelsState.openEndPanel() }
         }
     }

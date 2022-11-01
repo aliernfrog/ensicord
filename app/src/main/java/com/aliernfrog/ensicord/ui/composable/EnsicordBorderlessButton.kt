@@ -10,18 +10,22 @@ import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun EnsicordBorderlessButton(painterLight: Painter, painterDark: Painter, contentDescription: String, onClick: () -> Unit) {
+fun EnsicordBorderlessButton(painter: Painter, painterTintColor: Color = MaterialTheme.colors.onBackground, contentDescription: String, onClick: () -> Unit) {
     Image(
-        painter = if (MaterialTheme.colors.isLight) painterLight else painterDark,
+        painter = painter,
         contentDescription = contentDescription,
-        Modifier.padding(horizontal = 8.dp).size(25.dp, 25.dp).clickable(
-        interactionSource = remember { MutableInteractionSource() },
-        indication = rememberRipple(bounded = false, radius = 20.dp),
-        onClick = onClick
-    ).alpha(0.6f))
+        alpha = 0.6f,
+        colorFilter = ColorFilter.tint(painterTintColor),
+        modifier = Modifier.padding(horizontal = 8.dp).size(25.dp, 25.dp).clickable(
+            interactionSource = remember { MutableInteractionSource() },
+            indication = rememberRipple(bounded = false, radius = 20.dp),
+            onClick = onClick
+        )
+    )
 }
