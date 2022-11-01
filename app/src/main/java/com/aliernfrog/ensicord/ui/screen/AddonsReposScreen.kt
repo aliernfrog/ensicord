@@ -12,16 +12,13 @@ import com.aliernfrog.ensicord.ConfigKey
 import com.aliernfrog.ensicord.R
 import com.aliernfrog.ensicord.ui.composable.*
 
-private var recompose = mutableStateOf(false)
-
 @Composable
 fun AddonsReposScreen(navController: NavController, config: SharedPreferences) {
     val context = LocalContext.current
-    var repos = remember { config.getStringSet(ConfigKey.KEY_ADDON_REPOS, setOf(ConfigKey.DEFAULT_ADDON_REPO))!! }
+    val repos = remember { mutableStateOf(config.getStringSet(ConfigKey.KEY_ADDON_REPOS, setOf(ConfigKey.DEFAULT_ADDON_REPO))!!.toSet()) }
     EnsicordBaseScaffold(title = context.getString(R.string.addonsRepos), navController) {
-        AddRepo(repos, config) { repos = it; recompose.value = !recompose.value }
-        Repos(repos, config) { repos = it; recompose.value = !recompose.value }
-        recompose.value
+        AddRepo(repos.value, config) { repos.value = it }
+        Repos(repos.value, config) { repos.value = it }
     }
 }
 
