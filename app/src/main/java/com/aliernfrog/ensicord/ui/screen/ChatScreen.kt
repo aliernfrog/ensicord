@@ -5,10 +5,7 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.rememberModalBottomSheetState
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -31,10 +28,9 @@ import com.xinto.overlappingpanels.rememberOverlappingPanelsState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-private var recompose = mutableStateOf(true)
 private lateinit var scope: CoroutineScope
-private var userSheetUser: User? = null
-private var messageSheetMessage: Message? = null
+private var userSheetUser: MutableState<User?> = mutableStateOf(null)
+private var messageSheetMessage: MutableState<Message?> = mutableStateOf(null)
 @OptIn(ExperimentalMaterialApi::class) private lateinit var userSheetState: ModalBottomSheetState
 @OptIn(ExperimentalMaterialApi::class) private lateinit var messageSheetState: ModalBottomSheetState
 
@@ -57,7 +53,7 @@ fun ChatScreen(chatState: ChatState, topToastManager: TopToastManager, navContro
         panelCenter = messagesPanel(chatState, topToastManager, panelsState, onUserSheetRequest = { showUserSheet(it) }, onMessageSheetRequest = { showMessageSheet(it) })
     )
     MessageSheet(
-        message = messageSheetMessage,
+        message = messageSheetMessage.value,
         sheetState = messageSheetState,
         topToastManager = topToastManager,
         onUserSheetRequest = { showUserSheet(it) },
@@ -66,41 +62,22 @@ fun ChatScreen(chatState: ChatState, topToastManager: TopToastManager, navContro
         }
     )
     UserSheet(
-        user = userSheetUser,
+        user = userSheetUser.value,
         sheetState = userSheetState,
-        onNameClick = { topToastManager.showToast(userSheetUser!!.name) }
+        onNameClick = { topToastManager.showToast(userSheetUser.value?.name.toString()) }
     )
-    LaunchedEffect(messageSheetState.currentValue) {
-        if (messageSheetState.currentValue == ModalBottomSheetValue.Hidden) {
-            messageSheetMessage = null
-            recompose.value = !recompose.value
-        }
-    }
-    LaunchedEffect(userSheetState.currentValue) {
-        if (userSheetState.currentValue == ModalBottomSheetValue.Hidden) {
-            userSheetUser = null
-            recompose.value = !recompose.value
-        }
-    }
-    recompose.value
 }
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterialApi::class, ExperimentalComposeUiApi::class)
 private fun showUserSheet(user: User) {
-    userSheetUser = user
-    beforeSheetShow()
+    userSheetUser.value = user
+    keyboardController?.hide()
     scope.launch { userSheetState.show() }
 }
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterialApi::class, ExperimentalComposeUiApi::class)
 private fun showMessageSheet(message: Message) {
-    messageSheetMessage = message
-    beforeSheetShow()
-    scope.launch { messageSheetState.show() }
-}
-
-@OptIn(ExperimentalComposeUiApi::class)
-private fun beforeSheetShow() {
-    recompose.value = !recompose.value
+    messageSheetMessage.value = message
     keyboardController?.hide()
+    scope.launch { messageSheetState.show() }
 }
