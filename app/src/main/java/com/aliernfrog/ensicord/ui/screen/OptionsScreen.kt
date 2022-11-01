@@ -10,7 +10,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
 import com.aliernfrog.ensicord.*
-import com.aliernfrog.ensicord.model.AddonsModel
 import com.aliernfrog.ensicord.ui.composable.EnsicordBaseScaffold
 import com.aliernfrog.ensicord.ui.composable.EnsicordButton
 import com.aliernfrog.ensicord.ui.composable.EnsicordColumnRounded
@@ -19,11 +18,11 @@ import com.aliernfrog.toptoast.TopToastColorType
 import com.aliernfrog.toptoast.TopToastManager
 
 @Composable
-fun OptionsScreen(topToastManager: TopToastManager, navController: NavController, addonsModel: AddonsModel, config: SharedPreferences) {
+fun OptionsScreen(topToastManager: TopToastManager, navController: NavController, config: SharedPreferences) {
     val context = LocalContext.current
     EnsicordBaseScaffold(title = context.getString(R.string.options), navController = navController) {
         ThemeSelection(topToastManager, config)
-        Addons(navController, addonsModel, config)
+        Addons(navController)
     }
 }
 
@@ -42,10 +41,9 @@ private fun ThemeSelection(topToastManager: TopToastManager, config: SharedPrefe
 }
 
 @Composable
-private fun Addons(navController: NavController, addonsModel: AddonsModel, config: SharedPreferences) {
+private fun Addons(navController: NavController) {
     val context = LocalContext.current
     EnsicordButton(title = context.getString(R.string.addons), painter = painterResource(id = R.drawable.download)) {
-        addonsModel.fetchAddons(config.getStringSet(ConfigKey.KEY_ADDON_REPOS, setOf(ConfigKey.DEFAULT_ADDON_REPO))!!.toSet())
         navController.navigate(NavDestinations.ADDONS)
     }
 }

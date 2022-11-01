@@ -1,6 +1,6 @@
 package com.aliernfrog.ensicord
 
-object AddonFetchingState {
+object AddonFetchState {
     const val ADDONS_LOADING = 0
     const val ADDONS_DONE = 1
 }

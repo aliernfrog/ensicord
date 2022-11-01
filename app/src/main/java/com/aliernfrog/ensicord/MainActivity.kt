@@ -12,8 +12,8 @@ import androidx.core.view.WindowCompat
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.aliernfrog.ensicord.model.AddonsModel
 import com.aliernfrog.ensicord.model.ChatModel
+import com.aliernfrog.ensicord.state.AddonsState
 import com.aliernfrog.ensicord.ui.screen.*
 import com.aliernfrog.ensicord.ui.theme.EnsicordTheme
 import com.aliernfrog.ensicord.util.EnsiUtil
@@ -25,7 +25,7 @@ import java.io.File
 class MainActivity : ComponentActivity() {
     private lateinit var config: SharedPreferences
     private lateinit var chatModel: ChatModel
-    private lateinit var addonsModel: AddonsModel
+    private lateinit var addonsState: AddonsState
     private lateinit var topToastManager: TopToastManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,7 +37,7 @@ class MainActivity : ComponentActivity() {
         )
         config = getSharedPreferences(ConfigKey.PREF_NAME, MODE_PRIVATE)
         chatModel = ChatModel(this, config)
-        addonsModel = AddonsModel()
+        addonsState = AddonsState()
         topToastManager = TopToastManager()
         checkDataDir()
         setContent {
@@ -66,13 +66,13 @@ class MainActivity : ComponentActivity() {
                 ProfileScreen(chatModel, topToastManager, navController, config)
             }
             composable(route = NavDestinations.ADDONS) {
-                AddonsScreen(topToastManager, navController, addonsModel, config)
+                AddonsScreen(topToastManager, navController, addonsState, config)
             }
             composable(route = NavDestinations.ADDONS_REPOS) {
                 AddonsReposScreen(navController, config)
             }
             composable(route = NavDestinations.OPTIONS) {
-                OptionsScreen(topToastManager, navController, addonsModel, config)
+                OptionsScreen(topToastManager, navController, config)
             }
         }
     }
