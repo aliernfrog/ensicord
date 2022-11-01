@@ -35,20 +35,20 @@ import com.aliernfrog.toptoast.TopToastManager
 import java.io.File
 
 @Composable
-fun ProfileScreen(chatModel: ChatState, topToastManager: TopToastManager, navController: NavController, config: SharedPreferences) {
+fun ProfileScreen(chatState: ChatState, topToastManager: TopToastManager, navController: NavController, config: SharedPreferences) {
     val context = LocalContext.current
     EnsicordBaseScaffold(title = context.getString(R.string.profile), navController = navController) {
-        ProfileCustomization(chatModel, topToastManager, navController, config)
+        ProfileCustomization(chatState, topToastManager, navController, config)
     }
 }
 
 @Composable
-private fun ProfileCustomization(chatModel: ChatState, topToastManager: TopToastManager, navController: NavController, config: SharedPreferences) {
+private fun ProfileCustomization(chatState: ChatState, topToastManager: TopToastManager, navController: NavController, config: SharedPreferences) {
     val context = LocalContext.current
     var username by remember { mutableStateOf(config.getString(ConfigKey.KEY_USER_NAME, ConfigKey.DEFAULT_USER_NAME)!!) }
     var status by remember { mutableStateOf(config.getString(ConfigKey.KEY_USER_STATUS, "")!!) }
     EnsicordColumnRounded {
-        AvatarCustomization(chatModel, topToastManager, navController, Modifier.align(CenterHorizontally))
+        AvatarCustomization(chatState, topToastManager, navController, Modifier.align(CenterHorizontally))
         Spacer(Modifier.height(20.dp))
         EnsicordTextField(
             label = { Text(context.getString(R.string.profileName)) },
@@ -56,7 +56,7 @@ private fun ProfileCustomization(chatModel: ChatState, topToastManager: TopToast
             onValueChange = {
                 username = it
                 config.edit().putString(ConfigKey.KEY_USER_NAME, it).apply()
-                chatModel.updateUser(newUserName = it)
+                chatState.updateUser(newUserName = it)
             }
         )
         EnsicordTextField(
@@ -65,19 +65,19 @@ private fun ProfileCustomization(chatModel: ChatState, topToastManager: TopToast
             onValueChange = {
                 status = it
                 config.edit().putString("userStatus", it).apply()
-                chatModel.updateUser(newUserStatus = it)
+                chatState.updateUser(newUserStatus = it)
             }
         )
     }
 }
 
 @Composable
-private fun AvatarCustomization(chatModel: ChatState, topToastManager: TopToastManager, navController: NavController, modifier: Modifier) {
+private fun AvatarCustomization(chatState: ChatState, topToastManager: TopToastManager, navController: NavController, modifier: Modifier) {
     val context = LocalContext.current
-    val avatar = GeneralUtil.getAvatarPainter(chatModel.userUser.avatar)
+    val avatar = GeneralUtil.getAvatarPainter(chatState.userUser.avatar)
     val launcher = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (it.data?.data != null) setAvatar(context, it.data!!.data!!) {
-            chatModel.updateUser()
+            chatState.updateUser()
             topToastManager.showToast(context.getString(R.string.profileAvatarUpdated), iconDrawableId = R.drawable.check, iconTintColorType = TopToastColorType.PRIMARY)
             navController.popBackStack()
             navController.navigate(NavDestinations.PROFILE)

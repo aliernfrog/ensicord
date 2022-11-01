@@ -154,18 +154,18 @@ private fun ChatInput(chatState: ChatState) {
     }
 }
 
-private fun addMessage(message: Message, chatModel: ChatState, clearInput: Boolean = false) {
-    chatModel.sendMessage(message, clearInput) {
+private fun addMessage(message: Message, chatState: ChatState, clearInput: Boolean = false) {
+    chatState.sendMessage(message, clearInput) {
         scrollToBottom()
-        if (message.author.id == "user") createEnsiResponse(message, chatModel)
+        if (message.author.id == "user") createEnsiResponse(message, chatState)
     }
 }
 
-private fun createEnsiResponse(message: Message, chatModel: ChatState) {
+private fun createEnsiResponse(message: Message, chatState: ChatState) {
     val args = message.content.lowercase().split(" ")
     val response = if (args.contains("tell") && (args.contains("story") || args.contains("stories"))) EnsiUtil.getResponse(type = "LEGIT", sentenceCount = (5..50).random(), starting = true, punctuations = true)
     else EnsiUtil.getResponse(type = listOf("RAW","RAW","RAW","RAW","RAW","LEGIT","ALLCAPS").random(), lowCharChance = true)
-    addMessage(Message(chatModel.getNextId(), chatModel.ensiUser, response), chatModel)
+    addMessage(Message(chatState.getNextId(), chatState.ensiUser, response), chatState)
 }
 
 private fun scrollToBottom(force: Boolean = false) {
