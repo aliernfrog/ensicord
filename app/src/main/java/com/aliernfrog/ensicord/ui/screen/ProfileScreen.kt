@@ -78,7 +78,7 @@ private fun AvatarCustomization(chatModel: ChatModel, topToastManager: TopToastM
     val launcher = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (it.data?.data != null) setAvatar(context, it.data!!.data!!) {
             chatModel.updateUser()
-            topToastManager.showToast(context.getString(R.string.profileAvatarUpdated), iconDrawableId = R.drawable.check, iconBackgroundColorType = TopToastColorType.PRIMARY)
+            topToastManager.showToast(context.getString(R.string.profileAvatarUpdated), iconDrawableId = R.drawable.check, iconTintColorType = TopToastColorType.PRIMARY)
             navController.popBackStack()
             navController.navigate(NavDestinations.PROFILE)
         }

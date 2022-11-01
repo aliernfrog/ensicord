@@ -149,7 +149,7 @@ private fun ChatInput(chatModel: ChatModel) {
                 modifier = Modifier.padding(top = 8.dp, bottom = 8.dp, end = 8.dp).size(height = 48.dp, width = 48.dp).clip(CircleShape).clickable {
                     if (sendButtonEnabled) {
                         if (chatModel.chosenChannel.messageInput.value.length <= ChatConstants.MESSAGE_CHAR_LIMIT) addMessage(Message(chatModel.getNextId(), chatModel.userUser, chatModel.chosenChannel.messageInput.value), chatModel, clearInput = true)
-                        else topToastManager.showToast(context.getString(R.string.chatMessageTooLong).replace("%MAX%", ChatConstants.MESSAGE_CHAR_LIMIT.toString()), iconDrawableId = R.drawable.exclamation, iconBackgroundColorType = TopToastColorType.ERROR)
+                        else topToastManager.showToast(context.getString(R.string.chatMessageTooLong).replace("%MAX%", ChatConstants.MESSAGE_CHAR_LIMIT.toString()), iconDrawableId = R.drawable.exclamation, iconTintColorType = TopToastColorType.ERROR)
                     }
                 }
             )

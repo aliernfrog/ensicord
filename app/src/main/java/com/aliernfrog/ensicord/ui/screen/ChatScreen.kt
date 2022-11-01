@@ -62,7 +62,7 @@ fun ChatScreen(chatModel: ChatModel, topToastManager: TopToastManager, navContro
         topToastManager = topToastManager,
         onUserSheetRequest = { showUserSheet(it) },
         onMessageDeleteRequest = { message ->
-            chatModel.deleteMessage(message) { topToastManager.showToast(context.getString(R.string.chatDeletedMessage), iconDrawableId = R.drawable.trash, iconBackgroundColorType = TopToastColorType.PRIMARY) }
+            chatModel.deleteMessage(message) { topToastManager.showToast(context.getString(R.string.chatDeletedMessage), iconDrawableId = R.drawable.trash, iconTintColorType = TopToastColorType.PRIMARY) }
         }
     )
     UserSheet(
