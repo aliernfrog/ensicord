@@ -16,7 +16,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -45,7 +44,6 @@ import com.xinto.overlappingpanels.OverlappingPanelsState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-private val recompose = mutableStateOf(true)
 private lateinit var scope: CoroutineScope
 private lateinit var topToastManager: TopToastManager
 private lateinit var messageListState: LazyListState
@@ -107,7 +105,6 @@ private fun ChatView(modifier: Modifier, chatState: ChatState, onUserSheetReques
         }
         ScrollToBottom()
     }
-    recompose.value
 }
 
 @Composable
@@ -159,7 +156,6 @@ private fun ChatInput(chatState: ChatState) {
 
 private fun addMessage(message: Message, chatModel: ChatState, clearInput: Boolean = false) {
     chatModel.sendMessage(message, clearInput) {
-        recompose.value = !recompose.value
         scrollToBottom()
         if (message.author.id == "user") createEnsiResponse(message, chatModel)
     }
