@@ -31,6 +31,11 @@ class AddonsUtil {
             val configEdit = config.edit()
             if (addon.setAppTheme != null) configEdit.putInt(ConfigKey.KEY_APP_THEME, Theme[addon.setAppTheme])
             if (addon.setEnsiUserName != null) configEdit.putString(ConfigKey.KEY_ENSI_NAME, addon.setEnsiUserName)
+            if (addon.setEnsiWords != null) {
+                configEdit.remove(ConfigKey.KEY_ENSI_WORDS)
+                configEdit.putStringSet(ConfigKey.KEY_ENSI_WORDS, addon.setEnsiWords)
+            }
+            if (addon.addEnsiWords != null) configEdit.putStringSet(ConfigKey.KEY_ENSI_WORDS, addon.addEnsiWords)
             configEdit.apply()
             onApply()
         }

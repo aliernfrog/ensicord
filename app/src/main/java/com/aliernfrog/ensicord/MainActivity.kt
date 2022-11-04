@@ -32,8 +32,10 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
-        EnsiUtil.initialize(EnsiConfig())
         config = getSharedPreferences(ConfigKey.PREF_NAME, MODE_PRIVATE)
+        EnsiUtil.initialize(EnsiConfig(
+            words = config.getStringSet(ConfigKey.KEY_ENSI_WORDS, setOf("me","you","we","they","alierns","indinibee","bees","momes","frogs","mouse","chicken","furries","frog","Exi's basement","free candies","ensi","van","laptop","marchmilos","mouse"))!!
+        ))
         chatState = ChatState(this, config)
         addonsState = AddonsState()
         topToastManager = TopToastManager()
