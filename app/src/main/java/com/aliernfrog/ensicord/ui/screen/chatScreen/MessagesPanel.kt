@@ -162,9 +162,7 @@ private fun addMessage(message: Message, chatState: ChatState, clearInput: Boole
 }
 
 private fun createEnsiResponse(message: Message, chatState: ChatState) {
-    val args = message.content.lowercase().split(" ")
-    val response = if (args.contains("tell") && (args.contains("story") || args.contains("stories"))) EnsiUtil.getResponse(type = "LEGIT", sentenceCount = (5..50).random(), starting = true, punctuations = true)
-    else EnsiUtil.getResponse(type = listOf("RAW","RAW","RAW","RAW","RAW","LEGIT","ALLCAPS").random(), lowCharChance = true)
+    val response = EnsiUtil.generateResponse(message.content)
     addMessage(Message(chatState.getNextId(), chatState.ensiUser, response), chatState)
 }
 

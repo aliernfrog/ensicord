@@ -28,7 +28,7 @@ class ChatState(context: Context, config: SharedPreferences) {
     val ensiUser = User("ensi",
         config.getString(ConfigKey.KEY_ENSI_NAME, ConfigKey.DEFAULT_ENSI_NAME)!!,
         "ensi",
-        EnsiUtil.getStatus(context),
+        EnsiUtil.generateStatus(context),
         true
     )
     var users = listOf(userUser,ensiUser)

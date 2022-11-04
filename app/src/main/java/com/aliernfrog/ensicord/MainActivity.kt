@@ -17,6 +17,7 @@ import com.aliernfrog.ensicord.state.ChatState
 import com.aliernfrog.ensicord.ui.screen.*
 import com.aliernfrog.ensicord.ui.theme.EnsicordTheme
 import com.aliernfrog.ensicord.util.EnsiUtil
+import com.aliernfrog.ensigeneration.EnsiConfig
 import com.aliernfrog.toptoast.TopToastBase
 import com.aliernfrog.toptoast.TopToastManager
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -31,10 +32,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
-        EnsiUtil.prepare(
-            _verbs = listOf("sobbed","adsed","feed","featured","faced","undefined","petted","mousing"),
-            _words = listOf("me","you","we","they","alierns","indinibee","bees","momes","frogs","mouse","chicken","furries","frog","Exi's basement","free candies","ensi","van","laptop","marchmilos","mouse")
-        )
+        EnsiUtil.initialize(EnsiConfig())
         config = getSharedPreferences(ConfigKey.PREF_NAME, MODE_PRIVATE)
         chatState = ChatState(this, config)
         addonsState = AddonsState()
