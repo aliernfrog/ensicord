@@ -51,23 +51,11 @@ class EnsiUtil {
         }
 
         fun generateStatus(context: Context): UserStatus {
-            val name = try {
-                ensiGeneration.generate(
-                    generationType = listOf(
-                        EnsiGenerationType.RAW,
-                        EnsiGenerationType.RAW,
-                        EnsiGenerationType.RAW,
-                        EnsiGenerationType.RAW,
-                        EnsiGenerationType.RAW,
-                        EnsiGenerationType.LEGIT,
-                        EnsiGenerationType.ALLCAPS
-                    ).random(),
-                    sentenceCount = 1,
-                    addStartingSentence = false
-                )
-            } catch (e: Exception) {
-                e.toString()
-            }
+            val name = ensiGeneration.generate(
+                generationType = listOf(EnsiGenerationType.RAW,EnsiGenerationType.RAW,EnsiGenerationType.RAW,EnsiGenerationType.RAW,EnsiGenerationType.RAW,EnsiGenerationType.LEGIT,EnsiGenerationType.ALLCAPS).random(),
+                sentenceCount = 1,
+                addStartingSentence = false
+            )
             val type = listOf(
                 context.getString(R.string.status_playing),
                 context.getString(R.string.status_streaming),
