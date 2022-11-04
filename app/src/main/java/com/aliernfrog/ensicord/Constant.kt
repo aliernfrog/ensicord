@@ -18,7 +18,7 @@ object ConfigKey {
     const val KEY_ADDON_REPOS = "addonRepos"
     const val DEFAULT_USER_NAME = "Some frok"
     const val DEFAULT_ENSI_NAME = "Ensi"
-    const val DEFAULT_ADDON_REPO = "https://aliernfrog.github.io/ensicord-addons/addons.json"
+    val DEFAULT_ADDON_REPOS = setOf("https://aliernfrog.github.io/ensicord-addons/addons.json")
 }
 
 object NavDestinations {

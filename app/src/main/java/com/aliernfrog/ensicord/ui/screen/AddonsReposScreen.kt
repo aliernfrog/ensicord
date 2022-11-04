@@ -15,7 +15,7 @@ import com.aliernfrog.ensicord.ui.composable.*
 @Composable
 fun AddonsReposScreen(navController: NavController, config: SharedPreferences) {
     val context = LocalContext.current
-    val repos = remember { mutableStateOf(config.getStringSet(ConfigKey.KEY_ADDON_REPOS, setOf(ConfigKey.DEFAULT_ADDON_REPO))!!.toSet()) }
+    val repos = remember { mutableStateOf(config.getStringSet(ConfigKey.KEY_ADDON_REPOS, ConfigKey.DEFAULT_ADDON_REPOS)!!.toSet()) }
     EnsicordBaseScaffold(title = context.getString(R.string.addonsRepos), navController) {
         AddRepo(repos.value, config) { repos.value = it }
         Repos(repos.value, config) { repos.value = it }

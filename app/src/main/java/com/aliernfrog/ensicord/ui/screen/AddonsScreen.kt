@@ -32,7 +32,7 @@ fun AddonsScreen(topToastManager: TopToastManager, navController: NavController,
     LaunchedEffect(Unit) {
         scope.launch {
             if (addonsState.fetchState != AddonFetchState.ADDONS_DONE) addonsState.fetchAddons(
-                config.getStringSet(ConfigKey.KEY_ADDON_REPOS, setOf(ConfigKey.DEFAULT_ADDON_REPO))!!
+                config.getStringSet(ConfigKey.KEY_ADDON_REPOS, ConfigKey.DEFAULT_ADDON_REPOS)!!
             )
         }
     }
