@@ -32,9 +32,17 @@ class AddonsUtil {
             if (addon.setAppTheme != null) configEdit.putInt(ConfigKey.KEY_APP_THEME, Theme[addon.setAppTheme])
             if (addon.setEnsiUserName != null) configEdit.putString(ConfigKey.KEY_ENSI_NAME, addon.setEnsiUserName)
             if (addon.setEnsiWords != null) configEdit.putStringSet(ConfigKey.KEY_ENSI_WORDS, addon.setEnsiWords)
-            if (addon.addEnsiWords != null) configEdit.putStringSet(ConfigKey.KEY_ENSI_WORDS, config.getStringSet(ConfigKey.KEY_ENSI_WORDS, setOf())!!.plus(addon.addEnsiWords))
+            if (addon.addEnsiWords != null) appendPrefsSet(ConfigKey.KEY_ENSI_WORDS, addon.addEnsiWords, config, configEdit)
+            if (addon.setEnsiVerbs != null) configEdit.putStringSet(ConfigKey.KEY_ENSI_VERBS, addon.setEnsiVerbs)
+            if (addon.addEnsiVerbs != null) appendPrefsSet(ConfigKey.KEY_ENSI_VERBS, addon.addEnsiVerbs, config, configEdit)
             configEdit.apply()
             onApply()
+        }
+
+        private fun appendPrefsSet(key: String, toAppend: Set<String>, config: SharedPreferences, configEdit: SharedPreferences.Editor) {
+            val prev = config.getStringSet(key, setOf())!!
+            val filtered = toAppend.filter { !prev.contains(it) }
+            configEdit.putStringSet(key, prev.plus(filtered))
         }
 
         private fun jsonToAddon(jsonObject: JSONObject, fromRepo: String): Addon {
