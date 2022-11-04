@@ -3,6 +3,7 @@ package com.aliernfrog.ensicord.data
 data class Addon(
     val name: String,
     val description: String,
+    val thumbnailUrl: String? = null,
     val setAppTheme: String? = null,
     val setEnsiUserName: String? = null,
     val setEnsiWords: Set<String>? = null,
