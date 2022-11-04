@@ -4,6 +4,7 @@ import android.content.SharedPreferences
 import com.aliernfrog.ensicord.ConfigKey
 import com.aliernfrog.ensicord.Theme
 import com.aliernfrog.ensicord.data.Addon
+import com.google.gson.Gson
 import org.json.JSONArray
 import org.json.JSONObject
 import java.net.URL
@@ -28,7 +29,7 @@ class AddonsUtil {
 
         fun applyAddon(addon: Addon, config: SharedPreferences, onApply: () -> Unit) {
             val configEdit = config.edit()
-            if (addon.setAppTheme != null) configEdit.putInt(ConfigKey.KEY_APP_THEME, addon.setAppTheme)
+            if (addon.setAppTheme != null) configEdit.putInt(ConfigKey.KEY_APP_THEME, Theme[addon.setAppTheme])
             if (addon.setEnsiUserName != null) configEdit.putString(ConfigKey.KEY_ENSI_NAME, addon.setEnsiUserName)
             configEdit.apply()
             onApply()
@@ -36,33 +37,11 @@ class AddonsUtil {
 
         private fun jsonToAddon(jsonObject: JSONObject, fromRepo: String): Addon {
             return try {
-                Addon(
-                    name = jsonObject.getString("name"),
-                    description = jsonObject.getString("description"),
-                    repo = fromRepo,
-                    setAppTheme = stringToAppTheme(getStringOrNull(jsonObject, "setAppTheme")),
-                    setEnsiUserName = getStringOrNull(jsonObject, "setEnsiUserName")
-                )
+                val addon = Gson().fromJson(jsonObject.toString(), Addon::class.java)
+                addon.repo = fromRepo
+                return addon
             } catch (e: Exception) {
                 Addon(name = "", description = e.toString(), repo = fromRepo, error = true)
-            }
-        }
-
-        private fun getStringOrNull(jsonObject: JSONObject, key: String): String? {
-            return try {
-                jsonObject.getString(key)
-            } catch (e: Exception) {
-                null
-            }
-        }
-
-        private fun stringToAppTheme(string: String?): Int? {
-            if (string == null) return null
-            return when (string.uppercase()) {
-                "SYSTEM" -> Theme.SYSTEM
-                "LIGHT" -> Theme.LIGHT
-                "DARK" -> Theme.DARK
-                else -> null
             }
         }
     }

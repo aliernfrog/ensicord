@@ -35,6 +35,14 @@ object Path {
 }
 
 object Theme {
+    operator fun get(appTheme: String): Int {
+        return when (appTheme) {
+            "DARK" -> DARK
+            "LIGHT" -> LIGHT
+            else -> SYSTEM
+        }
+    }
+
     const val SYSTEM = 0
     const val LIGHT = 1
     const val DARK = 2
