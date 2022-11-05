@@ -26,7 +26,7 @@ import com.aliernfrog.toptoast.TopToastManager
 import kotlinx.coroutines.launch
 
 @Composable
-fun AddonsScreen(topToastManager: TopToastManager, navController: NavController, addonsState: AddonsState, config: SharedPreferences) {
+fun AddonsScreen(topToastManager: TopToastManager, navController: NavController, addonsState: AddonsState, config: SharedPreferences, addonConfig: SharedPreferences) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     LaunchedEffect(Unit) {
@@ -41,7 +41,7 @@ fun AddonsScreen(topToastManager: TopToastManager, navController: NavController,
             AddonFetchState.ADDONS_DONE -> {
                 addonsState.addons.forEach { addon ->
                     EnsicordAddon(addon) {
-                        AddonsUtil.applyAddon(addon, config) { topToastManager.showToast(context.getString(R.string.info_appliedAddon), iconDrawableId = R.drawable.check, iconTintColorType = TopToastColorType.PRIMARY) }
+                        AddonsUtil.applyAddon(addon, config, addonConfig) { topToastManager.showToast(context.getString(R.string.info_appliedAddon), iconDrawableId = R.drawable.check, iconTintColorType = TopToastColorType.PRIMARY) }
                     }
                 }
             }

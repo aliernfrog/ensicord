@@ -65,7 +65,7 @@ class MainActivity : ComponentActivity() {
                 ProfileScreen(chatState, topToastManager, navController, config)
             }
             composable(route = NavDestinations.ADDONS) {
-                AddonsScreen(topToastManager, navController, addonsState, config)
+                AddonsScreen(topToastManager, navController, addonsState, config, addonConfig)
             }
             composable(route = NavDestinations.ADDONS_REPOS) {
                 AddonsReposScreen(navController, config)

@@ -29,17 +29,19 @@ class AddonsUtil {
             return addonList
         }
 
-        fun applyAddon(addon: Addon, config: SharedPreferences, onApply: () -> Unit) {
+        fun applyAddon(addon: Addon, config: SharedPreferences, addonConfig: SharedPreferences, onApply: () -> Unit) {
             val configEdit = config.edit()
+            val addonConfigEdit = addonConfig.edit()
             if (addon.setAppTheme != null) configEdit.putInt(ConfigKey.KEY_APP_THEME, Theme[addon.setAppTheme])
-            if (addon.setEnsiUserName != null) configEdit.putString(AddonKey.KEY_ENSI_NAME, addon.setEnsiUserName)
+            if (addon.setEnsiUserName != null) addonConfigEdit.putString(AddonKey.KEY_ENSI_NAME, addon.setEnsiUserName)
             AddonConstants.SET_METHODS.forEach { method ->
                 val set = addon.getSet("set${method.fieldName}")
                 val add = addon.getSet("add${method.fieldName}")
-                if (set != null) configEdit.putStringSet(method.prefsKey, set)
-                if (add != null) appendPrefsSet(method.prefsKey, add, config, configEdit)
+                if (set != null) addonConfigEdit.putStringSet(method.prefsKey, set)
+                if (add != null) appendPrefsSet(method.prefsKey, add, addonConfig, addonConfigEdit)
             }
             configEdit.apply()
+            addonConfigEdit.apply()
             onApply()
         }
 
