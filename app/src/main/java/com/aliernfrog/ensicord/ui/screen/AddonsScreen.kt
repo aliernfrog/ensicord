@@ -1,6 +1,9 @@
 package com.aliernfrog.ensicord.ui.screen
 
 import android.content.SharedPreferences
+import androidx.compose.animation.animateContentSize
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
@@ -38,15 +41,17 @@ fun AddonsScreen(topToastManager: TopToastManager, navController: NavController,
         }
     }
     EnsicordBaseScaffold(title = context.getString(R.string.addons), navController = navController) {
-        when (addonsState.fetchState) {
-            AddonFetchState.ADDONS_DONE -> {
-                addonsState.addons.forEach { addon ->
-                    EnsicordAddon(addon) {
-                        AddonsUtil.applyAddon(addon, config, addonConfig) { topToastManager.showToast(context.getString(R.string.info_appliedAddon), iconDrawableId = R.drawable.check, iconTintColorType = TopToastColorType.PRIMARY) }
+        Column(Modifier.fillMaxWidth().animateContentSize()) {
+            when (addonsState.fetchState) {
+                AddonFetchState.ADDONS_DONE -> {
+                    addonsState.addons.forEach { addon ->
+                        EnsicordAddon(addon) {
+                            AddonsUtil.applyAddon(addon, config, addonConfig) { topToastManager.showToast(context.getString(R.string.info_appliedAddon), iconDrawableId = R.drawable.check, iconTintColorType = TopToastColorType.PRIMARY) }
+                        }
                     }
                 }
+                else -> CircularProgressIndicator(Modifier.align(CenterHorizontally).padding(top = 10.dp))
             }
-            else -> CircularProgressIndicator(Modifier.align(CenterHorizontally).padding(top = 10.dp))
         }
         ClearAddons(topToastManager, addonConfig)
         ManageRepos(navController)
