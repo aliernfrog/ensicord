@@ -2,6 +2,7 @@ package com.aliernfrog.ensicord.util
 
 import android.content.SharedPreferences
 import com.aliernfrog.ensicord.AddonConstants
+import com.aliernfrog.ensicord.AddonKey
 import com.aliernfrog.ensicord.ConfigKey
 import com.aliernfrog.ensicord.Theme
 import com.aliernfrog.ensicord.data.Addon
@@ -31,7 +32,7 @@ class AddonsUtil {
         fun applyAddon(addon: Addon, config: SharedPreferences, onApply: () -> Unit) {
             val configEdit = config.edit()
             if (addon.setAppTheme != null) configEdit.putInt(ConfigKey.KEY_APP_THEME, Theme[addon.setAppTheme])
-            if (addon.setEnsiUserName != null) configEdit.putString(ConfigKey.KEY_ENSI_NAME, addon.setEnsiUserName)
+            if (addon.setEnsiUserName != null) configEdit.putString(AddonKey.KEY_ENSI_NAME, addon.setEnsiUserName)
             AddonConstants.SET_METHODS.forEach { method ->
                 val set = addon.getSet("set${method.fieldName}")
                 val add = addon.getSet("add${method.fieldName}")

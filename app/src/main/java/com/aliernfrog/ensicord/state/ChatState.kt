@@ -6,6 +6,7 @@ import android.os.Environment
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import com.aliernfrog.ensicord.AddonKey
 import com.aliernfrog.ensicord.ConfigKey
 import com.aliernfrog.ensicord.Path
 import com.aliernfrog.ensicord.data.Channel
@@ -16,7 +17,7 @@ import com.aliernfrog.ensicord.util.EnsiUtil
 import com.aliernfrog.ensicord.util.GeneralUtil
 import java.io.File
 
-class ChatState(context: Context, config: SharedPreferences) {
+class ChatState(context: Context, config: SharedPreferences, addonConfig: SharedPreferences) {
     private var lastId = 0
 
     var userUser = User(
@@ -26,7 +27,7 @@ class ChatState(context: Context, config: SharedPreferences) {
         GeneralUtil.getUserStatusFromString(config.getString(ConfigKey.KEY_USER_STATUS, null))
     )
     val ensiUser = User("ensi",
-        config.getString(ConfigKey.KEY_ENSI_NAME, ConfigKey.DEFAULT_ENSI_NAME)!!,
+        addonConfig.getString(AddonKey.KEY_ENSI_NAME, AddonKey.DEFAULT_ENSI_NAME)!!,
         "ensi",
         EnsiUtil.generateStatus(context),
         true

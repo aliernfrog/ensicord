@@ -9,9 +9,37 @@ object AddonFetchState {
 
 object AddonConstants {
     val SET_METHODS = listOf(
-        AddonSetMethod("EnsiWords", ConfigKey.KEY_ENSI_WORDS),
-        AddonSetMethod("EnsiVerbs", ConfigKey.KEY_ENSI_VERBS)
+        AddonSetMethod("EnsiWords", AddonKey.KEY_ENSI_WORDS),
+        AddonSetMethod("EnsiVerbs", AddonKey.KEY_ENSI_VERBS),
+        AddonSetMethod("EnsiTimes", AddonKey.KEY_ENSI_TIMES),
+        AddonSetMethod("EnsiChars", AddonKey.KEY_ENSI_CHARS),
+        AddonSetMethod("EnsiPlaces", AddonKey.KEY_ENSI_PLACES),
+        AddonSetMethod("EnsiConcs", AddonKey.KEY_ENSI_CONCS),
+        AddonSetMethod("EnsiPositions", AddonKey.KEY_ENSI_POSITIONS),
+        AddonSetMethod("EnsiEmotions", AddonKey.KEY_ENSI_EMOTIONS),
+        AddonSetMethod("EnsiOthers", AddonKey.KEY_ENSI_OTHERS),
+        AddonSetMethod("EnsiNormalTypes", AddonKey.KEY_ENSI_TYPES_NORMAL),
+        AddonSetMethod("EnsiQuestionTypes", AddonKey.KEY_ENSI_TYPES_QUESTION),
+        AddonSetMethod("EnsiStartingTypes", AddonKey.KEY_ENSI_TYPES_STARTING)
     )
+}
+
+object AddonKey {
+    const val PREF_NAME = "APP_ADDON"
+    const val KEY_ENSI_NAME = "ensiName"
+    const val KEY_ENSI_WORDS = "ensiWords"
+    const val KEY_ENSI_VERBS = "ensiVerbs"
+    const val KEY_ENSI_TIMES = "ensiTimes"
+    const val KEY_ENSI_CHARS = "ensiChars"
+    const val KEY_ENSI_PLACES = "ensiPlaces"
+    const val KEY_ENSI_CONCS = "ensiConcs"
+    const val KEY_ENSI_EMOTIONS = "ensiEmotions"
+    const val KEY_ENSI_OTHERS = "ensiOthers"
+    const val KEY_ENSI_POSITIONS = "ensiPositions"
+    const val KEY_ENSI_TYPES_NORMAL = "ensiTypesNormal"
+    const val KEY_ENSI_TYPES_QUESTION = "ensiTypesQuestion"
+    const val KEY_ENSI_TYPES_STARTING = "ensiTypesStarting"
+    const val DEFAULT_ENSI_NAME = "Ensi"
 }
 
 object ChatConstants {
@@ -23,12 +51,8 @@ object ConfigKey {
     const val KEY_APP_THEME = "appTheme"
     const val KEY_USER_NAME = "userName"
     const val KEY_USER_STATUS = "userStatus"
-    const val KEY_ENSI_NAME = "ensiName"
-    const val KEY_ENSI_WORDS = "ensiWords"
-    const val KEY_ENSI_VERBS = "ensiVerbs"
     const val KEY_ADDON_REPOS = "addonRepos"
     const val DEFAULT_USER_NAME = "Some frok"
-    const val DEFAULT_ENSI_NAME = "Ensi"
     val DEFAULT_ADDON_REPOS = setOf("https://aliernfrog.github.io/ensicord-addons/addons.json")
 }
 

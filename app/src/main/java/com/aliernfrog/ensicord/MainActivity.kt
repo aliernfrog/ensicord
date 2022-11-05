@@ -24,6 +24,7 @@ import java.io.File
 
 class MainActivity : ComponentActivity() {
     private lateinit var config: SharedPreferences
+    private lateinit var addonConfig: SharedPreferences
     private lateinit var chatState: ChatState
     private lateinit var addonsState: AddonsState
     private lateinit var topToastManager: TopToastManager
@@ -32,8 +33,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
         config = getSharedPreferences(ConfigKey.PREF_NAME, MODE_PRIVATE)
-        EnsiUtil.initialize(config)
-        chatState = ChatState(this, config)
+        addonConfig = getSharedPreferences(AddonKey.PREF_NAME, MODE_PRIVATE)
+        EnsiUtil.initialize(addonConfig)
+        chatState = ChatState(this, config, addonConfig)
         addonsState = AddonsState()
         topToastManager = TopToastManager()
         checkDataDir()

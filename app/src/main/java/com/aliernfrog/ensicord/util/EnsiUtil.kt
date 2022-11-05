@@ -2,7 +2,7 @@ package com.aliernfrog.ensicord.util
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.aliernfrog.ensicord.ConfigKey
+import com.aliernfrog.ensicord.AddonKey
 import com.aliernfrog.ensicord.R
 import com.aliernfrog.ensicord.data.UserStatus
 import com.aliernfrog.ensigeneration.EnsiConfig
@@ -14,10 +14,20 @@ class EnsiUtil {
     companion object {
         private lateinit var ensiGeneration: EnsiGeneration
 
-        fun initialize(config: SharedPreferences) {
+        fun initialize(addonConfig: SharedPreferences) {
             ensiGeneration = EnsiGeneration(EnsiConfig(
-                words = config.getStringSet(ConfigKey.KEY_ENSI_WORDS, setOf())!!.ifEmpty { EnsiConfigDefaults.words },
-                verbs = config.getStringSet(ConfigKey.KEY_ENSI_VERBS, setOf())!!.ifEmpty { EnsiConfigDefaults.verbs }
+                words = addonConfig.getStringSet(AddonKey.KEY_ENSI_WORDS, setOf())!!.ifEmpty { EnsiConfigDefaults.words },
+                verbs = addonConfig.getStringSet(AddonKey.KEY_ENSI_VERBS, setOf())!!.ifEmpty { EnsiConfigDefaults.verbs },
+                times = addonConfig.getStringSet(AddonKey.KEY_ENSI_TIMES, setOf())!!.ifEmpty { EnsiConfigDefaults.times },
+                chars = addonConfig.getStringSet(AddonKey.KEY_ENSI_CHARS, setOf())!!.ifEmpty { EnsiConfigDefaults.chars },
+                places = addonConfig.getStringSet(AddonKey.KEY_ENSI_PLACES, setOf())!!.ifEmpty { EnsiConfigDefaults.places },
+                concs = addonConfig.getStringSet(AddonKey.KEY_ENSI_CONCS, setOf())!!.ifEmpty { EnsiConfigDefaults.concs },
+                emotions = addonConfig.getStringSet(AddonKey.KEY_ENSI_EMOTIONS, setOf())!!.ifEmpty { EnsiConfigDefaults.emotions },
+                others = addonConfig.getStringSet(AddonKey.KEY_ENSI_OTHERS, setOf())!!.ifEmpty { EnsiConfigDefaults.others },
+                positions = addonConfig.getStringSet(AddonKey.KEY_ENSI_POSITIONS, setOf())!!.ifEmpty { EnsiConfigDefaults.positions },
+                normalTypes = addonConfig.getStringSet(AddonKey.KEY_ENSI_TYPES_NORMAL, setOf())!!.ifEmpty { EnsiConfigDefaults.normalTypes },
+                questionTypes = addonConfig.getStringSet(AddonKey.KEY_ENSI_TYPES_QUESTION, setOf())!!.ifEmpty { EnsiConfigDefaults.questionTypes },
+                startingTypes = addonConfig.getStringSet(AddonKey.KEY_ENSI_TYPES_STARTING, setOf())!!.ifEmpty { EnsiConfigDefaults.startingTypes }
             ))
         }
 
