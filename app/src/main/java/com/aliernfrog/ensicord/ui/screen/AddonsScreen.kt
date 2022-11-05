@@ -69,7 +69,11 @@ private fun ClearAddons(topToastManager: TopToastManager, addonConfig: SharedPre
 @Composable
 private fun ManageRepos(navController: NavController) {
     val context = LocalContext.current
-    EnsicordButton(title = context.getString(R.string.addonsRepos), painter = painterResource(id = R.drawable.folder)) {
+    EnsicordButton(
+        title = context.getString(R.string.addonsRepos),
+        description = context.getString(R.string.addonsReposDescription),
+        painter = painterResource(id = R.drawable.folder)
+    ) {
         navController.navigate(NavDestinations.ADDONS_REPOS)
     }
 }

@@ -29,9 +29,10 @@
     <string name="profileStatus">Status</string>
     <string name="addons">Add-ons</string>
     <string name="addonsClearAddons">Clear add-ons</string>
-    <string name="addonsClearAddonsDescription">Clears add-on preferences and sets them to default values</string>
+    <string name="addonsClearAddonsDescription">Clear add-on preferences and set them to default values</string>
     <string name="addonsCleared">Cleared add-ons, click to restart the app</string>
     <string name="addonsRepos">Add-on repositories</string>
+    <string name="addonsReposDescription">Manage add-on sources</string>
     <string name="addonsReposAdd">Add a repository</string>
     <string name="addonsReposUrl">URL</string>
     <string name="addonsReposPlaceholder">Link to the JSON file</string>
