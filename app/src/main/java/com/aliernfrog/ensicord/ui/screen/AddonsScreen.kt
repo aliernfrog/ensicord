@@ -21,6 +21,7 @@ import com.aliernfrog.ensicord.ui.composable.EnsicordAddon
 import com.aliernfrog.ensicord.ui.composable.EnsicordBaseScaffold
 import com.aliernfrog.ensicord.ui.composable.EnsicordButton
 import com.aliernfrog.ensicord.util.AddonsUtil
+import com.aliernfrog.ensicord.util.GeneralUtil
 import com.aliernfrog.toptoast.TopToastColorType
 import com.aliernfrog.toptoast.TopToastManager
 import kotlinx.coroutines.launch
@@ -47,7 +48,21 @@ fun AddonsScreen(topToastManager: TopToastManager, navController: NavController,
             }
             else -> CircularProgressIndicator(Modifier.align(CenterHorizontally).padding(top = 10.dp))
         }
+        ClearAddons(topToastManager, addonConfig)
         ManageRepos(navController)
+    }
+}
+
+@Composable
+private fun ClearAddons(topToastManager: TopToastManager, addonConfig: SharedPreferences) {
+    val context = LocalContext.current
+    EnsicordButton(
+        title = context.getString(R.string.addonsClearAddons),
+        description = context.getString(R.string.addonsClearAddonsDescription),
+        painter = painterResource(R.drawable.trash)
+    ) {
+        addonConfig.edit().clear().apply()
+        topToastManager.showToast(context.getString(R.string.addonsCleared), iconDrawableId = R.drawable.check, iconTintColorType = TopToastColorType.PRIMARY) { GeneralUtil.restartApp(context) }
     }
 }
 

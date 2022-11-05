@@ -1,8 +1,6 @@
 package com.aliernfrog.ensicord.ui.screen
 
-import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -14,6 +12,7 @@ import com.aliernfrog.ensicord.ui.composable.EnsicordBaseScaffold
 import com.aliernfrog.ensicord.ui.composable.EnsicordButton
 import com.aliernfrog.ensicord.ui.composable.EnsicordColumnRounded
 import com.aliernfrog.ensicord.ui.composable.EnsicordRadioButtons
+import com.aliernfrog.ensicord.util.GeneralUtil
 import com.aliernfrog.toptoast.TopToastColorType
 import com.aliernfrog.toptoast.TopToastManager
 
@@ -34,7 +33,7 @@ private fun ThemeSelection(topToastManager: TopToastManager, config: SharedPrefe
     EnsicordColumnRounded(color = MaterialTheme.colors.secondary, title = context.getString(R.string.optionsTheme)) {
         EnsicordRadioButtons(options = options, selectedIndex = chosen, columnColor = MaterialTheme.colors.secondaryVariant, onSelect = { option ->
             applyTheme(option, config, context) {
-                topToastManager.showToast(context.getString(R.string.optionsThemeChanged), iconDrawableId = R.drawable.check, iconTintColorType = TopToastColorType.PRIMARY) { restartApp(context) }
+                topToastManager.showToast(context.getString(R.string.optionsThemeChanged), iconDrawableId = R.drawable.check, iconTintColorType = TopToastColorType.PRIMARY) { GeneralUtil.restartApp(context) }
             }
         })
     }
@@ -54,10 +53,4 @@ private fun applyTheme(option: String, config: SharedPreferences, context: Conte
     if (option == context.getString(R.string.optionsThemeDark)) theme = Theme.DARK
     config.edit().putInt(ConfigKey.KEY_APP_THEME, theme).apply()
     onApply()
-}
-
-private fun restartApp(context: Context) {
-    val intent = Intent(context, MainActivity::class.java)
-    (context as Activity).finish()
-    context.startActivity(intent)
 }

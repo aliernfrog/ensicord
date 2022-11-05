@@ -1,5 +1,8 @@
 package com.aliernfrog.ensicord.util
 
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
 import android.os.Environment
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
@@ -14,6 +17,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
+import com.aliernfrog.ensicord.MainActivity
 import com.aliernfrog.ensicord.R
 import com.aliernfrog.ensicord.data.UserStatus
 
@@ -59,6 +63,12 @@ class GeneralUtil {
         fun getUserStatusFromString(type: String?, name: String? = null): UserStatus? {
             return if (type != null || name != null) UserStatus(type, name)
             else null
+        }
+
+        fun restartApp(context: Context) {
+            val intent = Intent(context, MainActivity::class.java)
+            (context as Activity).finish()
+            context.startActivity(intent)
         }
     }
 }
