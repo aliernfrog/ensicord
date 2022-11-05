@@ -6,6 +6,7 @@ import com.aliernfrog.ensicord.ConfigKey
 import com.aliernfrog.ensicord.R
 import com.aliernfrog.ensicord.data.UserStatus
 import com.aliernfrog.ensigeneration.EnsiConfig
+import com.aliernfrog.ensigeneration.EnsiConfigDefaults
 import com.aliernfrog.ensigeneration.EnsiGeneration
 import com.aliernfrog.ensigeneration.EnsiGenerationType
 
@@ -15,8 +16,8 @@ class EnsiUtil {
 
         fun initialize(config: SharedPreferences) {
             ensiGeneration = EnsiGeneration(EnsiConfig(
-                words = config.getStringSet(ConfigKey.KEY_ENSI_WORDS, setOf("me","you","we","they","alierns","indinibee","bees","momes","frogs","mouse","chicken","furries","frog","Exi's basement","free candies","ensi","van","laptop","marchmilos","mouse"))!!,
-                verbs = config.getStringSet(ConfigKey.KEY_ENSI_VERBS, setOf("sobbed","adsed","feed","featured","faced","undefined","petted","mousing"))!!
+                words = config.getStringSet(ConfigKey.KEY_ENSI_WORDS, EnsiConfigDefaults.words)!!,
+                verbs = config.getStringSet(ConfigKey.KEY_ENSI_VERBS, EnsiConfigDefaults.verbs)!!
             ))
         }
 
