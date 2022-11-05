@@ -16,8 +16,8 @@ class EnsiUtil {
 
         fun initialize(config: SharedPreferences) {
             ensiGeneration = EnsiGeneration(EnsiConfig(
-                words = config.getStringSet(ConfigKey.KEY_ENSI_WORDS, EnsiConfigDefaults.words)!!,
-                verbs = config.getStringSet(ConfigKey.KEY_ENSI_VERBS, EnsiConfigDefaults.verbs)!!
+                words = config.getStringSet(ConfigKey.KEY_ENSI_WORDS, setOf())!!.ifEmpty { EnsiConfigDefaults.words },
+                verbs = config.getStringSet(ConfigKey.KEY_ENSI_VERBS, setOf())!!.ifEmpty { EnsiConfigDefaults.verbs }
             ))
         }
 
