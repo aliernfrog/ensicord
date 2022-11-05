@@ -1,8 +1,17 @@
 package com.aliernfrog.ensicord
 
+import com.aliernfrog.ensicord.data.AddonSetMethod
+
 object AddonFetchState {
     const val ADDONS_LOADING = 0
     const val ADDONS_DONE = 1
+}
+
+object AddonConstants {
+    val SET_METHODS = listOf(
+        AddonSetMethod("EnsiWords", ConfigKey.KEY_ENSI_WORDS),
+        AddonSetMethod("EnsiVerbs", ConfigKey.KEY_ENSI_VERBS)
+    )
 }
 
 object ChatConstants {

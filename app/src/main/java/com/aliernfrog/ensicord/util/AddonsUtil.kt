@@ -1,6 +1,8 @@
 package com.aliernfrog.ensicord.util
 
 import android.content.SharedPreferences
+import android.util.Log
+import com.aliernfrog.ensicord.AddonConstants
 import com.aliernfrog.ensicord.ConfigKey
 import com.aliernfrog.ensicord.Theme
 import com.aliernfrog.ensicord.data.Addon
@@ -31,10 +33,18 @@ class AddonsUtil {
             val configEdit = config.edit()
             if (addon.setAppTheme != null) configEdit.putInt(ConfigKey.KEY_APP_THEME, Theme[addon.setAppTheme])
             if (addon.setEnsiUserName != null) configEdit.putString(ConfigKey.KEY_ENSI_NAME, addon.setEnsiUserName)
-            if (addon.setEnsiWords != null) configEdit.putStringSet(ConfigKey.KEY_ENSI_WORDS, addon.setEnsiWords)
-            if (addon.addEnsiWords != null) appendPrefsSet(ConfigKey.KEY_ENSI_WORDS, addon.addEnsiWords, config, configEdit)
-            if (addon.setEnsiVerbs != null) configEdit.putStringSet(ConfigKey.KEY_ENSI_VERBS, addon.setEnsiVerbs)
-            if (addon.addEnsiVerbs != null) appendPrefsSet(ConfigKey.KEY_ENSI_VERBS, addon.addEnsiVerbs, config, configEdit)
+            AddonConstants.SET_METHODS.forEach { method ->
+                val set = addon.getSet("set${method.fieldName}")
+                val add = addon.getSet("add${method.fieldName}")
+                if (set != null) {
+                    Log.d("AddonUtil", "applyAddon: setting ${method.prefsKey} to: $set")
+                    configEdit.putStringSet(method.prefsKey, set)
+                }
+                if (add != null) {
+                    Log.d("AddonsUtil", "applyAddon: adding to ${method.prefsKey}: $add")
+                    appendPrefsSet(method.prefsKey, add, config, configEdit)
+                }
+            }
             configEdit.apply()
             onApply()
         }
