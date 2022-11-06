@@ -43,7 +43,7 @@ fun EnsicordBaseScaffold(title: String, navController: NavController, state: Sca
             }
         }
     ) {
-        Column(Modifier.fillMaxWidth().verticalScroll(rememberScrollState()).padding(horizontal = 24.dp).animateContentSize()) {
+        Column(Modifier.fillMaxWidth().verticalScroll(rememberScrollState()).animateContentSize()) {
             content()
             Spacer(Modifier.animateContentSize().height(60.dp+GeneralUtil.getNavigationBarHeight()))
         }
