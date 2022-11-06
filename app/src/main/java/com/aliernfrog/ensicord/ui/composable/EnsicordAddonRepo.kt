@@ -14,7 +14,7 @@ import com.aliernfrog.ensicord.R
 @Composable
 fun EnsicordAddonRepo(url: String, onRemove: () -> Unit) {
     val context = LocalContext.current
-    EnsicordColumn {
+    EnsicordColumnRounded {
         SelectionContainer { Text(text = url, modifier = Modifier.padding(horizontal = 8.dp)) }
         EnsicordButton(title = context.getString(R.string.action_remove), painter = painterResource(id = R.drawable.trash), backgroundColor = MaterialTheme.colors.error, contentColor = MaterialTheme.colors.onError, onClick = onRemove)
     }

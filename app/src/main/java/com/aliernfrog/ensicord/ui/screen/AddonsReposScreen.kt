@@ -26,7 +26,7 @@ fun AddonsReposScreen(navController: NavController, config: SharedPreferences) {
 private fun AddRepo(repos: Set<String>, config: SharedPreferences, onUpdate: (Set<String>) -> Unit) {
     val context = LocalContext.current
     var text by remember { mutableStateOf("") }
-    EnsicordColumn(title = context.getString(R.string.addonsReposAdd)) {
+    EnsicordColumnRounded(title = context.getString(R.string.addonsReposAdd)) {
         EnsicordTextField(
             value = text,
             onValueChange = { text = it },
