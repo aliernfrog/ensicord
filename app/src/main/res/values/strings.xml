@@ -3,7 +3,6 @@
     <string name="action_back">Go back</string>
     <string name="action_add">Add</string>
     <string name="action_remove">Remove</string>
-    <string name="info_appliedAddon">Applied add-on</string>
     <string name="info_copied">Copied to clipboard</string>
     <string name="warning_somethingWentWrong">Something went wrong</string>
     <string name="status_playing">Playing %n</string>
@@ -28,6 +27,7 @@
     <string name="profileName">Username</string>
     <string name="profileStatus">Status</string>
     <string name="addons">Add-ons</string>
+    <string name="addonsAppliedRestart">Applied add-on, click to restart the app</string>
     <string name="addonsClearAddons">Clear add-ons</string>
     <string name="addonsClearAddonsDescription">Clear add-on preferences and set them to default values</string>
     <string name="addonsCleared">Cleared add-ons, click to restart the app</string>
