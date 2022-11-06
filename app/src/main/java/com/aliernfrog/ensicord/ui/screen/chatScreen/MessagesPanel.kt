@@ -90,7 +90,7 @@ private fun ChatView(modifier: Modifier, chatState: ChatState, onUserSheetReques
                     color = MaterialTheme.colors.onBackground,
                     fontWeight = FontWeight.Bold,
                     fontSize = 30.sp,
-                    modifier = Modifier.alpha(0.5f).padding(top = 100.dp, bottom = 60.dp, start = 8.dp, end = 8.dp)
+                    modifier = Modifier.fillMaxWidth().padding(top = 100.dp, bottom = 60.dp, start = 8.dp, end = 8.dp).alpha(0.5f)
                 )
             }
             items(chatState.chosenChannel.messages) { message ->
