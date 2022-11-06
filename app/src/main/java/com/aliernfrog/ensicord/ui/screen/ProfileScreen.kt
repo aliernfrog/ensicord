@@ -27,7 +27,7 @@ import com.aliernfrog.ensicord.Path
 import com.aliernfrog.ensicord.R
 import com.aliernfrog.ensicord.state.ChatState
 import com.aliernfrog.ensicord.ui.composable.EnsicordBaseScaffold
-import com.aliernfrog.ensicord.ui.composable.EnsicordColumnRounded
+import com.aliernfrog.ensicord.ui.composable.EnsicordColumn
 import com.aliernfrog.ensicord.ui.composable.EnsicordTextField
 import com.aliernfrog.ensicord.util.GeneralUtil
 import com.aliernfrog.toptoast.TopToastColorType
@@ -47,7 +47,7 @@ private fun ProfileCustomization(chatState: ChatState, topToastManager: TopToast
     val context = LocalContext.current
     var username by remember { mutableStateOf(config.getString(ConfigKey.KEY_USER_NAME, ConfigKey.DEFAULT_USER_NAME)!!) }
     var status by remember { mutableStateOf(config.getString(ConfigKey.KEY_USER_STATUS, "")!!) }
-    EnsicordColumnRounded {
+    EnsicordColumn {
         AvatarCustomization(chatState, topToastManager, navController, Modifier.align(CenterHorizontally))
         Spacer(Modifier.height(20.dp))
         EnsicordTextField(

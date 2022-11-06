@@ -10,7 +10,7 @@ import androidx.navigation.NavController
 import com.aliernfrog.ensicord.*
 import com.aliernfrog.ensicord.ui.composable.EnsicordBaseScaffold
 import com.aliernfrog.ensicord.ui.composable.EnsicordButton
-import com.aliernfrog.ensicord.ui.composable.EnsicordColumnRounded
+import com.aliernfrog.ensicord.ui.composable.EnsicordColumn
 import com.aliernfrog.ensicord.ui.composable.EnsicordRadioButtons
 import com.aliernfrog.ensicord.util.GeneralUtil
 import com.aliernfrog.toptoast.TopToastColorType
@@ -30,7 +30,7 @@ private fun ThemeSelection(topToastManager: TopToastManager, config: SharedPrefe
     val context = LocalContext.current
     val options = listOf(context.getString(R.string.optionsThemeSystem),context.getString(R.string.optionsThemeLight),context.getString(R.string.optionsThemeDark))
     val chosen = config.getInt(ConfigKey.KEY_APP_THEME, 0)
-    EnsicordColumnRounded(color = MaterialTheme.colors.secondary, title = context.getString(R.string.optionsTheme)) {
+    EnsicordColumn(color = MaterialTheme.colors.secondary, title = context.getString(R.string.optionsTheme)) {
         EnsicordRadioButtons(options = options, selectedIndex = chosen, columnColor = MaterialTheme.colors.secondaryVariant, onSelect = { option ->
             applyTheme(option, config, context) {
                 topToastManager.showToast(context.getString(R.string.optionsThemeChanged), iconDrawableId = R.drawable.check, iconTintColorType = TopToastColorType.PRIMARY) { GeneralUtil.restartApp(context) }

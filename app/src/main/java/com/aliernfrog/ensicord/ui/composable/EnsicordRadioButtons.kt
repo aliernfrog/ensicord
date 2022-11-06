@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun EnsicordRadioButtons(options: List<String>, columnColor: Color = MaterialTheme.colors.secondary, selectedIndex: Int = 0, onSelect: (String) -> Unit) {
     val (selectedOption, onOptionSelected) = remember { mutableStateOf(options[selectedIndex]) }
-    EnsicordColumnRounded(color = columnColor) {
+    EnsicordColumn(color = columnColor) {
         options.forEach { option ->
             val isSelected = selectedOption === option
             val onSelected = {
