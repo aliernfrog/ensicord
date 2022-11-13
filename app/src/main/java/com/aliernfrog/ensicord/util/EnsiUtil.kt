@@ -60,9 +60,9 @@ class EnsiUtil {
                 generationType = listOf(EnsiGenerationType.RAW,EnsiGenerationType.RAW,EnsiGenerationType.RAW,EnsiGenerationType.LEGIT,EnsiGenerationType.ALLCAPS).random(),
                 types = setOf("%WORD_VERB% %WORD_VERB%","%WORD_VERB%"),
                 sentenceCount = 1,
-                addStartingSentence = false,
+                startingSentenceAllowed = false,
                 questionsAllowed = false,
-                punctuationsAllowed = false
+                addPunctuations = false
             )
         }
 
@@ -70,7 +70,7 @@ class EnsiUtil {
             val name = ensiGeneration.generate(
                 generationType = listOf(EnsiGenerationType.RAW,EnsiGenerationType.RAW,EnsiGenerationType.RAW,EnsiGenerationType.RAW,EnsiGenerationType.RAW,EnsiGenerationType.LEGIT,EnsiGenerationType.ALLCAPS).random(),
                 sentenceCount = 1,
-                addStartingSentence = false
+                addPunctuations = false
             )
             val type = listOf(
                 context.getString(R.string.status_playing),

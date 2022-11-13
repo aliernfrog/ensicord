@@ -34,6 +34,9 @@ class AddonsUtil {
             val addonConfigEdit = addonConfig.edit()
             if (addon.setAppTheme != null) configEdit.putInt(ConfigKey.KEY_APP_THEME, Theme[addon.setAppTheme])
             if (addon.setEnsiUserName != null) addonConfigEdit.putString(AddonKey.KEY_ENSI_NAME, addon.setEnsiUserName)
+            addon.booleanMethods?.forEach { booleanMethod ->
+                if (AddonConstants.BOOLEAN_PREF_KEYS.contains(booleanMethod.key)) addonConfigEdit.putBoolean(booleanMethod.key, booleanMethod.boolean)
+            }
             addon.collectionMethods?.forEach { collectionMethod ->
                 if (AddonConstants.COLLECTION_PREF_KEYS.contains(collectionMethod.key)) when(collectionMethod.type) {
                     AddonConstants.COLLECTION_METHOD_SET -> addonConfigEdit.putStringSet(collectionMethod.key, collectionMethod.collection)

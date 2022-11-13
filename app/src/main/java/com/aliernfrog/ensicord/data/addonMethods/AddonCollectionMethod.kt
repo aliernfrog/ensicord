@@ -1,4 +1,4 @@
-package com.aliernfrog.ensicord.data
+package com.aliernfrog.ensicord.data.addonMethods
 
 /**
  * Methods that are used to edit a collection

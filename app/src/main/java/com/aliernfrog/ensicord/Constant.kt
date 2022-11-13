@@ -6,6 +6,13 @@ object AddonFetchState {
 }
 
 object AddonConstants {
+    val BOOLEAN_PREF_KEYS = listOf(
+        "wordAsCharAllowed",
+        "startingSentenceAllowed",
+        "questionsAllowed",
+        "punctuationsAllowed",
+        "subSentencesAllowed"
+    )
     val COLLECTION_PREF_KEYS = listOf(
         "ensiWords",
         "ensiVerbs",
