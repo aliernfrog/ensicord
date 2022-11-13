@@ -69,7 +69,7 @@ dependencies {
     implementation "com.google.code.gson:gson:2.10"
     //noinspection GradleDependency
     implementation "com.github.aliernfrog:top-toast-compose:0.0.10"
-    implementation "com.github.aliernfrog:ensi-generation-kt:1.0.6"
+    implementation "com.github.aliernfrog:ensi-generation-kt:1.0.7"
     implementation "io.coil-kt:coil-compose:2.2.2"
     implementation "com.github.X1nto:OverlappingPanelsCompose:1.2.0"
 }
