@@ -5,10 +5,7 @@ import android.content.SharedPreferences
 import com.aliernfrog.ensicord.AddonKey
 import com.aliernfrog.ensicord.R
 import com.aliernfrog.ensicord.data.UserStatus
-import com.aliernfrog.ensigeneration.EnsiConfig
-import com.aliernfrog.ensigeneration.EnsiConfigDefaults
-import com.aliernfrog.ensigeneration.EnsiGeneration
-import com.aliernfrog.ensigeneration.EnsiGenerationType
+import com.aliernfrog.ensigeneration.*
 
 class EnsiUtil {
     companion object {
@@ -27,7 +24,13 @@ class EnsiUtil {
                 positions = addonConfig.getStringSet(AddonKey.KEY_ENSI_POSITIONS, setOf())!!.ifEmpty { EnsiConfigDefaults.positions },
                 normalTypes = addonConfig.getStringSet(AddonKey.KEY_ENSI_TYPES_NORMAL, setOf())!!.ifEmpty { EnsiConfigDefaults.normalTypes },
                 questionTypes = addonConfig.getStringSet(AddonKey.KEY_ENSI_TYPES_QUESTION, setOf())!!.ifEmpty { EnsiConfigDefaults.questionTypes },
-                startingTypes = addonConfig.getStringSet(AddonKey.KEY_ENSI_TYPES_STARTING, setOf())!!.ifEmpty { EnsiConfigDefaults.startingTypes }
+                startingTypes = addonConfig.getStringSet(AddonKey.KEY_ENSI_TYPES_STARTING, setOf())!!.ifEmpty { EnsiConfigDefaults.startingTypes },
+                sentenceCountRange = getSentenceCountRange(addonConfig, EnsiConfigDefaults.sentenceCountRange),
+                wordAsCharAllowed = addonConfig.getBoolean(AddonKey.KEY_ENSI_WORD_AS_CHAR_ALLOWED, EnsiConfigDefaults.wordAsCharAllowed),
+                startingSentenceAllowed = addonConfig.getBoolean(AddonKey.KEY_ENSI_STARTING_SENTENCE_ALLOWED, EnsiConfigDefaults.startingSentenceAllowed),
+                questionsAllowed = addonConfig.getBoolean(AddonKey.KEY_ENSI_QUESTIONS_ALLOWED, EnsiConfigDefaults.questionsAllowed),
+                punctuationsAllowed = addonConfig.getBoolean(AddonKey.KEY_ENSI_PUNCTUATIONS_ALLOWED, EnsiConfigDefaults.punctuationsAllowed),
+                subSentencesAllowed = addonConfig.getBoolean(AddonKey.KEY_ENSI_SUB_SENTENCES_ALLOWED, EnsiConfigDefaults.subSentencesAllowed)
             ))
         }
 
@@ -81,6 +84,12 @@ class EnsiUtil {
                 null
             ).random()
             return UserStatus(type, name)
+        }
+
+        private fun getSentenceCountRange(addonConfig: SharedPreferences, default: Range): Range {
+            val min = addonConfig.getInt(AddonKey.KEY_ENSI_SENTENCE_COUNT_MIN, default.min)
+            val max = addonConfig.getInt(AddonKey.KEY_ENSI_SENTENCE_COUNT_MAX, default.max)
+            return Range(min, max)
         }
     }
 }

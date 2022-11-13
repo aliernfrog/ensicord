@@ -7,11 +7,11 @@ object AddonFetchState {
 
 object AddonConstants {
     val BOOLEAN_PREF_KEYS = listOf(
-        "wordAsCharAllowed",
-        "startingSentenceAllowed",
-        "questionsAllowed",
-        "punctuationsAllowed",
-        "subSentencesAllowed"
+        "ensiWordAsCharAllowed",
+        "ensiStartingSentenceAllowed",
+        "ensiQuestionsAllowed",
+        "ensiPunctuationsAllowed",
+        "ensiSubSentencesAllowed"
     )
     val COLLECTION_PREF_KEYS = listOf(
         "ensiWords",
@@ -46,6 +46,13 @@ object AddonKey {
     const val KEY_ENSI_TYPES_NORMAL = "ensiTypesNormal"
     const val KEY_ENSI_TYPES_QUESTION = "ensiTypesQuestion"
     const val KEY_ENSI_TYPES_STARTING = "ensiTypesStarting"
+    const val KEY_ENSI_SENTENCE_COUNT_MIN = "ensiSentenceCountMin"
+    const val KEY_ENSI_SENTENCE_COUNT_MAX = "ensiSentenceCountMax"
+    const val KEY_ENSI_WORD_AS_CHAR_ALLOWED = "ensiWordAsCharAllowed"
+    const val KEY_ENSI_STARTING_SENTENCE_ALLOWED = "ensiStartingSentenceAllowed"
+    const val KEY_ENSI_QUESTIONS_ALLOWED = "ensiQuestionsAllowed"
+    const val KEY_ENSI_PUNCTUATIONS_ALLOWED = "ensiPunctuationsAllowed"
+    const val KEY_ENSI_SUB_SENTENCES_ALLOWED = "ensiSubSentencesAllowed"
     const val DEFAULT_ENSI_NAME = "Ensi"
 }
 
