@@ -34,11 +34,12 @@ class AddonsUtil {
             val addonConfigEdit = addonConfig.edit()
             if (addon.setAppTheme != null) configEdit.putInt(ConfigKey.KEY_APP_THEME, Theme[addon.setAppTheme])
             if (addon.setEnsiUserName != null) addonConfigEdit.putString(AddonKey.KEY_ENSI_NAME, addon.setEnsiUserName)
-            AddonConstants.SET_METHODS.forEach { method ->
-                val set = addon.getSet("set${method.fieldName}")
-                val add = addon.getSet("add${method.fieldName}")
-                if (set != null) addonConfigEdit.putStringSet(method.prefsKey, set)
-                if (add != null) appendPrefsSet(method.prefsKey, add, addonConfig, addonConfigEdit)
+            addon.collectionMethods?.forEach { collectionMethod ->
+                if (!AddonConstants.COLLECTION_PREF_KEYS.contains(collectionMethod.key)) return
+                when(collectionMethod.type) {
+                    AddonConstants.COLLECTION_METHOD_SET -> addonConfigEdit.putStringSet(collectionMethod.key, collectionMethod.collection)
+                    AddonConstants.COLLECTION_METHOD_ADD -> appendPrefsSet(collectionMethod.key, collectionMethod.collection, addonConfig, addonConfigEdit)
+                }
             }
             configEdit.apply()
             addonConfigEdit.apply()

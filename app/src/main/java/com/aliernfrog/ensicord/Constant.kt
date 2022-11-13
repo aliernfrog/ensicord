@@ -1,27 +1,27 @@
 package com.aliernfrog.ensicord
 
-import com.aliernfrog.ensicord.data.AddonSetMethod
-
 object AddonFetchState {
     const val ADDONS_LOADING = 0
     const val ADDONS_DONE = 1
 }
 
 object AddonConstants {
-    val SET_METHODS = listOf(
-        AddonSetMethod("EnsiWords", AddonKey.KEY_ENSI_WORDS),
-        AddonSetMethod("EnsiVerbs", AddonKey.KEY_ENSI_VERBS),
-        AddonSetMethod("EnsiTimes", AddonKey.KEY_ENSI_TIMES),
-        AddonSetMethod("EnsiChars", AddonKey.KEY_ENSI_CHARS),
-        AddonSetMethod("EnsiPlaces", AddonKey.KEY_ENSI_PLACES),
-        AddonSetMethod("EnsiConcs", AddonKey.KEY_ENSI_CONCS),
-        AddonSetMethod("EnsiPositions", AddonKey.KEY_ENSI_POSITIONS),
-        AddonSetMethod("EnsiEmotions", AddonKey.KEY_ENSI_EMOTIONS),
-        AddonSetMethod("EnsiOthers", AddonKey.KEY_ENSI_OTHERS),
-        AddonSetMethod("EnsiNormalTypes", AddonKey.KEY_ENSI_TYPES_NORMAL),
-        AddonSetMethod("EnsiQuestionTypes", AddonKey.KEY_ENSI_TYPES_QUESTION),
-        AddonSetMethod("EnsiStartingTypes", AddonKey.KEY_ENSI_TYPES_STARTING)
+    val COLLECTION_PREF_KEYS = listOf(
+        "ensiWords",
+        "ensiVerbs",
+        "ensiTimes",
+        "ensiChars",
+        "ensiPlaces",
+        "ensiConcs",
+        "ensiEmotions",
+        "ensiOthers",
+        "ensiPositions",
+        "ensiTypesNormal",
+        "ensiTypesQuestion",
+        "ensiTypesStarting"
     )
+    val COLLECTION_METHOD_SET = "set"
+    val COLLECTION_METHOD_ADD = "add"
 }
 
 object AddonKey {
