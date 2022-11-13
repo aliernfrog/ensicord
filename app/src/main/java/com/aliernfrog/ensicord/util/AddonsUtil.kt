@@ -1,6 +1,7 @@
 package com.aliernfrog.ensicord.util
 
 import android.content.SharedPreferences
+import android.util.Log
 import com.aliernfrog.ensicord.AddonConstants
 import com.aliernfrog.ensicord.AddonKey
 import com.aliernfrog.ensicord.ConfigKey
@@ -35,8 +36,8 @@ class AddonsUtil {
             if (addon.setAppTheme != null) configEdit.putInt(ConfigKey.KEY_APP_THEME, Theme[addon.setAppTheme])
             if (addon.setEnsiUserName != null) addonConfigEdit.putString(AddonKey.KEY_ENSI_NAME, addon.setEnsiUserName)
             addon.collectionMethods?.forEach { collectionMethod ->
-                if (!AddonConstants.COLLECTION_PREF_KEYS.contains(collectionMethod.key)) return
-                when(collectionMethod.type) {
+                Log.d("", "applyAddon: ${collectionMethod.key}")
+                if (AddonConstants.COLLECTION_PREF_KEYS.contains(collectionMethod.key)) when(collectionMethod.type) {
                     AddonConstants.COLLECTION_METHOD_SET -> addonConfigEdit.putStringSet(collectionMethod.key, collectionMethod.collection)
                     AddonConstants.COLLECTION_METHOD_ADD -> appendPrefsSet(collectionMethod.key, collectionMethod.collection, addonConfig, addonConfigEdit)
                 }
