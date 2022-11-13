@@ -20,8 +20,8 @@ object AddonConstants {
         "ensiTypesQuestion",
         "ensiTypesStarting"
     )
-    val COLLECTION_METHOD_SET = "set"
-    val COLLECTION_METHOD_ADD = "add"
+    const val COLLECTION_METHOD_SET = "set"
+    const val COLLECTION_METHOD_ADD = "add"
 }
 
 object AddonKey {
