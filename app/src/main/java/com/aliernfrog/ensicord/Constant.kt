@@ -7,25 +7,25 @@ object AddonFetchState {
 
 object AddonConstants {
     val BOOLEAN_PREF_KEYS = listOf(
-        "ensiWordAsCharAllowed",
-        "ensiStartingSentenceAllowed",
-        "ensiQuestionsAllowed",
-        "ensiPunctuationsAllowed",
-        "ensiSubSentencesAllowed"
+        AddonKey.KEY_ENSI_WORD_AS_CHAR_ALLOWED,
+        AddonKey.KEY_ENSI_STARTING_SENTENCE_ALLOWED,
+        AddonKey.KEY_ENSI_QUESTIONS_ALLOWED,
+        AddonKey.KEY_ENSI_PUNCTUATIONS_ALLOWED,
+        AddonKey.KEY_ENSI_SUB_SENTENCES_ALLOWED
     )
     val COLLECTION_PREF_KEYS = listOf(
-        "ensiWords",
-        "ensiVerbs",
-        "ensiTimes",
-        "ensiChars",
-        "ensiPlaces",
-        "ensiConcs",
-        "ensiEmotions",
-        "ensiOthers",
-        "ensiPositions",
-        "ensiTypesNormal",
-        "ensiTypesQuestion",
-        "ensiTypesStarting"
+        AddonKey.KEY_ENSI_WORDS,
+        AddonKey.KEY_ENSI_VERBS,
+        AddonKey.KEY_ENSI_TIMES,
+        AddonKey.KEY_ENSI_CHARS,
+        AddonKey.KEY_ENSI_PLACES,
+        AddonKey.KEY_ENSI_CONCS,
+        AddonKey.KEY_ENSI_EMOTIONS,
+        AddonKey.KEY_ENSI_OTHERS,
+        AddonKey.KEY_ENSI_POSITIONS,
+        AddonKey.KEY_ENSI_TYPES_NORMAL,
+        AddonKey.KEY_ENSI_TYPES_QUESTION,
+        AddonKey.KEY_ENSI_TYPES_STARTING
     )
     const val COLLECTION_METHOD_SET = "set"
     const val COLLECTION_METHOD_ADD = "add"
