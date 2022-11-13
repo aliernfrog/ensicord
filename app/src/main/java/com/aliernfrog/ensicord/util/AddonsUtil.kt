@@ -62,6 +62,7 @@ class AddonsUtil {
             return try {
                 val addon = Gson().fromJson(jsonObject.toString(), Addon::class.java)
                 addon.repo = fromRepo
+                addon.error = false
                 return addon
             } catch (e: Exception) {
                 Addon(name = "", description = e.toString(), repo = fromRepo, error = true)
