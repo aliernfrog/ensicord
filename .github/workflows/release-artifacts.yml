@@ -1,9 +1,6 @@
 name: Release in Artifacts
 
 on:
-  push:
-    branches: [ "compose" ]
-
   workflow_dispatch:
 
 jobs:
