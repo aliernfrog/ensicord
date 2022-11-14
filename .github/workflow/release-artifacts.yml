@@ -1,8 +1,10 @@
 name: Release in Artifacts
 
 on:
-  workflow_dispatch:
+  push:
+    branches: [ "compose" ]
 
+  workflow_dispatch:
 
 jobs:
   build:
