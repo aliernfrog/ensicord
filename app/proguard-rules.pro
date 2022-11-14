@@ -12,6 +12,9 @@
 
 # Application classes that will be serialized/deserialized over Gson
 -keep class com.aliernfrog.ensicord.data.Addon { *; }
+-keep class com.aliernfrog.ensicord.data.addonMethods.AddonBooleanMethod { *; }
+-keep class com.aliernfrog.ensicord.data.addonMethods.AddonCollectionMethod { *; }
+-keep class com.aliernfrog.ensigeneration.Range { *; }
 
 # Prevent proguard from stripping interface information from TypeAdapter, TypeAdapterFactory,
 # JsonSerializer, JsonDeserializer instances (so they can be used in @JsonAdapter)
