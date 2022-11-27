@@ -22,8 +22,11 @@ jobs:
           keyStorePassword: ${{ secrets.KEYSTORE_PASSWORD }}
           keyPassword: ${{ secrets.KEY_PASSWORD }}
 
+      - name: Rename signed APK
+        run: mv ${{steps.sign_apk.outputs.signedReleaseFile}} ensicord.apk
+
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
           name: ensicord
-          path: ${{steps.sign_apk.outputs.signedReleaseFile}}
+          path: ensicord.apk
