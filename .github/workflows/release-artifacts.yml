@@ -2,7 +2,7 @@ name: Release in Artifacts
 
 on:
   push:
-    branches: ["main"]
+    branches: ["compose"]
 
   workflow_dispatch:
   
