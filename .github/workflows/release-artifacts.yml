@@ -2,7 +2,7 @@ name: Release in Artifacts
 
 on:
   push:
-    branches: ["compose"]
+    branches: ["main"]
 
   workflow_dispatch:
 
@@ -26,10 +26,10 @@ jobs:
           keyPassword: ${{ secrets.KEY_PASSWORD }}
 
       - name: Rename signed APK
-        run: mv ${{steps.sign_apk.outputs.signedReleaseFile}} lactool.apk
+        run: mv ${{steps.sign_apk.outputs.signedReleaseFile}} ensicord.apk
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: lactool
-          path: lactool.apk
+          name: ensicord
+          path: ensicord.apk
