@@ -16,7 +16,7 @@ android {
         minSdk = 23
         targetSdk = 34
         versionCode = 20000
-        versionName = "2.0.0-dev"
+        versionName = "v2.0.0 (dev)"
         vectorDrawables { useSupportLibrary = true }
     }
 
@@ -39,6 +39,7 @@ android {
     }
 
     buildFeatures {
+        buildConfig = true
         compose = true
     }
 

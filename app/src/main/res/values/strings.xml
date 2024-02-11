@@ -1,8 +1,11 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <string name="app_name" translatable="false">Ensicord</string>
+    <string name="action_more">More</string>
+    <string name="avatar">Avatar</string>
     <string name="chat_menu">Menu</string>
     <string name="chat_jumpToBottom">Jump to latest message</string>
     <string name="chat_isReadOnly">This channel is read-only</string>
     <string name="chat_textInput_hint">Send a message..</string>
     <string name="chat_textInput_send">Send message</string>
+    <string name="settings">Settings</string>
 </resources>
