@@ -3,6 +3,7 @@ package com.aliernfrog.ensicord.ui.theme
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.os.Build
+import androidx.annotation.StringRes
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
@@ -16,6 +17,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
+import com.aliernfrog.ensicord.R
 import com.aliernfrog.ensicord.ui.activity.MainActivity
 
 val supportsMaterialYou = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
@@ -63,8 +65,11 @@ fun EnsicordTheme(
     )
 }
 
-enum class Theme(val int: Int) {
-    SYSTEM(0),
-    LIGHT(1),
-    DARK(2)
+enum class Theme(
+    val int: Int,
+    @StringRes val label: Int
+) {
+    SYSTEM(0, R.string.settings_appearance_theme_system),
+    LIGHT(1, R.string.settings_appearance_theme_light),
+    DARK(2, R.string.settings_appearance_theme_dark)
 }

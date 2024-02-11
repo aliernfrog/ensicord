@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.displayCutoutPadding
@@ -19,6 +20,7 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.aliernfrog.ensicord.ui.component.InsetsObserver
 import com.aliernfrog.ensicord.ui.screen.MainScreen
 import com.aliernfrog.ensicord.ui.theme.EnsicordTheme
+import com.aliernfrog.ensicord.ui.theme.Theme
 import com.aliernfrog.ensicord.ui.viewmodel.MainViewModel
 import com.aliernfrog.toptoast.component.TopToastHost
 import org.koin.androidx.compose.koinViewModel
@@ -42,7 +44,11 @@ class MainActivity : AppCompatActivity() {
 
         @Composable
         fun AppTheme(content: @Composable () -> Unit) {
-            EnsicordTheme(content = content)
+            EnsicordTheme(
+                darkTheme = isDarkThemeEnabled(mainViewModel.prefs.theme),
+                dynamicColors = mainViewModel.prefs.materialYou,
+                content = content
+            )
         }
 
         AppTheme {
@@ -74,5 +80,14 @@ class MainActivity : AppCompatActivity() {
             modifier = modifier,
             content = content
         )
+    }
+
+    @Composable
+    private fun isDarkThemeEnabled(theme: Int): Boolean {
+        return when(theme) {
+            Theme.LIGHT.int -> false
+            Theme.DARK.int -> true
+            else -> isSystemInDarkTheme()
+        }
     }
 }

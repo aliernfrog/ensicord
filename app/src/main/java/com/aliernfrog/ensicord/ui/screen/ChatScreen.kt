@@ -88,7 +88,8 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun ChatScreen(
-    chatViewModel: ChatViewModel = koinViewModel()
+    chatViewModel: ChatViewModel = koinViewModel(),
+    onNavigateSettingsRequest: () -> Unit
 ) {
     val scope = rememberCoroutineScope()
     ModalNavigationDrawer(
@@ -156,7 +157,7 @@ fun ChatScreen(
                         .clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp))
                         .background(MaterialTheme.colorScheme.surface)
                         .navigationBarsPadding()
-                        .clickable { /* TODO */ }
+                        .clickable(onClick = onNavigateSettingsRequest)
                         .padding(start = 12.dp, top = 8.dp, bottom = 8.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
@@ -173,7 +174,9 @@ fun ChatScreen(
                         ),
                         modifier = Modifier.weight(1f).fillMaxWidth()
                     )
-                    IconButton(onClick = { /*TODO*/ }) {
+                    IconButton(
+                        onClick = onNavigateSettingsRequest
+                    ) {
                         Icon(
                             imageVector = Icons.Default.Settings,
                             contentDescription = stringResource(R.string.settings)
@@ -322,7 +325,7 @@ private fun ChatTextInput(
     modifier: Modifier = Modifier,
     enabled: Boolean = true
 ) {
-    val textFieldContainerColor = MaterialTheme.colorScheme.surfaceContainerLow
+    val textFieldContainerColor = MaterialTheme.colorScheme.surfaceContainer
     val textFieldTextStyle = LocalTextStyle.current.copy(
         color = contentColorFor(textFieldContainerColor)
     )
