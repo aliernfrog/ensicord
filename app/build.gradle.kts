@@ -67,6 +67,7 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:2.7.6")
     implementation("io.insert-koin:koin-androidx-compose:3.5.3")
     implementation("aliernfrog:top-toast-compose:2.0.0")
+    implementation("com.google.code.gson:gson:2.10.1")
     implementation("io.coil-kt:coil-compose:2.5.0")
     implementation("com.github.jeziellago:compose-markdown:0.3.7")
 }

@@ -160,9 +160,7 @@ enum class SettingsDestination(
         description = R.string.settings_addons_description,
         icon = Icons.Outlined.Download,
         content = {
-            SoonTMPage {
-                it.navigateBackToSettings()
-            }
+            AddonsPage()
         }
     ),
 

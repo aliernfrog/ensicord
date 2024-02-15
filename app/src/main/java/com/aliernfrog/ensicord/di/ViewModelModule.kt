@@ -7,5 +7,6 @@ import org.koin.dsl.module
 val viewModelModule = module {
     singleOf(::MainViewModel)
     singleOf(::InsetsViewModel)
+    singleOf(::AddonsViewModel)
     singleOf(::ChatViewModel)
 }

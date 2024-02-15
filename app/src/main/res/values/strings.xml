@@ -22,6 +22,7 @@
     <string name="settings_appearance_materialYou_description">Theme based on colors of your device</string>
     <string name="settings_addons">Addons</string>
     <string name="settings_addons_description">Change behavior of Ensicord and Ensi</string>
+    <string name="settings_addons_thumbnail">Addon thumbnail</string>
     <string name="settings_save">Save &amp; load</string>
     <string name="settings_save_description">Save current vocabulary and configuration or load from a save</string>
     <string name="settings_about">About Ensicord</string>
