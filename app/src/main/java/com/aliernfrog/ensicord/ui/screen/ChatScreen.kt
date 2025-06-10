@@ -75,21 +75,23 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.AsyncImage
+import coil3.compose.AsyncImage
 import com.aliernfrog.ensicord.BuildConfig
 import com.aliernfrog.ensicord.R
 import com.aliernfrog.ensicord.ui.component.IMEVisibilityListener
 import com.aliernfrog.ensicord.ui.component.chat.Message
+import com.aliernfrog.ensicord.ui.screen.settings.SettingsDestination
 import com.aliernfrog.ensicord.ui.theme.AppComponentShape
 import com.aliernfrog.ensicord.ui.viewmodel.ChatViewModel
+import com.aliernfrog.ensicord.ui.viewmodel.MainViewModel
 import com.aliernfrog.ensicord.util.extension.isAtBeginning
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun ChatScreen(
-    chatViewModel: ChatViewModel = koinViewModel(),
-    onNavigateSettingsRequest: () -> Unit
+    mainViewModel: MainViewModel = koinViewModel(),
+    chatViewModel: ChatViewModel = koinViewModel()
 ) {
     val scope = rememberCoroutineScope()
     ModalNavigationDrawer(
@@ -150,6 +152,9 @@ fun ChatScreen(
                             } }
                         )
                     }
+                }
+                val onNavigateSettingsRequest: () -> Unit = {
+                    mainViewModel.navigationBackStack.add(SettingsDestination.ROOT)
                 }
                 Row(
                     modifier = Modifier

@@ -1,8 +1,5 @@
 package com.aliernfrog.ensicord.ui.screen.settings
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Brush
 import androidx.compose.material.icons.outlined.ModeNight
@@ -11,7 +8,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.res.stringResource
 import com.aliernfrog.ensicord.R
@@ -25,12 +21,14 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun AppearancePage(
-    mainViewModel: MainViewModel = koinViewModel()
+    mainViewModel: MainViewModel = koinViewModel(),
+    onNavigateBackRequest: () -> Unit
 ) {
     var themesExpanded by rememberSaveable { mutableStateOf(false) }
 
-    Column(
-        modifier = Modifier.verticalScroll(rememberScrollState())
+    SettingsPageContainer(
+        title = stringResource(R.string.settings_appearance),
+        onNavigateBackRequest = onNavigateBackRequest
     ) {
         ExpandableRow(
             expanded = themesExpanded,

@@ -1,20 +1,17 @@
 plugins {
-    id("com.android.application")
-    id("org.jetbrains.kotlin.android")
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.compose)
 }
-
-val composeMaterialVersion = "1.7.0-beta06"
-val composeMaterial3Version = "1.3.0-beta05"
-val composeCompilerVersion = "1.5.14"
 
 android {
     namespace = "com.aliernfrog.ensicord"
-    compileSdk = 34
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.aliernfrog.ensicord"
         minSdk = 23
-        targetSdk = 34
+        targetSdk = 36
         versionCode = 20000
         versionName = "v2.0.0 (dev)"
         vectorDrawables { useSupportLibrary = true }
@@ -29,22 +26,18 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
 
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "11"
         freeCompilerArgs = freeCompilerArgs + "-opt-in=kotlin.RequiresOptIn"
     }
 
     buildFeatures {
         buildConfig = true
         compose = true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = composeCompilerVersion
     }
 
     packaging {
@@ -55,19 +48,26 @@ android {
 }
 
 dependencies {
-    implementation("androidx.core:core-ktx:1.13.1")
-    implementation("androidx.core:core-splashscreen:1.0.1")
-    implementation("androidx.compose.ui:ui:$composeMaterialVersion")
-    implementation("androidx.compose.material:material:$composeMaterialVersion")
-    implementation("androidx.compose.material:material-icons-extended:$composeMaterialVersion")
-    implementation("androidx.compose.material3:material3:$composeMaterial3Version")
-    implementation("androidx.compose.material3:material3-window-size-class:$composeMaterial3Version")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.4")
-    implementation("androidx.activity:activity-compose:1.9.1")
-    implementation("androidx.navigation:navigation-compose:2.7.7")
-    implementation("io.insert-koin:koin-androidx-compose:3.5.6")
-    implementation("com.github.aliernfrog:top-toast-compose:2.1.0-alpha01")
-    implementation("com.google.code.gson:gson:2.11.0")
-    implementation("io.coil-kt:coil-compose:2.7.0")
-    implementation("com.github.jeziellago:compose-markdown:0.5.2")
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.ktx)
+    implementation(libs.androidx.lifecycle.compose)
+    implementation(libs.androidx.lifecycle.ktx)
+    implementation(libs.androidx.navigation3.runtime)
+    implementation(libs.androidx.navigation3.ui)
+    implementation(libs.androidx.splashscreen)
+
+    implementation(libs.compose.ui)
+    implementation(libs.compose.material)
+    implementation(libs.compose.material.icons)
+    implementation(libs.compose.material3)
+
+    implementation(libs.coil)
+    implementation(libs.coil.okhttp)
+    implementation(libs.gson)
+    implementation(libs.koin)
+    implementation(libs.toptoast)
+
+    debugImplementation(libs.compose.ui.tooling)
+    debugImplementation(libs.compose.ui.tooling.preview)
 }
