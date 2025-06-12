@@ -8,6 +8,7 @@
     <string name="chat_isReadOnly">This channel is read-only</string>
     <string name="chat_textInput_hint">Send a message..</string>
     <string name="chat_textInput_send">Send message</string>
+    <string name="reels_noImages">No images were fetched from the API, it may be down</string>
     <string name="settings">Settings</string>
     <string name="settings_profile">Profile</string>
     <string name="settings_profile_description">Click to customize your profile</string>

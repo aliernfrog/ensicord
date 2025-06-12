@@ -6,7 +6,6 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
@@ -78,6 +77,7 @@ import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import com.aliernfrog.ensicord.BuildConfig
 import com.aliernfrog.ensicord.R
+import com.aliernfrog.ensicord.enum.Destination
 import com.aliernfrog.ensicord.ui.component.IMEVisibilityListener
 import com.aliernfrog.ensicord.ui.component.chat.Message
 import com.aliernfrog.ensicord.ui.screen.settings.SettingsDestination
@@ -147,8 +147,13 @@ fun ChatScreen(
                             selected = selected,
                             modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding),
                             onClick = { scope.launch {
-                                chatViewModel.chosenChannelIndex = index
-                                chatViewModel.drawerState.close()
+                                // TODO better entrypoint
+                                if (channel.name == "reels") {
+                                    mainViewModel.navigationBackStack.add(Destination.REELS)
+                                } else {
+                                    chatViewModel.chosenChannelIndex = index
+                                    chatViewModel.drawerState.close()
+                                }
                             } }
                         )
                     }
@@ -196,9 +201,10 @@ fun ChatScreen(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ChatPanel(
+    mainViewModel: MainViewModel = koinViewModel(),
     chatViewModel: ChatViewModel = koinViewModel()
 ) {
     val scope = rememberCoroutineScope()
@@ -208,6 +214,11 @@ private fun ChatPanel(
 
     LaunchedEffect(Unit) {
         chatViewModel.uiScope = scope
+
+        if (chatViewModel.chosenChannel.name == "reels") {
+            chatViewModel.chosenChannel = chatViewModel.channels.first()
+            mainViewModel.navigationBackStack.add(Destination.REELS)
+        }
     }
 
     IMEVisibilityListener { isIMEVisible ->

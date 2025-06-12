@@ -8,5 +8,7 @@ val viewModelModule = module {
     singleOf(::MainViewModel)
     singleOf(::InsetsViewModel)
     singleOf(::AddonsViewModel)
+
     singleOf(::ChatViewModel)
+    singleOf(::ReelsViewModel)
 }

@@ -13,13 +13,10 @@ import com.aliernfrog.ensicord.R
 import com.aliernfrog.ensicord.data.Channel
 import com.aliernfrog.ensicord.data.Message
 import com.aliernfrog.ensicord.data.User
-import com.aliernfrog.toptoast.state.TopToastState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-class ChatViewModel(
-    val topToastState: TopToastState
-) : ViewModel() {
+class ChatViewModel : ViewModel() {
     lateinit var uiScope: CoroutineScope
 
     val lazyListState = LazyListState()
@@ -34,7 +31,8 @@ class ChatViewModel(
         Channel("general"),
         Channel("offtopic"),
         Channel("news", readOnly = true),
-        Channel("starboard", readOnly = true)
+        Channel("starboard", readOnly = true),
+        Channel("reels")
     )
     var chosenChannelIndex by mutableIntStateOf(0)
     var chosenChannel: Channel
