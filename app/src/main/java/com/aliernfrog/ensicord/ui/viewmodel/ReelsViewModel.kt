@@ -1,6 +1,7 @@
 package com.aliernfrog.ensicord.ui.viewmodel
 
 import android.util.Log
+import androidx.compose.foundation.pager.PagerState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -22,6 +23,8 @@ class ReelsViewModel(
 ) : ViewModel() {
     val images = mutableStateListOf<ByteArray>()
     var fetching by mutableStateOf(false)
+
+    val pagerState = PagerState(0) { images.size }
 
     suspend fun fetchAndAppendNewImages(count: Int = 3) {
         val buffers = fetchImagesFromAPI(count)
