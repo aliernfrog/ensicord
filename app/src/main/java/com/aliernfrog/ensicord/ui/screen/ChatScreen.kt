@@ -40,6 +40,7 @@ import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Tag
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -72,6 +73,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
@@ -201,10 +203,9 @@ fun ChatScreen(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 private fun ChatPanel(
-    mainViewModel: MainViewModel = koinViewModel(),
     chatViewModel: ChatViewModel = koinViewModel()
 ) {
     val scope = rememberCoroutineScope()
@@ -214,11 +215,6 @@ private fun ChatPanel(
 
     LaunchedEffect(Unit) {
         chatViewModel.uiScope = scope
-
-        if (chatViewModel.chosenChannel.name == "reels") {
-            chatViewModel.chosenChannel = chatViewModel.channels.first()
-            mainViewModel.navigationBackStack.add(Destination.REELS)
-        }
     }
 
     IMEVisibilityListener { isIMEVisible ->
@@ -330,6 +326,18 @@ private fun ChatPanel(
                         .combinedClickable { /* TODO */ }
                 )
             }
+
+            item {
+                Text(
+                    text = stringResource(R.string.chat_beginning)
+                        .replace("{CHANNEL}", "#"+chatViewModel.chosenChannel.name),
+                    style = MaterialTheme.typography.headlineSmallEmphasized
+                        .copy(fontWeight = FontWeight.SemiBold),
+                    modifier = Modifier
+                        .padding(12.dp)
+                        .padding(bottom = 56.dp)
+                )
+            }
         }
     }
 }
@@ -363,7 +371,7 @@ private fun ChatTextInput(
                 .background(textFieldContainerColor)
                 .padding(
                     horizontal = 16.dp,
-                    vertical = 12.dp
+                    vertical = 8.dp
                 )
         )
         if (value.isEmpty() || !enabled) Text(

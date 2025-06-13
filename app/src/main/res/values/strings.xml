@@ -4,6 +4,7 @@
     <string name="action_more">More</string>
     <string name="avatar">Avatar</string>
     <string name="chat_menu">Menu</string>
+    <string name="chat_beginning">This is the beginning of {CHANNEL}</string>
     <string name="chat_jumpToBottom">Jump to latest message</string>
     <string name="chat_isReadOnly">This channel is read-only</string>
     <string name="chat_textInput_hint">Send a message..</string>
