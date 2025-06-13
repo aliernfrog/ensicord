@@ -27,7 +27,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.aliernfrog.ensicord.R
@@ -126,14 +125,6 @@ private fun TopBar(
                 modifier = Modifier.align(Alignment.CenterVertically)
             )
         }
-    }
-}
-
-@Preview
-@Composable
-fun TestTopBar() {
-    TopBar {
-
     }
 }
 
