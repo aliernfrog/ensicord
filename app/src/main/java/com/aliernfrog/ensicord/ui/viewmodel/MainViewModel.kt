@@ -13,4 +13,7 @@ class MainViewModel(
     val navigationBackStack = mutableStateListOf<Any>(
         Destination.CHAT
     )
+
+    val forceDarkTheme: Boolean
+        get() = navigationBackStack.last() == Destination.REELS
 }

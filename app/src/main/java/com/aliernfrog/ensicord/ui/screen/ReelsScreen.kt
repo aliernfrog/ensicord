@@ -8,10 +8,8 @@ import androidx.compose.foundation.pager.VerticalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.LoadingIndicator
-import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -34,26 +32,24 @@ fun ReelsScreen(
     val images = viewModel.images
     val fetching = viewModel.fetching
 
-    CompositionLocalProvider(LocalContentColor provides Color.White.copy(alpha = 0.98f)) {
-        Box(
-            modifier = Modifier
-                .background(Color.Black)
-                .fillMaxSize()
-                .systemBarsPadding()
-        ) {
-            if (images.isEmpty()) {
-                if (fetching) LoadingIndicator(
-                    Modifier.align(Alignment.Center)
-                ) else Text(
-                    stringResource(R.string.reels_noImages)
-                )
-            } else VerticalPager(
-                state = pagerState,
-                modifier = Modifier.fillMaxSize()
-            ) { pageIndex ->
-                images.getOrNull(pageIndex)?.let {
-                    ReelPage(it, Modifier.fillMaxSize())
-                }
+    Box(
+        modifier = Modifier
+            .background(Color.Black)
+            .fillMaxSize()
+            .systemBarsPadding()
+    ) {
+        if (images.isEmpty()) {
+            if (fetching) LoadingIndicator(
+                Modifier.align(Alignment.Center)
+            ) else Text(
+                stringResource(R.string.reels_noImages)
+            )
+        } else VerticalPager(
+            state = pagerState,
+            modifier = Modifier.fillMaxSize()
+        ) { pageIndex ->
+            images.getOrNull(pageIndex)?.let {
+                ReelPage(it, Modifier.fillMaxSize())
             }
         }
     }

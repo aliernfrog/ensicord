@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
         @Composable
         fun AppTheme(content: @Composable () -> Unit) {
             EnsicordTheme(
-                darkTheme = isDarkThemeEnabled(mainViewModel.prefs.theme),
+                darkTheme = mainViewModel.forceDarkTheme || isDarkThemeEnabled(mainViewModel.prefs.theme),
                 dynamicColors = mainViewModel.prefs.materialYou,
                 content = content
             )
