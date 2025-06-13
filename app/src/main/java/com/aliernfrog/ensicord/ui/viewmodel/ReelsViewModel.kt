@@ -13,7 +13,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.net.URL
 
-// TODO fetch below url from a server
+// TODO provide below url from addons
 // THIS URL IS SUBJECT TO CHANGE
 const val GET_IMAGES_URL = "https://randomized-image.aliernfrog.site/image/generate"
 
@@ -23,7 +23,7 @@ class ReelsViewModel(
     val images = mutableStateListOf<ByteArray>()
     var fetching by mutableStateOf(false)
 
-    suspend fun fetchAndAppendNewImages(count: Int = 10) {
+    suspend fun fetchAndAppendNewImages(count: Int = 3) {
         val buffers = fetchImagesFromAPI(count)
         images.addAll(buffers)
     }

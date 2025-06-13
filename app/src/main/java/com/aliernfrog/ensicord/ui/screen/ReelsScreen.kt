@@ -1,6 +1,5 @@
 package com.aliernfrog.ensicord.ui.screen
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,14 +13,15 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import coil3.compose.AsyncImage
 import com.aliernfrog.ensicord.R
-import com.aliernfrog.ensicord.TAG
 import com.aliernfrog.ensicord.ui.viewmodel.ReelsViewModel
+import kotlinx.coroutines.launch
 import org.koin.compose.viewmodel.koinViewModel
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
@@ -29,6 +29,7 @@ import org.koin.compose.viewmodel.koinViewModel
 fun ReelsScreen(
     viewModel: ReelsViewModel = koinViewModel()
 ) {
+    val scope = rememberCoroutineScope()
     val pagerState = rememberPagerState { viewModel.images.size }
     val images = viewModel.images
     val fetching = viewModel.fetching
@@ -58,13 +59,14 @@ fun ReelsScreen(
     }
 
     LaunchedEffect(pagerState.currentPage, images.size) {
-        if (images.isNotEmpty() && !fetching) {
-            if (pagerState.currentPage >= images.size-2) {
-                Log.d(TAG, "fetching new images")
+        scope.launch {
+            if (images.isNotEmpty() && !fetching) {
+                if (pagerState.currentPage >= images.size-2) {
+                    viewModel.fetchAndAppendNewImages()
+                }
+            } else if (images.isEmpty() && !fetching) {
                 viewModel.fetchAndAppendNewImages()
             }
-        } else if (images.isEmpty() && !fetching) {
-            viewModel.fetchAndAppendNewImages()
         }
     }
 }
