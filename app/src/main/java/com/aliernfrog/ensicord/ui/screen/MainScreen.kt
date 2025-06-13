@@ -1,9 +1,9 @@
 package com.aliernfrog.ensicord.ui.screen
 
 import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.ContentTransform
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.animation.togetherWith
 import androidx.compose.runtime.Composable
 import androidx.navigation3.runtime.entry
 import androidx.navigation3.runtime.entryProvider
@@ -20,32 +20,42 @@ fun MainScreen(
 ) {
     NavDisplay(
         backStack = mainViewModel.navigationBackStack,
+        transitionSpec = {
+            ContentTransform(
+                slideIntoContainer(
+                    AnimatedContentTransitionScope.SlideDirection.Start
+                ) + fadeIn(),
+                slideOutOfContainer(
+                    AnimatedContentTransitionScope.SlideDirection.Start
+                ) + fadeOut()
+            )
+        },
+        popTransitionSpec = {
+            ContentTransform(
+                slideIntoContainer(
+                    AnimatedContentTransitionScope.SlideDirection.End
+                ),
+                slideOutOfContainer(
+                    AnimatedContentTransitionScope.SlideDirection.End
+                )
+            )
+        },
+        predictivePopTransitionSpec = {
+            ContentTransform(
+                slideIntoContainer(
+                    AnimatedContentTransitionScope.SlideDirection.End
+                ),
+                slideOutOfContainer(
+                    AnimatedContentTransitionScope.SlideDirection.End
+                )
+            )
+        },
         entryProvider = entryProvider {
             entry<Destination> { destination ->
                 destination.content()
             }
 
-            entry<SettingsDestination>(
-                metadata = NavDisplay.transitionSpec {
-                    slideIntoContainer(
-                        AnimatedContentTransitionScope.SlideDirection.Start
-                    ) + fadeIn() togetherWith slideOutOfContainer(
-                        AnimatedContentTransitionScope.SlideDirection.Start
-                    ) + fadeOut()
-                } + NavDisplay.popTransitionSpec {
-                    slideIntoContainer(
-                        AnimatedContentTransitionScope.SlideDirection.End
-                    ) togetherWith slideOutOfContainer(
-                        AnimatedContentTransitionScope.SlideDirection.End
-                    )
-                } + NavDisplay.predictivePopTransitionSpec {
-                    slideIntoContainer(
-                        AnimatedContentTransitionScope.SlideDirection.End
-                    ) togetherWith slideOutOfContainer(
-                        AnimatedContentTransitionScope.SlideDirection.End
-                    )
-                }
-            ) { destination ->
+            entry<SettingsDestination> { destination ->
                 destination.content(
                     /* onNavigateBackRequest = */ {
                         mainViewModel.navigationBackStack.removeLastIfMultiple()
