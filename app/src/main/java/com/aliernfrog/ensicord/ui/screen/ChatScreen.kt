@@ -39,6 +39,7 @@ import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Tag
+import androidx.compose.material.icons.filled.Theaters
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.FilledIconButton
@@ -74,12 +75,13 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import com.aliernfrog.ensicord.BuildConfig
 import com.aliernfrog.ensicord.R
 import com.aliernfrog.ensicord.enum.Destination
+import com.aliernfrog.ensicord.ui.component.HorizontalSegmentor
 import com.aliernfrog.ensicord.ui.component.IMEVisibilityListener
+import com.aliernfrog.ensicord.ui.component.SquareButton
 import com.aliernfrog.ensicord.ui.component.chat.Message
 import com.aliernfrog.ensicord.ui.screen.settings.SettingsDestination
 import com.aliernfrog.ensicord.ui.theme.AppComponentShape
@@ -148,52 +150,70 @@ fun ChatScreen(
                             selected = selected,
                             modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding),
                             onClick = { scope.launch {
-                                // TODO better entrypoint
-                                if (channel.name == "reels") {
-                                    mainViewModel.navigationBackStack.add(Destination.REELS)
-                                } else {
-                                    chatViewModel.chosenChannelIndex = index
-                                    chatViewModel.drawerState.close()
-                                }
+                                chatViewModel.chosenChannelIndex = index
+                                chatViewModel.drawerState.close()
                             } }
                         )
                     }
                 }
-                val onNavigateSettingsRequest: () -> Unit = {
-                    mainViewModel.navigationBackStack.add(SettingsDestination.ROOT)
-                }
                 Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp))
-                        .background(MaterialTheme.colorScheme.surface)
-                        .navigationBarsPadding()
-                        .clickable(onClick = onNavigateSettingsRequest)
-                        .padding(start = 12.dp, top = 8.dp, bottom = 8.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    modifier = Modifier.navigationBarsPadding()
                 ) {
-                    AsyncImage(
-                        model = chatViewModel.user.avatarModel,
-                        contentDescription = stringResource(R.string.avatar),
-                        modifier = Modifier.size(44.dp).clip(CircleShape)
-                    )
-                    Text(
-                        text = chatViewModel.user.name,
-                        style = MaterialTheme.typography.titleMedium.copy(
-                            fontSize = 18.sp
-                        ),
-                        modifier = Modifier.weight(1f).fillMaxWidth()
-                    )
-                    IconButton(
-                        onClick = onNavigateSettingsRequest
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Settings,
-                            contentDescription = stringResource(R.string.settings)
-                        )
-                    }
+
                 }
+                HorizontalSegmentor(
+                    {
+                        SquareButton(
+                            modifier = Modifier.fillMaxWidth(),
+                            label = stringResource(R.string.settings_profile),
+                            icon = {
+                                AsyncImage(
+                                    model = chatViewModel.user.avatarModel,
+                                    contentDescription = stringResource(R.string.avatar),
+                                    modifier = Modifier.size(32.dp).clip(CircleShape)
+                                )
+                            },
+                            onClick = {
+                                mainViewModel.navigationBackStack.add(SettingsDestination.PROFILE)
+                            }
+                        )
+                    },
+                    {
+                        SquareButton(
+                            modifier = Modifier.fillMaxWidth(),
+                            label = stringResource(R.string.reels),
+                            icon = {
+                                Icon(
+                                    imageVector = Icons.Default.Theaters,
+                                    contentDescription = null,
+                                    modifier = Modifier.size(32.dp)
+                                )
+                            },
+                            onClick = {
+                                mainViewModel.navigationBackStack.add(Destination.REELS)
+                            }
+                        )
+                    },
+                    {
+                        SquareButton(
+                            modifier = Modifier.fillMaxWidth(),
+                            label = stringResource(R.string.settings),
+                            icon = {
+                                Icon(
+                                    imageVector = Icons.Default.Settings,
+                                    contentDescription = null,
+                                    modifier = Modifier.size(32.dp)
+                                )
+                            },
+                            onClick = {
+                                mainViewModel.navigationBackStack.add(SettingsDestination.ROOT)
+                            }
+                        )
+                    },
+                    modifier = Modifier
+                        .navigationBarsPadding()
+                        .padding(horizontal = 12.dp, vertical = 8.dp)
+                )
             }
         },
         drawerState = chatViewModel.drawerState

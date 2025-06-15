@@ -14,6 +14,11 @@
     <string name="settings">Settings</string>
     <string name="settings_profile">Profile</string>
     <string name="settings_profile_description">Click to customize your profile</string>
+    <string name="settings_profile_avatar">Avatar</string>
+    <string name="settings_profile_avatar_update">Pick new avatar</string>
+    <string name="settings_profile_name">Name</string>
+    <string name="settings_profile_name_update">Set nickname</string>
+    <string name="settings_profile_name_updated">Saved new nickname</string>
     <string name="settings_appearance">Appearance</string>
     <string name="settings_appearance_description">Customize the way Ensicord looks</string>
     <string name="settings_appearance_theme">Theme</string>

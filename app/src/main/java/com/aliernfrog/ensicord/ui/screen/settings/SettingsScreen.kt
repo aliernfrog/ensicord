@@ -197,7 +197,7 @@ enum class SettingsDestination(
         icon = null,
         showInPagesList = false,
         content = { onNavigateBackRequest, _ ->
-            SoonTMPage(onNavigateBackRequest = onNavigateBackRequest)
+            ProfilePage(onNavigateBackRequest = onNavigateBackRequest)
         }
     ),
 

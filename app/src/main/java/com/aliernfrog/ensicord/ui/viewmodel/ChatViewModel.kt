@@ -13,26 +13,30 @@ import com.aliernfrog.ensicord.R
 import com.aliernfrog.ensicord.data.Channel
 import com.aliernfrog.ensicord.data.Message
 import com.aliernfrog.ensicord.data.User
+import com.aliernfrog.ensicord.util.manager.PreferenceManager
+import com.aliernfrog.toptoast.state.TopToastState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-class ChatViewModel : ViewModel() {
+class ChatViewModel(
+    val prefs: PreferenceManager,
+    val topToastState: TopToastState
+) : ViewModel() {
     lateinit var uiScope: CoroutineScope
 
     val lazyListState = LazyListState()
     val drawerState = DrawerState(initialValue = DrawerValue.Closed)
-    val user = User(
+    var user by mutableStateOf(User(
         id = "user",
-        name = "Somemaus",
+        name = prefs.userName,
         avatarModel = R.drawable.user
-    )
+    ))
 
     val channels = mutableStateListOf(
         Channel("general"),
         Channel("offtopic"),
         Channel("news", readOnly = true),
-        Channel("starboard", readOnly = true),
-        Channel("reels")
+        Channel("starboard", readOnly = true)
     )
     var chosenChannelIndex by mutableIntStateOf(0)
     var chosenChannel: Channel

@@ -10,4 +10,6 @@ class PreferenceManager(context: Context) : BasePreferenceManager(
     // Appearance options
     var theme by intPreference("theme", Theme.SYSTEM.int)
     var materialYou by booleanPreference("materialYou", true)
+
+    var userName by stringPreference("userName", "Somemaus")
 }
