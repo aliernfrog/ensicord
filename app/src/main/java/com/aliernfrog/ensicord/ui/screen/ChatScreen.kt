@@ -73,7 +73,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
@@ -271,7 +270,10 @@ private fun ChatPanel(
                             chatViewModel.sendMessageFromUserInput()
                         },
                         colors = IconButtonDefaults.filledIconButtonColors(
-                            disabledContainerColor = MaterialTheme.colorScheme.surfaceContainer
+                            containerColor = MaterialTheme.colorScheme.primary,
+                            contentColor = MaterialTheme.colorScheme.onPrimary,
+                            disabledContainerColor = MaterialTheme.colorScheme.surfaceContainer,
+                            disabledContentColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f)
                         ),
                         enabled = enabled
                     ) {
@@ -331,8 +333,7 @@ private fun ChatPanel(
                 Text(
                     text = stringResource(R.string.chat_beginning)
                         .replace("{CHANNEL}", "#"+chatViewModel.chosenChannel.name),
-                    style = MaterialTheme.typography.headlineSmallEmphasized
-                        .copy(fontWeight = FontWeight.SemiBold),
+                    style = MaterialTheme.typography.headlineSmallEmphasized,
                     modifier = Modifier
                         .padding(12.dp)
                         .padding(bottom = 56.dp)
