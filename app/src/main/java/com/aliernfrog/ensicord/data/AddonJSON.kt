@@ -1,9 +1,13 @@
 package com.aliernfrog.ensicord.data
 
+import androidx.annotation.Keep
+
+@Keep
 data class AddonJSON(
     val meta: AddonMetadataJSON
 )
 
+@Keep
 data class AddonMetadataJSON(
     val name: String,
     val description: String,

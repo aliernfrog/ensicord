@@ -6,15 +6,17 @@
 >
 > Development is going on at [`compose`](https://github.com/aliernfrog/ensicord/tree/compose) branch.
 
-# <a href="https://github.com/aliernfrog/ensicord/releases">Download</a>
+# Download
+Very outdated, but (partially) working versions can be downloaded from [Releases](https://github.com/aliernfrog/ensicord/releases).
+
+Development builds of Ensicord Compose can be downloaded from [Actions](https://github.com/aliernfrog/ensicord/actions/workflows/commit.yml).
 
 # Requirements
-- Any Android version above Android 4.1
+- Any Android version above Android 6.0.
 
-# Notes
-- `READ_EXTERNAL_STORAGE` and `WRITE_EXTERNAL_STORAGE` are needed for custom avatars.
-
-# Building
-- Clone the repository
-- Open it in Android Studio
-- Remove signingConfigs from `app/build.gradle` if needed
+# TO-DO
+- [ ] Use `kotlinx.serialization` instead of Gson
+- [ ] Implement chatting with Ensi
+- [ ] Update flow
+- [ ] Improve state management
+- And others from [Issues](https://github.com/aliernfrog/ensicord/issues)

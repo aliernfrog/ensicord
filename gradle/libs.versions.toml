@@ -1,22 +1,23 @@
 [versions]
-android-plugin = "8.10.1"
-kotlin-plugin = "2.1.21"
+android-plugin = "9.0.1"
+kotlin-plugin = "2.3.10"
 
-androidx-activity = "1.12.0-alpha02"
+androidx-activity = "1.12.4"
 androidx-appcompat = "1.7.1"
-androidx-ktx = "1.16.0"
-androidx-lifecycle = "2.9.1"
-androidx-navigation3-core = "1.0.0-alpha03"
-androidx-splashscreen = "1.0.1"
+androidx-ktx = "1.17.0"
+androidx-lifecycle = "2.10.0"
+androidx-navigation3-core = "1.0.1"
+androidx-splashscreen = "1.2.0"
 
-compose = "1.8.2"
+compose = "1.10.3"
 compose-material-icons = "1.7.8"
-compose-material3 = "1.4.0-alpha15"
+compose-material3 = "1.5.0-alpha14"
 
-coil = "3.2.0"
-gson = "2.13.1"
-koin = "4.0.4"
-toptoast = "2.1.0"
+aboutlibraries = "14.0.0-b02"
+coil = "3.3.0"
+gson = "2.13.2"
+koin = "4.1.1"
+toptoast = "2.2.0-alpha03"
 
 [libraries]
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "androidx-activity" }
@@ -35,6 +36,10 @@ compose-material = { group = "androidx.compose.material", name = "material", ver
 compose-material-icons = { group = "androidx.compose.material", name = "material-icons-extended", version.ref = "compose-material-icons" }
 compose-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "compose-material3" }
 
+kgp = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin-plugin" }
+
+aboutlibraries-core = { group = "com.mikepenz", name = "aboutlibraries-core", version.ref = "aboutlibraries" }
+aboutlibraries-compose-core = { group = "com.mikepenz", name = "aboutlibraries-compose-core", version.ref = "aboutlibraries" }
 coil = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil" }
 coil-okhttp = { group = "io.coil-kt.coil3", name = "coil-network-okhttp", version.ref = "coil" }
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
@@ -44,5 +49,5 @@ toptoast = { group = "com.github.aliernfrog", name = "top-toast-compose", versio
 [plugins]
 android-application = { id = "com.android.application", version.ref = "android-plugin" }
 android-library = { id = "com.android.library", version.ref = "android-plugin" }
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin-plugin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin-plugin" }
+aboutlibraries-android = { id = "com.mikepenz.aboutlibraries.plugin.android", version.ref = "aboutlibraries" }

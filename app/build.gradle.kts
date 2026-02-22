@@ -1,7 +1,9 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.aboutlibraries.android)
 }
 
 android {
@@ -12,8 +14,8 @@ android {
         applicationId = "com.aliernfrog.ensicord"
         minSdk = 23
         targetSdk = 36
-        versionCode = 20000
-        versionName = "v2.0.0 (dev)"
+        versionCode = 200000
+        versionName = "v2.0.0-dev"
         vectorDrawables { useSupportLibrary = true }
     }
 
@@ -30,11 +32,6 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
 
-    kotlinOptions {
-        jvmTarget = "11"
-        freeCompilerArgs = freeCompilerArgs + "-opt-in=kotlin.RequiresOptIn"
-    }
-
     buildFeatures {
         buildConfig = true
         compose = true
@@ -44,6 +41,14 @@ android {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
+    }
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_11)
+        optIn.add("kotlin.RequiresOptIn")
+        freeCompilerArgs.add("-Xannotation-default-target=param-property")
     }
 }
 
@@ -62,6 +67,8 @@ dependencies {
     implementation(libs.compose.material.icons)
     implementation(libs.compose.material3)
 
+    implementation(libs.aboutlibraries.core)
+    implementation(libs.aboutlibraries.compose.core)
     implementation(libs.coil)
     implementation(libs.coil.okhttp)
     implementation(libs.gson)
