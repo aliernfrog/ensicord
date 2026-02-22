@@ -9,17 +9,15 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.aliernfrog.ensicord.TAG
 import com.aliernfrog.ensicord.data.BufferWrapper
+import com.aliernfrog.ensicord.util.manager.PreferenceManager
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.net.URL
 
-// TODO provide below url from addons
-// THIS URL IS SUBJECT TO CHANGE
-const val GET_IMAGES_URL = "https://randomized-image.aliernfrog.site/image/generate"
-
 class ReelsViewModel(
-    private val gson: Gson
+    private val gson: Gson,
+    private val prefs: PreferenceManager
 ) : ViewModel() {
     val images = mutableStateListOf<ByteArray>()
     var fetching by mutableStateOf(false)
@@ -36,7 +34,7 @@ class ReelsViewModel(
         fetching = true
         try {
             val wrappers = withContext(Dispatchers.IO) {
-                val url = URL("$GET_IMAGES_URL?count=${count}")
+                val url = URL("${prefs.reelsURL.value}?count=${count}")
                 val response = url.readText()
                 gson.fromJson(response, Array<BufferWrapper>::class.java)
             }

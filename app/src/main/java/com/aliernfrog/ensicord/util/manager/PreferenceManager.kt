@@ -17,6 +17,6 @@ class PreferenceManager(context: Context) : BasePreferenceManager(
 
     val experimentalOptionsEnabled = booleanPreference("experimental_options_enabled", false)
     val autoCheckUpdates = booleanPreference("auto_updates", true)
-
+    val reelsURL = stringPreference("reels_url", "", experimental = true, includeInDebugInfo = false)
     val releasesURL = stringPreference("releases_url", defaultReleasesURL, experimental = true, includeInDebugInfo = false)
 }
