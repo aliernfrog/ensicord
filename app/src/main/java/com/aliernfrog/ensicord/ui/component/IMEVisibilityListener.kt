@@ -7,19 +7,19 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.unit.dp
-import com.aliernfrog.ensicord.ui.viewmodel.InsetsViewModel
-import org.koin.androidx.compose.koinViewModel
+import io.github.aliernfrog.shared.impl.InsetsManager
+import org.koin.compose.koinInject
 
 @Composable
 fun IMEVisibilityListener(
     onVisibilityUpdate: (visible: Boolean) -> Unit
 ) {
-    val insetsViewModel = koinViewModel<InsetsViewModel>()
+    val insetsManager = koinInject<InsetsManager>()
 
     var lastHeight by remember { mutableStateOf(0.dp) }
 
-    LaunchedEffect(insetsViewModel.imePadding) {
-        val height = insetsViewModel.imePadding
+    LaunchedEffect(insetsManager.imePadding) {
+        val height = insetsManager.imePadding
         if (lastHeight == height) return@LaunchedEffect
         onVisibilityUpdate(height > 0.dp)
         lastHeight = height

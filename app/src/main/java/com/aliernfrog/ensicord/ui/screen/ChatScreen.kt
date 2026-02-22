@@ -79,15 +79,16 @@ import coil3.compose.AsyncImage
 import com.aliernfrog.ensicord.BuildConfig
 import com.aliernfrog.ensicord.R
 import com.aliernfrog.ensicord.enum.Destination
-import com.aliernfrog.ensicord.ui.component.HorizontalSegmentor
 import com.aliernfrog.ensicord.ui.component.IMEVisibilityListener
 import com.aliernfrog.ensicord.ui.component.SquareButton
 import com.aliernfrog.ensicord.ui.component.chat.Message
-import com.aliernfrog.ensicord.ui.screen.settings.SettingsDestination
 import com.aliernfrog.ensicord.ui.theme.AppComponentShape
 import com.aliernfrog.ensicord.ui.viewmodel.ChatViewModel
 import com.aliernfrog.ensicord.ui.viewmodel.MainViewModel
+import com.aliernfrog.ensicord.util.AppSettingsDestination
 import com.aliernfrog.ensicord.util.extension.isAtBeginning
+import io.github.aliernfrog.shared.ui.component.HorizontalSegmentor
+import io.github.aliernfrog.shared.ui.screen.settings.SettingsDestination
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
@@ -97,6 +98,10 @@ fun ChatScreen(
     chatViewModel: ChatViewModel = koinViewModel()
 ) {
     val scope = rememberCoroutineScope()
+    val versionName = remember {
+        "v" + BuildConfig.VERSION_NAME
+    }
+
     ModalNavigationDrawer(
         drawerContent = {
             ModalDrawerSheet(
@@ -122,7 +127,7 @@ fun ChatScreen(
                             style = MaterialTheme.typography.titleLarge
                         )
                         Text(
-                            text = BuildConfig.VERSION_NAME,
+                            text = versionName,
                             style = MaterialTheme.typography.bodyMedium
                         )
                     }
@@ -156,11 +161,6 @@ fun ChatScreen(
                         )
                     }
                 }
-                Row(
-                    modifier = Modifier.navigationBarsPadding()
-                ) {
-
-                }
                 HorizontalSegmentor(
                     {
                         SquareButton(
@@ -174,7 +174,7 @@ fun ChatScreen(
                                 )
                             },
                             onClick = {
-                                mainViewModel.navigationBackStack.add(SettingsDestination.PROFILE)
+                                mainViewModel.navigationBackStack.add(AppSettingsDestination.profile)
                             }
                         )
                     },
@@ -206,7 +206,7 @@ fun ChatScreen(
                                 )
                             },
                             onClick = {
-                                mainViewModel.navigationBackStack.add(SettingsDestination.ROOT)
+                                mainViewModel.navigationBackStack.add(SettingsDestination.root)
                             }
                         )
                     },

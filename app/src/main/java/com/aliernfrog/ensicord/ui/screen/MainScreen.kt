@@ -8,17 +8,23 @@ import androidx.compose.runtime.Composable
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
 import com.aliernfrog.ensicord.enum.Destination
-import com.aliernfrog.ensicord.ui.screen.settings.SettingsDestination
+import com.aliernfrog.ensicord.ui.screen.settings.SettingsScreen
 import com.aliernfrog.ensicord.ui.viewmodel.MainViewModel
 import com.aliernfrog.ensicord.util.extension.removeLastIfMultiple
+import com.aliernfrog.ensicord.util.slideTransitionMetadata
+import io.github.aliernfrog.shared.ui.screen.settings.SettingsDestination
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun MainScreen(
-    mainViewModel: MainViewModel = koinViewModel()
+    vm: MainViewModel = koinViewModel()
 ) {
+    val onNavigateBackRequest: () -> Unit = {
+        vm.navigationBackStack.removeLastIfMultiple()
+    }
+
     NavDisplay(
-        backStack = mainViewModel.navigationBackStack,
+        backStack = vm.navigationBackStack,
         transitionSpec = {
             ContentTransform(
                 slideIntoContainer(
@@ -54,13 +60,18 @@ fun MainScreen(
                 destination.content()
             }
 
-            entry<SettingsDestination> { destination ->
-                destination.content(
-                    /* onNavigateBackRequest = */ {
-                        mainViewModel.navigationBackStack.removeLastIfMultiple()
+            entry<SettingsDestination>(
+                metadata = slideTransitionMetadata
+            ) { destination ->
+                SettingsScreen(
+                    destination = destination,
+                    onNavigateBackRequest = onNavigateBackRequest,
+                    onNavigateRequest = { vm.navigationBackStack.add(it) },
+                    onCheckUpdatesRequest = {
+                        // TODO vm.checkUpdates(skipVersionCheck = skipVersionCheck)
                     },
-                    /* onNavigateRequest = */ { target ->
-                        mainViewModel.navigationBackStack.add(target)
+                    onNavigateUpdatesScreenRequest = {
+                        // TODO vm.navigationBackStack.add(UpdateScreenDestination)
                     }
                 )
             }

@@ -15,7 +15,7 @@ android {
         minSdk = 23
         targetSdk = 36
         versionCode = 200000
-        versionName = "v2.0.0-dev"
+        versionName = "2.0.0-dev"
         vectorDrawables { useSupportLibrary = true }
     }
 
@@ -52,6 +52,31 @@ kotlin {
     }
 }
 
+// Utilities to get git environment information
+// Source: https://github.com/vendetta-mod/VendettaManager/blob/main/app/build.gradle.kts
+fun getCurrentBranch() = exec("git", "symbolic-ref", "--short", "HEAD")
+    ?: exec("git", "describe", "--tags", "--exact-match")
+fun getLatestCommit() = exec("git", "rev-parse", "--short", "HEAD")
+fun hasLocalChanges(): Boolean {
+    val branch = getCurrentBranch()
+    val uncommittedChanges = exec("git", "status", "-s")?.isNotEmpty() ?: false
+    val unpushedChanges = exec("git", "log", "origin/$branch..HEAD")?.isNotBlank() ?: false
+    return uncommittedChanges || unpushedChanges
+}
+
+fun exec(vararg command: String) = try {
+    val process = ProcessBuilder(command.toList())
+        .redirectOutput(ProcessBuilder.Redirect.PIPE)
+        .redirectError(ProcessBuilder.Redirect.PIPE)
+        .start()
+    val stdout = process.inputStream.bufferedReader().readText()
+    val stderr = process.errorStream.bufferedReader().readText()
+    if (stderr.isNotEmpty()) throw Error(stderr)
+    stdout.trim()
+} catch (_: Throwable) {
+    null
+}
+
 dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.appcompat)
@@ -73,8 +98,15 @@ dependencies {
     implementation(libs.coil.okhttp)
     implementation(libs.gson)
     implementation(libs.koin)
+    implementation(libs.pftool.shared.base)
     implementation(libs.toptoast)
 
     debugImplementation(libs.compose.ui.tooling)
     debugImplementation(libs.compose.ui.tooling.preview)
+}
+
+android.defaultConfig.run {
+    buildConfigField("String", "GIT_BRANCH", "\"${getCurrentBranch()}\"")
+    buildConfigField("String", "GIT_COMMIT", "\"${getLatestCommit()}\"")
+    buildConfigField("boolean", "GIT_LOCAL_CHANGES", "${hasLocalChanges()}")
 }

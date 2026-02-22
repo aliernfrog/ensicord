@@ -19,9 +19,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.aliernfrog.ensicord.R
-import com.aliernfrog.ensicord.ui.component.expressive.ExpressiveSection
 import com.aliernfrog.ensicord.ui.viewmodel.ChatViewModel
 import com.aliernfrog.ensicord.util.extension.showSuccessToast
+import io.github.aliernfrog.shared.ui.component.expressive.ExpressiveSection
+import io.github.aliernfrog.shared.ui.screen.settings.SettingsPageContainer
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -30,7 +31,7 @@ fun ProfilePage(
     onNavigateBackRequest: () -> Unit
 ) {
     var nameInput by rememberSaveable {
-        mutableStateOf(chatViewModel.prefs.userName)
+        mutableStateOf(chatViewModel.prefs.userName.value)
     }
 
     SettingsPageContainer(
@@ -61,23 +62,24 @@ fun ProfilePage(
                 Text(stringResource(R.string.settings_profile_avatar_update))
             }
         }
+
         ExpressiveSection(stringResource(R.string.settings_profile_name)) {
             OutlinedTextField(
                 value = nameInput,
                 onValueChange = { nameInput = it },
-                placeholder = { Text(chatViewModel.prefs.userName) },
+                placeholder = { Text(chatViewModel.prefs.userName.value) },
                 singleLine = true,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 12.dp)
             )
             Button(
-                enabled = nameInput.isNotEmpty() && nameInput != chatViewModel.prefs.userName,
+                enabled = nameInput.isNotEmpty() && nameInput != chatViewModel.prefs.userName.value,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 12.dp, vertical = 8.dp),
                 onClick = {
-                    chatViewModel.prefs.userName = nameInput
+                    chatViewModel.prefs.userName.value = nameInput
                     chatViewModel.user = chatViewModel.user.copy(
                         name = nameInput
                     )

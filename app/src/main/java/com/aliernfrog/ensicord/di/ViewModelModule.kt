@@ -5,8 +5,9 @@ import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 
 val viewModelModule = module {
+    // TODO use viewModelOf
     singleOf(::MainViewModel)
-    singleOf(::InsetsViewModel)
+    singleOf(::SettingsViewModel)
     singleOf(::AddonsViewModel)
 
     singleOf(::ChatViewModel)

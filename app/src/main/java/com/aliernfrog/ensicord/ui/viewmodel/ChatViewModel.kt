@@ -28,7 +28,7 @@ class ChatViewModel(
     val drawerState = DrawerState(initialValue = DrawerValue.Closed)
     var user by mutableStateOf(User(
         id = "user",
-        name = prefs.userName,
+        name = prefs.userName.value,
         avatarModel = R.drawable.user
     ))
 

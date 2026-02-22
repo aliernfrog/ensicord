@@ -1,28 +1,23 @@
 package com.aliernfrog.ensicord.ui.activity
 
-import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxScope
-import androidx.compose.foundation.layout.displayCutoutPadding
-import androidx.compose.foundation.layout.navigationBarsPadding
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalView
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import com.aliernfrog.ensicord.ui.component.InsetsObserver
 import com.aliernfrog.ensicord.ui.screen.MainScreen
 import com.aliernfrog.ensicord.ui.theme.EnsicordTheme
 import com.aliernfrog.ensicord.ui.theme.Theme
 import com.aliernfrog.ensicord.ui.viewmodel.MainViewModel
+import com.aliernfrog.ensicord.util.sharedString
 import com.aliernfrog.toptoast.component.TopToastHost
+import io.github.aliernfrog.shared.ui.component.util.AppContainer
+import io.github.aliernfrog.shared.ui.component.util.InsetsObserver
+import io.github.aliernfrog.shared.util.LocalSharedString
 import org.koin.androidx.compose.koinViewModel
 
 class MainActivity : AppCompatActivity() {
@@ -45,17 +40,21 @@ class MainActivity : AppCompatActivity() {
         @Composable
         fun AppTheme(content: @Composable () -> Unit) {
             EnsicordTheme(
-                darkTheme = mainViewModel.forceDarkTheme || isDarkThemeEnabled(mainViewModel.prefs.theme),
-                dynamicColors = mainViewModel.prefs.materialYou,
+                darkTheme = mainViewModel.forceDarkTheme || shouldUseDarkTheme(mainViewModel.prefs.theme.value),
+                dynamicColors = mainViewModel.prefs.materialYou.value,
                 content = content
             )
         }
 
         AppTheme {
             InsetsObserver()
-            AppContainer {
-                MainScreen()
-                TopToastHost(mainViewModel.topToastState)
+            CompositionLocalProvider(
+                LocalSharedString provides sharedString
+            ) {
+                AppContainer {
+                    MainScreen()
+                    TopToastHost(mainViewModel.topToastState)
+                }
             }
         }
 
@@ -66,24 +65,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     @Composable
-    private fun AppContainer(
-        content: @Composable BoxScope.() -> Unit
-    ) {
-        val config = LocalConfiguration.current
-        var modifier = Modifier.background(MaterialTheme.colorScheme.surface)
-        if (config.orientation == Configuration.ORIENTATION_LANDSCAPE)
-            modifier = modifier
-                .displayCutoutPadding()
-                .navigationBarsPadding()
-
-        Box(
-            modifier = modifier,
-            content = content
-        )
-    }
-
-    @Composable
-    private fun isDarkThemeEnabled(theme: Int): Boolean {
+    private fun shouldUseDarkTheme(theme: Int): Boolean {
         return when(theme) {
             Theme.LIGHT.int -> false
             Theme.DARK.int -> true
