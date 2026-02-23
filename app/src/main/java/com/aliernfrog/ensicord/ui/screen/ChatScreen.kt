@@ -33,7 +33,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.Send
+import androidx.compose.material.icons.automirrored.rounded.Send
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.MoreVert
@@ -42,9 +42,7 @@ import androidx.compose.material.icons.filled.Tag
 import androidx.compose.material.icons.filled.Theaters
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
-import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
@@ -56,6 +54,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SmallFloatingActionButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.TooltipAnchorPosition
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.contentColorFor
@@ -72,6 +71,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -86,11 +86,14 @@ import com.aliernfrog.ensicord.ui.viewmodel.ChatViewModel
 import com.aliernfrog.ensicord.util.AppSettingsDestination
 import com.aliernfrog.ensicord.util.Destination
 import com.aliernfrog.ensicord.util.extension.isAtBeginning
+import io.github.aliernfrog.shared.ui.component.FilledIconButtonWithTooltip
 import io.github.aliernfrog.shared.ui.component.HorizontalSegmentor
+import io.github.aliernfrog.shared.ui.component.IconButtonWithTooltip
 import io.github.aliernfrog.shared.ui.screen.settings.SettingsDestination
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun ChatScreen(
     vm: ChatViewModel = koinViewModel()
@@ -129,14 +132,12 @@ fun ChatScreen(
                             style = MaterialTheme.typography.bodyMedium
                         )
                     }
-                    IconButton(
-                        onClick = { /*TODO*/ }
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.MoreVert,
-                            contentDescription = stringResource(R.string.action_more)
-                        )
-                    }
+                    IconButtonWithTooltip(
+                        icon = rememberVectorPainter(Icons.Default.MoreVert),
+                        contentDescription = stringResource(R.string.action_more),
+                        tooltipPositioning = TooltipAnchorPosition.Below,
+                        onClick = { /* TODO */ }
+                    )
                 }
                 Column(
                     modifier = Modifier
@@ -257,14 +258,14 @@ private fun ChatPanel(
                     }
                 },
                 navigationIcon = {
-                    IconButton(onClick = { scope.launch {
-                        chatViewModel.drawerState.open()
-                    } }) {
-                        Icon(
-                            imageVector = Icons.Default.Menu,
-                            contentDescription = stringResource(R.string.chat_menu)
-                        )
-                    }
+                    IconButtonWithTooltip(
+                        icon = rememberVectorPainter(Icons.Default.Menu),
+                        contentDescription = stringResource(R.string.chat_menu),
+                        tooltipPositioning = TooltipAnchorPosition.Below,
+                        onClick = { scope.launch {
+                            chatViewModel.drawerState.open()
+                        } }
+                    )
                 },
                 scrollBehavior = scrollBehavior
             )
@@ -283,7 +284,9 @@ private fun ChatPanel(
                     onValueChange = { chatViewModel.textInput = it }
                 )
                 Crossfade(targetState = chatViewModel.textInput.isNotBlank()) { enabled ->
-                    FilledIconButton(
+                    FilledIconButtonWithTooltip(
+                        icon = rememberVectorPainter(Icons.AutoMirrored.Rounded.Send),
+                        contentDescription = stringResource(R.string.chat_textInput_send),
                         onClick = {
                             chatViewModel.sendMessageFromUserInput()
                         },
@@ -294,12 +297,7 @@ private fun ChatPanel(
                             disabledContentColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f)
                         ),
                         enabled = enabled
-                    ) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.Send,
-                            contentDescription = stringResource(R.string.chat_textInput_send)
-                        )
-                    }
+                    )
                 }
             }
         },
@@ -312,7 +310,7 @@ private fun ChatPanel(
             ) {
                 SmallFloatingActionButton(
                     onClick = { scope.launch {
-                        // [bug] this causes top app bar to not change color when scrolling
+                        // BUG: this causes top app bar to not change color when scrolling
                         chatViewModel.lazyListState.animateScrollToItem(0)
                     } },
                     shape = RoundedCornerShape(12.dp),
