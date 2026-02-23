@@ -31,7 +31,6 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.aliernfrog.ensicord.R
 import com.aliernfrog.ensicord.ui.theme.AppComponentShape
-import com.aliernfrog.ensicord.ui.viewmodel.MainViewModel
 import com.aliernfrog.ensicord.ui.viewmodel.ReelsViewModel
 import com.aliernfrog.ensicord.util.extension.removeLastIfMultiple
 import kotlinx.coroutines.CoroutineScope
@@ -42,11 +41,10 @@ import org.koin.compose.viewmodel.koinViewModel
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun ReelsScreen(
-    mainViewModel: MainViewModel = koinViewModel(),
-    viewModel: ReelsViewModel = koinViewModel()
+    vm: ReelsViewModel = koinViewModel()
 ) {
-    val images = viewModel.images
-    val fetching = viewModel.fetching
+    val images = vm.images
+    val fetching = vm.fetching
 
     Box(
         modifier = Modifier
@@ -60,7 +58,7 @@ fun ReelsScreen(
                 stringResource(R.string.reels_noImages)
             )
         } else VerticalPager(
-            state = viewModel.pagerState,
+            state = vm.pagerState,
             modifier = Modifier.fillMaxSize()
         ) { pageIndex ->
             images.getOrNull(pageIndex)?.let {
@@ -70,7 +68,7 @@ fun ReelsScreen(
 
         TopBar(
             onNavigateBackRequest = {
-                mainViewModel.navigationBackStack.removeLastIfMultiple()
+                vm.navigationBackStack.removeLastIfMultiple()
             },
             modifier = Modifier
                 .systemBarsPadding()
@@ -79,14 +77,14 @@ fun ReelsScreen(
         )
     }
 
-    LaunchedEffect(viewModel.pagerState.currentPage, images.size) {
+    LaunchedEffect(vm.pagerState.currentPage, images.size) {
         CoroutineScope(Dispatchers.Main).launch {
             if (images.isNotEmpty() && !fetching) {
-                if (viewModel.pagerState.currentPage >= images.size-2) {
-                    viewModel.fetchAndAppendNewImages()
+                if (vm.pagerState.currentPage >= images.size-2) {
+                    vm.fetchAndAppendNewImages()
                 }
             } else if (images.isEmpty() && !fetching) {
-                viewModel.fetchAndAppendNewImages()
+                vm.fetchAndAppendNewImages()
             }
         }
     }

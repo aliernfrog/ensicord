@@ -16,6 +16,11 @@ import io.github.aliernfrog.shared.ui.screen.settings.SettingsDestination
 import io.github.aliernfrog.shared.ui.screen.settings.category
 import io.github.aliernfrog.shared.util.SharedStringResolvable
 
+object Destination {
+    object Chat
+    object Reels
+}
+
 class AppSettingsDestination {
     companion object {
         val profile = SettingsDestination(

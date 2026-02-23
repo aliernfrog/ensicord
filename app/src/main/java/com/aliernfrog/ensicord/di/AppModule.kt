@@ -2,6 +2,7 @@ package com.aliernfrog.ensicord.di
 
 import com.aliernfrog.ensicord.BuildConfig
 import com.aliernfrog.ensicord.TAG
+import com.aliernfrog.ensicord.domain.AppState
 import com.aliernfrog.ensicord.util.manager.PreferenceManager
 import com.aliernfrog.toptoast.state.TopToastState
 import com.google.gson.Gson
@@ -29,6 +30,7 @@ val appModule = module {
         }
     }
 
+    singleOf(::AppState)
     single {
         TopToastState(
             composeView = null,

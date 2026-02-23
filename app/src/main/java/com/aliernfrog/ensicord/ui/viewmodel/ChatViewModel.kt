@@ -14,16 +14,21 @@ import com.aliernfrog.ensicord.R
 import com.aliernfrog.ensicord.data.Channel
 import com.aliernfrog.ensicord.data.Message
 import com.aliernfrog.ensicord.data.User
+import com.aliernfrog.ensicord.domain.AppState
 import com.aliernfrog.ensicord.util.manager.PreferenceManager
 import com.aliernfrog.toptoast.state.TopToastState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 class ChatViewModel(
-    val prefs: PreferenceManager,
-    val topToastState: TopToastState
+    private val appState: AppState,
+    val topToastState: TopToastState,
+    val prefs: PreferenceManager
 ) : ViewModel() {
     lateinit var uiScope: CoroutineScope
+
+    val navigationBackStack
+        get() = appState.navigationBackStack
 
     val responseGenerator = Ensi(types = listOf(), schemes = listOf())
     val lazyListState = LazyListState()

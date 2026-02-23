@@ -9,6 +9,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.aliernfrog.ensicord.TAG
 import com.aliernfrog.ensicord.data.BufferWrapper
+import com.aliernfrog.ensicord.domain.AppState
 import com.aliernfrog.ensicord.util.manager.PreferenceManager
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
@@ -16,9 +17,13 @@ import kotlinx.coroutines.withContext
 import java.net.URL
 
 class ReelsViewModel(
+    private val appState: AppState,
     private val gson: Gson,
     private val prefs: PreferenceManager
 ) : ViewModel() {
+    val navigationBackStack
+        get() = appState.navigationBackStack
+
     val images = mutableStateListOf<ByteArray>()
     var fetching by mutableStateOf(false)
 

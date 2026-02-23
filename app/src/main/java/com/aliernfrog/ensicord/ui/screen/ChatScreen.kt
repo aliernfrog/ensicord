@@ -78,14 +78,13 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.aliernfrog.ensicord.BuildConfig
 import com.aliernfrog.ensicord.R
-import com.aliernfrog.ensicord.enum.Destination
 import com.aliernfrog.ensicord.ui.component.IMEVisibilityListener
 import com.aliernfrog.ensicord.ui.component.SquareButton
 import com.aliernfrog.ensicord.ui.component.chat.Message
 import com.aliernfrog.ensicord.ui.theme.AppComponentShape
 import com.aliernfrog.ensicord.ui.viewmodel.ChatViewModel
-import com.aliernfrog.ensicord.ui.viewmodel.MainViewModel
 import com.aliernfrog.ensicord.util.AppSettingsDestination
+import com.aliernfrog.ensicord.util.Destination
 import com.aliernfrog.ensicord.util.extension.isAtBeginning
 import io.github.aliernfrog.shared.ui.component.HorizontalSegmentor
 import io.github.aliernfrog.shared.ui.screen.settings.SettingsDestination
@@ -94,8 +93,7 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun ChatScreen(
-    mainViewModel: MainViewModel = koinViewModel(),
-    chatViewModel: ChatViewModel = koinViewModel()
+    vm: ChatViewModel = koinViewModel()
 ) {
     val scope = rememberCoroutineScope()
     val versionName = remember {
@@ -147,16 +145,16 @@ fun ChatScreen(
                         .verticalScroll(rememberScrollState())
                 ) {
                     Spacer(Modifier.height(12.dp))
-                    chatViewModel.channels.forEachIndexed { index, channel ->
-                        val selected = chatViewModel.chosenChannelIndex == index
+                    vm.channels.forEachIndexed { index, channel ->
+                        val selected = vm.chosenChannelIndex == index
                         NavigationDrawerItem(
                             label = { Text(channel.name) },
                             icon = { Icon(Icons.Default.Tag, null) },
                             selected = selected,
                             modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding),
                             onClick = { scope.launch {
-                                chatViewModel.chosenChannelIndex = index
-                                chatViewModel.drawerState.close()
+                                vm.chosenChannelIndex = index
+                                vm.drawerState.close()
                             } }
                         )
                     }
@@ -168,13 +166,13 @@ fun ChatScreen(
                             label = stringResource(R.string.settings_profile),
                             icon = {
                                 AsyncImage(
-                                    model = chatViewModel.user.avatarModel,
+                                    model = vm.user.avatarModel,
                                     contentDescription = stringResource(R.string.avatar),
                                     modifier = Modifier.size(32.dp).clip(CircleShape)
                                 )
                             },
                             onClick = {
-                                mainViewModel.navigationBackStack.add(AppSettingsDestination.profile)
+                                vm.navigationBackStack.add(AppSettingsDestination.profile)
                             }
                         )
                     },
@@ -190,7 +188,7 @@ fun ChatScreen(
                                 )
                             },
                             onClick = {
-                                mainViewModel.navigationBackStack.add(Destination.REELS)
+                                vm.navigationBackStack.add(Destination.Reels)
                             }
                         )
                     },
@@ -206,7 +204,7 @@ fun ChatScreen(
                                 )
                             },
                             onClick = {
-                                mainViewModel.navigationBackStack.add(SettingsDestination.root)
+                                vm.navigationBackStack.add(SettingsDestination.root)
                             }
                         )
                     },
@@ -216,7 +214,7 @@ fun ChatScreen(
                 )
             }
         },
-        drawerState = chatViewModel.drawerState
+        drawerState = vm.drawerState
     ) {
         ChatPanel()
     }
