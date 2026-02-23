@@ -76,7 +76,7 @@ fun ReelsScreen(
             },
             showLoadingIndicator = fetching
                     && images.isNotEmpty()
-                    && vm.pagerState.currentPage == images.size,
+                    && vm.pagerState.currentPage == images.lastIndex,
             modifier = Modifier
                 .systemBarsPadding()
                 .padding(horizontal = 12.dp, vertical = 4.dp)
