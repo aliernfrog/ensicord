@@ -1,12 +1,10 @@
 *.iml
+*.jks
 .gradle
-/.github
 /.idea
 .DS_Store
 /build
 /captures
-index.html
-README.md
 .externalNativeBuild
 .cxx
 local.properties
