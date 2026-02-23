@@ -75,7 +75,7 @@ object SettingsConstant {
         ),
         CreditData(
             name = "Exi",
-            // TODO add avatar
+            githubUsername = "Exi277",
             description = R.string.settings_about_credits_help
         ),
         CreditData(

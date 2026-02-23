@@ -101,6 +101,7 @@ dependencies {
     implementation(libs.koin)
     implementation(libs.pftool.shared.base)
     implementation(libs.toptoast)
+    implementation(libs.zoomable)
 
     debugImplementation(libs.compose.ui.tooling)
     debugImplementation(libs.compose.ui.tooling.preview)

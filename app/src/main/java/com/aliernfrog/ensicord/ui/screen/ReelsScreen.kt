@@ -1,5 +1,7 @@
 package com.aliernfrog.ensicord.ui.screen
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -28,7 +30,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import coil3.compose.AsyncImage
+import coil3.compose.rememberAsyncImagePainter
 import com.aliernfrog.ensicord.R
 import com.aliernfrog.ensicord.ui.theme.AppComponentShape
 import com.aliernfrog.ensicord.ui.viewmodel.ReelsViewModel
@@ -36,6 +38,8 @@ import com.aliernfrog.ensicord.util.extension.removeLastIfMultiple
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import net.engawapg.lib.zoomable.rememberZoomState
+import net.engawapg.lib.zoomable.zoomable
 import org.koin.compose.viewmodel.koinViewModel
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
@@ -70,6 +74,9 @@ fun ReelsScreen(
             onNavigateBackRequest = {
                 vm.navigationBackStack.removeLastIfMultiple()
             },
+            showLoadingIndicator = fetching
+                    && images.isNotEmpty()
+                    && vm.pagerState.currentPage == images.size,
             modifier = Modifier
                 .systemBarsPadding()
                 .padding(horizontal = 12.dp, vertical = 4.dp)
@@ -94,13 +101,13 @@ fun ReelsScreen(
 @Composable
 private fun TopBar(
     modifier: Modifier = Modifier,
+    showLoadingIndicator: Boolean,
     onNavigateBackRequest: () -> Unit
 ) {
     CompositionLocalProvider(
         LocalContentColor provides MaterialTheme.colorScheme.onSurface
     ) {
         Row(
-            horizontalArrangement = Arrangement.spacedBy(4.dp),
             modifier = modifier
                 .clip(AppComponentShape)
                 .background(
@@ -108,20 +115,31 @@ private fun TopBar(
                 )
                 .padding(8.dp)
         ) {
-            IconButton(
-                onClick = onNavigateBackRequest,
-                shapes = IconButtonDefaults.shapes()
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(4.dp),
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth()
             ) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = stringResource(R.string.action_back)
+                IconButton(
+                    onClick = onNavigateBackRequest,
+                    shapes = IconButtonDefaults.shapes()
+                ) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = stringResource(R.string.action_back)
+                    )
+                }
+                Text(
+                    text = stringResource(R.string.reels),
+                    style = MaterialTheme.typography.titleLarge,
+                    modifier = Modifier.align(Alignment.CenterVertically)
                 )
             }
-            Text(
-                text = stringResource(R.string.reels),
-                style = MaterialTheme.typography.titleLarge,
-                modifier = Modifier.align(Alignment.CenterVertically)
-            )
+
+            AnimatedVisibility(showLoadingIndicator) {
+                LoadingIndicator()
+            }
         }
     }
 }
@@ -131,9 +149,14 @@ private fun ReelPage(
     imageBuffer: ByteArray,
     modifier: Modifier = Modifier
 ) {
-    AsyncImage(
-        model = imageBuffer,
+    val painter = rememberAsyncImagePainter(imageBuffer)
+    val zoomState = rememberZoomState(contentSize = painter.intrinsicSize)
+
+    Image(
+        painter = painter,
         contentDescription = null,
         modifier = modifier
+            .fillMaxSize()
+            .zoomable(zoomState)
     )
 }

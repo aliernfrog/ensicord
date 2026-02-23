@@ -20,6 +20,7 @@ gson = "2.13.2"
 koin = "4.1.1"
 pftool-shared = "c324992467"
 toptoast = "2.2.0-alpha03"
+zoomable = "2.11.1"
 
 [libraries]
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "androidx-activity" }
@@ -49,6 +50,7 @@ gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 koin = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koin" }
 pftool-shared-base = { group = "com.github.aliernfrog.pf-tool", name = "shared", version.ref = "pftool-shared" }
 toptoast = { group = "com.github.aliernfrog", name = "top-toast-compose", version.ref = "toptoast" }
+zoomable = { group = "net.engawapg.lib", name = "zoomable", version.ref = "zoomable" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "android-plugin" }
