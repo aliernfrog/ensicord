@@ -15,6 +15,7 @@ compose-material3 = "1.5.0-alpha14"
 
 aboutlibraries = "14.0.0-b02"
 coil = "3.3.0"
+ensi = "2.0.0-alpha02"
 gson = "2.13.2"
 koin = "4.1.1"
 pftool-shared = "c324992467"
@@ -43,6 +44,7 @@ aboutlibraries-core = { group = "com.mikepenz", name = "aboutlibraries-core", ve
 aboutlibraries-compose-core = { group = "com.mikepenz", name = "aboutlibraries-compose-core", version.ref = "aboutlibraries" }
 coil = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil" }
 coil-okhttp = { group = "io.coil-kt.coil3", name = "coil-network-okhttp", version.ref = "coil" }
+ensi = { group = "com.github.aliernfrog", name = "ensi-generation-kt", version.ref = "ensi" }
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 koin = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koin" }
 pftool-shared-base = { group = "com.github.aliernfrog.pf-tool", name = "shared", version.ref = "pftool-shared" }

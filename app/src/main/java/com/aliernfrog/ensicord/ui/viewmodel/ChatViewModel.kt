@@ -9,6 +9,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import com.aliernfrog.ensi.Ensi
 import com.aliernfrog.ensicord.R
 import com.aliernfrog.ensicord.data.Channel
 import com.aliernfrog.ensicord.data.Message
@@ -24,8 +25,15 @@ class ChatViewModel(
 ) : ViewModel() {
     lateinit var uiScope: CoroutineScope
 
+    val responseGenerator = Ensi(types = listOf(), schemes = listOf())
     val lazyListState = LazyListState()
     val drawerState = DrawerState(initialValue = DrawerValue.Closed)
+
+    private val ensi = User(
+        id = "ensi",
+        name = "Ensi",
+        avatarModel = R.drawable.ensi
+    )
     var user by mutableStateOf(User(
         id = "user",
         name = prefs.userName.value,
@@ -49,16 +57,37 @@ class ChatViewModel(
 
     var lastMessageShownWithoutIME by mutableStateOf<Int?>(null)
 
-    fun sendMessageFromUserInput() {
-        if (chosenChannel.readOnly) return
-        if (textInput.isBlank()) return
-        chosenChannel.messages.add(Message(
-            author = user,
-            content = textInput
+    fun sendMessage(message: String, author: User, channel: Channel) {
+        if (message.isBlank()) return
+        channel.messages.add(Message(
+            author = author,
+            content = message
         ))
-        textInput = ""
-        uiScope.launch {
+        if (channel.name == chosenChannel.name) uiScope.launch {
             lazyListState.animateScrollToItem(0)
         }
+    }
+
+    fun sendMessageFromUserInput() {
+        if (chosenChannel.readOnly) return
+        val content = textInput
+        val channel = chosenChannel
+        sendMessage(
+            message = content,
+            author = user,
+            channel = chosenChannel
+        )
+        textInput = ""
+        sendEnsiMessage(input = content, channel = channel)
+    }
+
+    fun sendEnsiMessage(input: String, channel: Channel) {
+        sendMessage(
+            message = responseGenerator.generate(
+                message = input
+            ),
+            author = ensi,
+            channel = channel
+        )
     }
 }

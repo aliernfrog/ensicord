@@ -96,6 +96,7 @@ dependencies {
     implementation(libs.aboutlibraries.compose.core)
     implementation(libs.coil)
     implementation(libs.coil.okhttp)
+    implementation(libs.ensi)
     implementation(libs.gson)
     implementation(libs.koin)
     implementation(libs.pftool.shared.base)
